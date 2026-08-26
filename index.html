@@ -1863,10 +1863,9 @@
     (function() {
       var map = L.map('map', { zoomControl: true }).setView([18, 15], 2);
       window.__profileMap = map;
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap, &copy; CARTO',
-        subdomains: 'abcd',
-        maxZoom: 19
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri — Esri, HERE, Garmin, FAO, NOAA, USGS',
+        maxZoom: 16
       }).addTo(map);
 
       var Pune = [18.52, 73.85], Gurgaon = [28.46, 77.08], Lima = [-12.0, -77.0];
