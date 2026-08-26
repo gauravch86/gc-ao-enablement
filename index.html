@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Gaurav Chaudhary — Autonomous Operations | Strategic Product Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --text: #e6edf3;
+      --muted: #8b9cb3;
+      --accent: #58a6ff;
+      --success: #3fb950;
+      --gold: #d4a853;
+      --prodapt: #c41e3a;
+      --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--surface) 0%, #0d1117 100%);
+      padding: 2.5rem 1.5rem 3rem;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .hero-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .hero-inner { flex-direction: row; text-align: left; gap: 2rem; }
+    }
+    .hero-photo-wrap {
+      flex-shrink: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid rgba(212, 168, 83, 0.45);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.06);
+      background: var(--surface2);
+    }
+    .hero-photo {
+      display: block;
+      width: 168px;
+      height: 210px;
+      object-fit: cover;
+      object-position: center 18%;
+    }
+    @media (min-width: 640px) {
+      .hero-photo { width: 188px; height: 236px; }
+    }
+    .hero-content { text-align: center; }
+    @media (min-width: 640px) { .hero-content { text-align: left; } }
+    .hero h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+    .hero .tagline { color: var(--accent); font-size: 1.1rem; font-weight: 500; margin-bottom: 0.5rem; }
+    .hero .meta { color: var(--muted); font-size: 0.95rem; }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 1.25rem; }
+    .container-wide { max-width: 1200px; margin: 0 auto; padding: 0 1.25rem; }
+
+    section { padding: 2.5rem 0; }
+    section > h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(212,168,83,.25);
+    }
+    section > .lead { color: var(--muted); font-size: 0.95rem; margin-bottom: 1rem; }
+
+    /* Map + footprint — map full width on top, list below */
+    .map-wrap { display: flex; flex-direction: column; gap: 1rem; }
+    .map-wrap .map-container { width: 100%; }
+    #map {
+      height: 520px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.08);
+      overflow: hidden;
+      background: var(--surface);
+    }
+    @media (min-width: 768px) { #map { height: 600px; } }
+    .footprint-list {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 12px;
+      padding: 1rem;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+    .map-legend { font-size: 0.8rem; color: var(--muted); margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+    .map-legend .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    .map-legend .dot.gold { background: var(--gold); }
+    .map-legend .dot.flight { background: var(--accent); }
+    .map-legend .dot.reloc { background: var(--success); }
+    .map-legend .dot.repat { background: #a371f7; }
+    .footprint-item {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      font-size: 0.9rem;
+    }
+    .footprint-item:last-child { border-bottom: 0; }
+    .footprint-group { margin-bottom: 1.25rem; }
+    .footprint-group:last-child { margin-bottom: 0; }
+    .footprint-period {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .footprint-item {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      font-size: 0.9rem;
+    }
+    .footprint-item:last-child { border-bottom: 0; }
+    .footprint-item .loc { font-weight: 600; color: var(--gold); margin-bottom: 0.2rem; }
+    .footprint-item .years { color: var(--accent); font-size: 0.85em; }
+    .footprint-item .role { color: var(--text); margin: 0.2rem 0; }
+    .footprint-item .clients { color: var(--success); font-size: 0.85em; }
+
+    /* Timeline */
+    .timeline { position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent), var(--success));
+      border-radius: 2px;
+      opacity: .6;
+    }
+    .timeline-item { position: relative; padding-left: 2.75rem; padding-bottom: 1.5rem; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 0.4rem;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 0 3px var(--bg);
+    }
+    .timeline-item.current::before { border-color: var(--gold); background: var(--gold); }
+    .timeline-year { font-weight: 700; color: var(--accent); font-size: 0.95rem; margin-bottom: 0.2rem; }
+    .timeline-role { font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
+    .timeline-geo { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.35rem; }
+    .timeline-summary {
+      font-size: 0.9rem;
+      color: var(--success);
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+    .timeline-summary strong { color: var(--gold); }
+    .timeline-summary .site-loc { font-weight: 600; color: var(--gold); }
+    .timeline-mobility {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.85rem;
+      margin-top: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .timeline-mobility .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .timeline-mobility .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .timeline-mobility .tag.loc .dot { background: var(--gold); }
+    .timeline-mobility .tag.flight .dot { background: var(--accent); }
+    .timeline-mobility .tag.reloc .dot { background: var(--success); }
+    .timeline-mobility .tag.repat .dot { background: #a371f7; }
+    .timeline-sites {
+      list-style: none;
+      margin: 0 0 0.25rem;
+      padding: 0 0 0 0.65rem;
+      border-left: 2px solid rgba(212, 168, 83, 0.22);
+      font-size: 0.84rem;
+      line-height: 1.55;
+    }
+    .timeline-sites li {
+      margin-bottom: 0.35rem;
+      padding-left: 0.5rem;
+    }
+    .timeline-sites li:last-child { margin-bottom: 0; }
+    .timeline-sites .site-loc { font-weight: 600; color: var(--gold); }
+    .timeline-sites .site-detail { color: var(--success); }
+    .timeline-legend {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+    .timeline-legend .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .timeline-legend .dot.gold { background: var(--gold); }
+    .timeline-legend .dot.flight { background: var(--accent); }
+    .timeline-legend .dot.reloc { background: var(--success); }
+    .timeline-legend .dot.repat { background: #a371f7; }
+
+    /* Summary / paragraphs */
+    .summary p { margin-bottom: 0.75rem; color: var(--text); }
+    .summary p:last-child { margin-bottom: 0; }
+    .summary .role-line { font-size: 1rem; font-weight: 600; color: var(--gold); margin-bottom: 1rem; }
+    .story-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+    .story-pair {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .story-card { background: var(--surface); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 1.25rem; }
+    .story-card.featured { grid-column: 1 / -1; border-color: rgba(212, 168, 83, 0.28); background: linear-gradient(145deg, rgba(26, 35, 50, 0.95) 0%, var(--surface) 100%); }
+    .story-card.featured .story-columns {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 1.25rem 1.75rem;
+      margin-top: 0.25rem;
+    }
+    @media (max-width: 720px) { .story-card.featured .story-columns { grid-template-columns: 1fr; } }
+    .story-card h3 { font-size: 1.1rem; color: var(--gold); margin-bottom: 0.35rem; }
+    .story-card .deal { font-size: 0.9rem; color: var(--success); font-weight: 500; margin-bottom: 0.75rem; }
+    .story-card .sub { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin: 0.75rem 0 0.35rem; }
+    .story-card ul { margin: 0; padding-left: 1.1rem; color: var(--text); font-size: 0.9rem; line-height: 1.5; }
+    .story-card li { margin-bottom: 0.3rem; }
+    .story-card .note {
+      margin-top: 0.9rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255,255,255,.08);
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.5;
+    }
+    .team-split {
+      margin-top: 1.25rem;
+      padding: 1.15rem 1.2rem 1.1rem;
+      background: rgba(15, 20, 25, 0.55);
+      border: 1px solid rgba(212, 168, 83, 0.22);
+      border-radius: 12px;
+    }
+    .team-split-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem 1rem;
+      margin-bottom: 0.85rem;
+    }
+    .team-split-head h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin: 0;
+    }
+    .team-split-head .total {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .team-split-head .total strong { color: var(--accent); font-weight: 700; }
+    .team-bar {
+      display: flex;
+      width: 100%;
+      height: 18px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,.04);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+      margin-bottom: 1rem;
+    }
+    .team-bar span { display: block; height: 100%; min-width: 2px; }
+    .team-bar .c-mon { width: 6%; background: #58a6ff; }
+    .team-bar .c-sd { width: 11.9%; background: #38bdf8; }
+    .team-bar .c-nsd { width: 5.4%; background: #3fb950; }
+    .team-bar .c-app { width: 35.7%; background: #d4a853; }
+    .team-bar .c-infra { width: 32.1%; background: #a371f7; }
+    .team-bar .c-out { width: 8.9%; background: #8b9cb3; }
+    .team-split-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.55rem 0.75rem;
+    }
+    @media (max-width: 800px) { .team-split-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .team-split-grid { grid-template-columns: 1fr; } }
+    .team-chip {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      background: rgba(26, 35, 50, 0.75);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 9px;
+      padding: 0.55rem 0.65rem;
+    }
+    .team-chip .count {
+      flex-shrink: 0;
+      min-width: 2.1rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1.2;
+    }
+    .team-chip .meta { min-width: 0; }
+    .team-chip .label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .team-chip .desc {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.35;
+      margin-top: 0.1rem;
+    }
+    .team-chip .dot {
+      flex-shrink: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 0.35rem;
+    }
+    .team-chip .dot.mon { background: #58a6ff; }
+    .team-chip .dot.sd { background: #38bdf8; }
+    .team-chip .dot.nsd { background: #3fb950; }
+    .team-chip .dot.app { background: #d4a853; }
+    .team-chip .dot.infra { background: #a371f7; }
+    .team-chip .dot.out { background: #8b9cb3; }
+    .team-split-foot {
+      margin: 0.75rem 0 0;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* Career list (Gamma style) */
+    .career-list { list-style: none; }
+    .career-list li {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      align-items: start;
+    }
+    .career-list li:last-child { border-bottom: 0; }
+    .career-list .num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--surface2);
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .career-list .title { font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+    .career-list .when { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.15rem; }
+    .career-list .where { font-size: 0.85rem; color: var(--accent); }
+
+    /* Competencies grid */
+    .competencies { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+    .comp-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+    .comp-card h3 { font-size: 1rem; color: var(--gold); margin-bottom: 0.5rem; }
+    .comp-card p { font-size: 0.9rem; color: var(--muted); margin: 0; }
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1rem; }
+    @media (max-width: 768px) { .skills-grid { grid-template-columns: 1fr; } }
+    .skills-column { background: var(--surface); border: 1px solid rgba(255,255,255,.06); border-radius: 10px; padding: 1.25rem; }
+    .skills-column h3 { font-size: 1rem; color: var(--gold); margin-bottom: 0.75rem; font-weight: 600; }
+    .skills-column ul { list-style: none; padding: 0; margin: 0; }
+    .skills-column li { font-size: 0.9rem; color: var(--text); padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,.04); }
+    .skills-column li:last-child { border-bottom: 0; }
+    .skills-column li::before { content: '· '; color: var(--accent); font-weight: bold; }
+
+    /* Metrics */
+    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .metric-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .metric-value { font-size: 1.5rem; font-weight: 700; color: var(--gold); margin-bottom: 0.25rem; }
+    .metric-label { font-size: 0.8rem; color: var(--muted); }
+
+    /* Bullet lists */
+    .bullet-list { padding-left: 1.25rem; margin: 0.5rem 0; }
+    .bullet-list li { margin-bottom: 0.35rem; color: var(--text); font-size: 0.95rem; }
+    .section-subheading {
+      font-size: 1rem;
+      color: var(--gold);
+      margin: 1.5rem 0 0.75rem;
+      font-weight: 600;
+    }
+
+    /* Core Competencies & Domain */
+    .comp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.65rem;
+      margin-top: 1rem;
+    }
+    .comp-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 0.8rem 0.9rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .comp-card:hover {
+      border-color: rgba(212, 168, 83, 0.3);
+      transform: translateY(-1px);
+    }
+    .comp-icon {
+      flex-shrink: 0;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .comp-icon svg { width: 1.15rem; height: 1.15rem; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .comp-icon.gold { background: rgba(212, 168, 83, 0.12); color: var(--gold); }
+    .comp-icon.purple { background: rgba(163, 113, 247, 0.12); color: #a371f7; }
+    .comp-icon.blue { background: rgba(88, 166, 255, 0.12); color: var(--accent); }
+    .comp-icon.green { background: rgba(63, 185, 80, 0.12); color: var(--success); }
+    .comp-icon.cyan { background: rgba(56, 189, 248, 0.12); color: #38bdf8; }
+    .comp-text { font-size: 0.82rem; color: var(--text); line-height: 1.45; padding-top: 0.15rem; }
+    .domain-block { margin-top: 1.25rem; }
+    .domain-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.65rem;
+    }
+    @media (max-width: 560px) { .domain-grid { grid-template-columns: 1fr; } }
+    .domain-card {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      background: linear-gradient(135deg, rgba(26, 35, 50, 0.9) 0%, var(--surface) 100%);
+      border: 1px solid rgba(212, 168, 83, 0.18);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+    }
+    .domain-icon {
+      flex-shrink: 0;
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(212, 168, 83, 0.1);
+      color: var(--gold);
+    }
+    .domain-icon svg { width: 1.35rem; height: 1.35rem; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .domain-icon.telecom { background: rgba(88, 166, 255, 0.12); color: var(--accent); }
+    .domain-icon.fintech { background: rgba(63, 185, 80, 0.12); color: var(--success); }
+    .domain-text { font-size: 0.88rem; font-weight: 500; color: var(--text); line-height: 1.4; }
+    .domain-text small { display: block; font-size: 0.75rem; font-weight: 400; color: var(--muted); margin-top: 0.2rem; }
+
+    /* P&L Ownership Growth */
+    .pnl-section { margin-top: 0.5rem; }
+    .pnl-chart-wrap {
+      background: linear-gradient(145deg, var(--surface) 0%, rgba(26, 35, 50, 0.6) 100%);
+      border: 1px solid rgba(212, 168, 83, 0.2);
+      border-radius: 14px;
+      padding: 1.5rem 1.25rem 1rem;
+      margin: 1.25rem 0 1.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    .pnl-chart-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .pnl-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 0.5rem;
+      height: 200px;
+      padding: 0 0.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    @media (max-width: 640px) {
+      .pnl-chart { height: 160px; gap: 0.35rem; overflow-x: auto; min-width: 100%; padding-bottom: 0.5rem; }
+      .pnl-bar-col { min-width: 52px; flex-shrink: 0; }
+    }
+    .pnl-bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+      gap: 0.35rem;
+    }
+    .pnl-bar-value {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .pnl-bar-track {
+      width: 100%;
+      max-width: 56px;
+      height: 140px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .pnl-bar {
+      width: 100%;
+      border-radius: 6px 6px 2px 2px;
+      background: linear-gradient(180deg, var(--gold) 0%, var(--accent) 55%, rgba(88, 166, 255, 0.35) 100%);
+      box-shadow: 0 0 20px rgba(212, 168, 83, 0.25), 0 4px 12px rgba(0, 0, 0, 0.3);
+      animation: pnlBarGrow 1s ease-out backwards;
+      position: relative;
+      min-height: 8px;
+    }
+    .pnl-bar-col:nth-child(1) .pnl-bar { animation-delay: 0.05s; }
+    .pnl-bar-col:nth-child(2) .pnl-bar { animation-delay: 0.12s; }
+    .pnl-bar-col:nth-child(3) .pnl-bar { animation-delay: 0.19s; }
+    .pnl-bar-col:nth-child(4) .pnl-bar { animation-delay: 0.26s; }
+    .pnl-bar-col:nth-child(5) .pnl-bar { animation-delay: 0.33s; }
+    .pnl-bar-col:nth-child(6) .pnl-bar { animation-delay: 0.4s; }
+    .pnl-bar-col.peak .pnl-bar {
+      background: linear-gradient(180deg, #f0c674 0%, var(--gold) 40%, var(--success) 100%);
+      box-shadow: 0 0 28px rgba(212, 168, 83, 0.45), 0 4px 16px rgba(63, 185, 80, 0.2);
+    }
+    .pnl-bar-label {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.2;
+      max-width: 72px;
+    }
+    @keyframes pnlBarGrow {
+      from { height: 0 !important; opacity: 0; }
+      to { opacity: 1; }
+    }
+    .pnl-legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.25rem;
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .pnl-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .pnl-legend .swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      background: linear-gradient(180deg, var(--gold), var(--accent));
+    }
+    .pnl-legend .swatch.peak { background: linear-gradient(180deg, #f0c674, var(--success)); }
+    .pnl-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .pnl-card {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 1.15rem 1.25rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .pnl-card:hover {
+      border-color: rgba(212, 168, 83, 0.35);
+      transform: translateY(-2px);
+    }
+    .pnl-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--gold), var(--accent));
+      opacity: 0.85;
+    }
+    .pnl-card.peak::before { background: linear-gradient(180deg, var(--gold), var(--success)); }
+    .pnl-card-period {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+    .pnl-card-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-bottom: 0.65rem;
+    }
+    .pnl-metric-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(88, 166, 255, 0.1);
+      border: 1px solid rgba(88, 166, 255, 0.25);
+      border-radius: 999px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.82rem;
+    }
+    .pnl-metric-pill.rev { color: var(--gold); border-color: rgba(212, 168, 83, 0.35); background: rgba(212, 168, 83, 0.08); }
+    .pnl-metric-pill.ebit { color: var(--success); border-color: rgba(63, 185, 80, 0.35); background: rgba(63, 185, 80, 0.08); }
+    .pnl-metric-pill.ebit-range { color: #a371f7; border-color: rgba(163, 113, 247, 0.35); background: rgba(163, 113, 247, 0.08); }
+    .pnl-metric-pill strong { font-weight: 700; }
+    .pnl-card-role {
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.45;
+      padding-left: 0.15rem;
+    }
+    .pnl-card-role span { color: var(--muted); }
+
+    /* Early career */
+    .early-career { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .early-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+    .early-card .company { font-weight: 600; color: var(--gold); margin-bottom: 0.25rem; }
+    .early-card .role { font-size: 0.9rem; color: var(--accent); margin-bottom: 0.5rem; }
+    .early-card .tenure { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; }
+    .early-card p { font-size: 0.9rem; color: var(--text); margin: 0; }
+
+    /* Education */
+    .edu { background: var(--surface); border: 1px solid rgba(255,255,255,.06); border-radius: 10px; padding: 1.25rem; }
+    .edu .degree { font-weight: 600; color: var(--gold); margin-bottom: 0.2rem; }
+    .edu .school { color: var(--accent); font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .edu .years { font-size: 0.85rem; color: var(--muted); }
+
+    /* Key achievements */
+    .achieve-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.65rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 768px) { .achieve-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 420px) { .achieve-grid { grid-template-columns: 1fr; } }
+    .achieve-stat {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 0.75rem 0.65rem;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+    .achieve-stat:hover { border-color: rgba(212, 168, 83, 0.28); }
+    .achieve-stat .num {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .achieve-stat .title {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 0.4rem;
+      line-height: 1.25;
+    }
+    .achieve-stat .desc {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      line-height: 1.35;
+    }
+    .achieve-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.65rem;
+      margin-top: 0.65rem;
+    }
+    @media (max-width: 768px) { .achieve-highlights { grid-template-columns: 1fr; } }
+    .achieve-highlight {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 0.7rem 0.85rem;
+      min-height: 100%;
+    }
+    .achieve-highlight .icon {
+      flex-shrink: 0;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: rgba(88, 166, 255, 0.12);
+      color: var(--accent);
+    }
+    .achieve-highlight.pnl .icon { background: rgba(212, 168, 83, 0.12); color: var(--gold); }
+    .achieve-highlight.ai .icon { background: rgba(163, 113, 247, 0.12); color: #a371f7; }
+    .achieve-highlight.award {
+      border-color: rgba(212, 168, 83, 0.28);
+      background: linear-gradient(135deg, rgba(212, 168, 83, 0.07) 0%, var(--surface) 100%);
+    }
+    .achieve-highlight.award .icon { background: rgba(212, 168, 83, 0.18); color: var(--gold); }
+    .achieve-highlight .text { font-size: 0.8rem; color: var(--text); line-height: 1.4; }
+    .achieve-highlight .text strong { color: var(--gold); font-weight: 600; }
+
+    /* Operations & SRE Acumen */
+    .ops-narrative { margin-bottom: 1.5rem; }
+    .ops-narrative p { margin-bottom: 0.75rem; color: var(--text); font-size: 0.95rem; }
+    .ops-narrative p:last-child { margin-bottom: 0; }
+    .ops-narrative strong { color: var(--gold); font-weight: 600; }
+    .ops-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.65rem;
+      margin: 1.25rem 0 1.5rem;
+    }
+    @media (max-width: 800px) { .ops-flow { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 420px) { .ops-flow { grid-template-columns: 1fr; } }
+    .ops-flow-step {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 10px;
+      padding: 0.85rem 0.9rem;
+      position: relative;
+    }
+    .ops-flow-step .step-num {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+    .ops-flow-step .step-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.35rem;
+    }
+    .ops-flow-step p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.45;
+      margin: 0;
+    }
+    .ops-cycle-wrap {
+      background: linear-gradient(145deg, var(--surface) 0%, rgba(26, 35, 50, 0.65) 100%);
+      border: 1px solid rgba(212, 168, 83, 0.2);
+      border-radius: 14px;
+      padding: 1.5rem 1.25rem 1.35rem;
+      margin: 1.25rem 0;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    .ops-cycle-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 0.35rem;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-color: rgba(212, 168, 83, 0.45);
+    }
+    .ops-cycle-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 1.25rem;
+    }
+    .ops-cycle-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .ops-ring-svg {
+      width: min(100%, 340px);
+      height: auto;
+      display: block;
+    }
+    .ops-stage-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem;
+      width: 100%;
+    }
+    .ops-stage-card {
+      background: rgba(15, 20, 25, 0.55);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      border-left: 3px solid var(--accent);
+    }
+    .ops-stage-card.learning { border-left-color: var(--gold); }
+    .ops-stage-card.predict { border-left-color: var(--accent); }
+    .ops-stage-card.prevent { border-left-color: var(--success); }
+    .ops-stage-card.restore { border-left-color: #38bdf8; }
+    .ops-stage-card.rca { border-left-color: #a371f7; }
+    .ops-stage-card h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+    .ops-stage-card.learning h3 { color: var(--gold); }
+    .ops-stage-card.predict h3 { color: var(--accent); }
+    .ops-stage-card.prevent h3 { color: var(--success); }
+    .ops-stage-card.restore h3 { color: #38bdf8; }
+    .ops-stage-card.rca h3 { color: #a371f7; }
+    .ops-stage-card ul {
+      margin: 0;
+      padding-left: 1.05rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.45;
+    }
+    .ops-stage-card li { margin-bottom: 0.3rem; }
+    .ops-stage-card li:last-child { margin-bottom: 0; }
+    .ops-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      align-items: center;
+    }
+    .ops-tools .ops-tools-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-right: 0.25rem;
+    }
+    .ops-tool-chip {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      background: rgba(88, 166, 255, 0.1);
+      border: 1px solid rgba(88, 166, 255, 0.28);
+      border-radius: 999px;
+      padding: 0.3rem 0.75rem;
+    }
+    .ops-tool-chip:nth-child(3) { border-color: rgba(212, 168, 83, 0.35); background: rgba(212, 168, 83, 0.08); color: var(--gold); }
+    .ops-tool-chip:nth-child(4) { border-color: rgba(63, 185, 80, 0.35); background: rgba(63, 185, 80, 0.08); color: var(--success); }
+    .ops-tool-chip:nth-child(5) { border-color: rgba(163, 113, 247, 0.35); background: rgba(163, 113, 247, 0.08); color: #a371f7; }
+
+    /* JD / AO fit mapping */
+    .ao-fit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .ao-fit-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 10px;
+      padding: 0.95rem 1rem;
+      border-top: 3px solid var(--accent);
+    }
+    .ao-fit-card h3 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+      line-height: 1.35;
+    }
+    .ao-fit-card p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+      margin: 0;
+    }
+    .ao-fit-card p strong { color: var(--text); font-weight: 600; }
+    .maturity-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.55rem;
+      margin: 1.15rem 0 0.5rem;
+    }
+    @media (max-width: 720px) { .maturity-row { grid-template-columns: repeat(2, 1fr); } }
+    .maturity-step {
+      background: rgba(15, 20, 25, 0.55);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 10px;
+      padding: 0.75rem 0.8rem;
+      text-align: center;
+    }
+    .maturity-step .lvl {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+    .maturity-step .name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+    .maturity-step p {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    /* Contact */
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .contact-item {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+    .contact-item .label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem; }
+    .contact-item .value { font-weight: 500; color: var(--text); }
+    .contact-item a { color: var(--accent); text-decoration: none; }
+    .contact-item a:hover { text-decoration: underline; }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      border-top: 1px solid rgba(255,255,255,.06);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* Print / PDF: pull page-1 content up; keep ops steps intact */
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .hero {
+        padding: 1.1rem 1rem 1.15rem !important;
+      }
+      .hero-inner { gap: 1rem !important; }
+      .hero-photo {
+        width: 132px !important;
+        height: 165px !important;
+      }
+      @media (min-width: 640px) {
+        .hero-photo { width: 140px !important; height: 175px !important; }
+      }
+      .hero h1 { font-size: 1.55rem !important; margin-bottom: 0.2rem !important; }
+      .hero .tagline { font-size: 0.95rem !important; margin-bottom: 0.25rem !important; }
+      .hero .meta { font-size: 0.82rem !important; }
+      section { padding: 1.15rem 0 !important; }
+      section > h2 {
+        font-size: 1.1rem !important;
+        margin-bottom: 0.65rem !important;
+        padding-bottom: 0.35rem !important;
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+      /* Keep heading + body together; move whole block to next page if needed */
+      .print-keep {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+      }
+      .print-break-before {
+        break-before: page !important;
+        page-break-before: always !important;
+      }
+      .early-career,
+      .early-card,
+      .edu,
+      .contact-grid,
+      .contact-item,
+      .achieve-grid,
+      .comp-grid,
+      .metrics,
+      .domain-block,
+      .story-pair,
+      .story-card:not(.featured) {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+      }
+      .story-pair {
+        gap: 0.75rem !important;
+      }
+      .story-card:not(.featured) {
+        padding: 0.85rem 0.95rem !important;
+      }
+      .story-card:not(.featured) h3 { font-size: 1rem !important; margin-bottom: 0.2rem !important; }
+      .story-card:not(.featured) .deal { font-size: 0.8rem !important; margin-bottom: 0.4rem !important; }
+      .story-card:not(.featured) .sub { margin: 0.4rem 0 0.2rem !important; font-size: 0.72rem !important; }
+      .story-card:not(.featured) ul { font-size: 0.78rem !important; line-height: 1.35 !important; }
+      .story-card:not(.featured) li { margin-bottom: 0.18rem !important; }
+      section > .lead { margin-bottom: 0.55rem !important; font-size: 0.88rem !important; }
+      .ops-narrative p { margin-bottom: 0.45rem !important; font-size: 0.88rem !important; }
+      .ops-flow {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.5rem !important;
+        margin: 0.75rem 0 0.85rem !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .ops-flow-step {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        padding: 0.65rem 0.75rem !important;
+      }
+      .ops-flow-step p { font-size: 0.74rem !important; }
+      .ops-cycle-wrap { margin-top: 0.75rem !important; padding: 1rem !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-photo-wrap">
+        <img class="hero-photo" src="gaurav-profile.png?v=20250517" alt="Gaurav Chaudhary" width="188" height="236" />
+      </div>
+      <div class="hero-content">
+        <h1>Gaurav Chaudhary</h1>
+        <p class="tagline">Strategic Product &amp; Services Leader — Autonomous Operations Enablement (18 yrs)</p>
+        <p class="meta">Telecom Managed Services · Reactive → Predictive → Autonomous · Cell: +91 9650044746 (Mobile)</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Autonomous Operations Acumen -->
+    <section>
+      <h2>Autonomous Operations Acumen</h2>
+      <p class="lead">Systems thinking across the closed loop of design, deployment, operation, assurance and continuous improvement — proven in customer-facing telecom managed services across Telefonica Peru, Chile &amp; Argentina, then H3G Ireland and H3G UK. Automation treated as a <strong>systemic capability</strong>, not isolated scripts.</p>
+
+      <div class="maturity-row" aria-label="Autonomy maturity journey">
+        <div class="maturity-step">
+          <div class="lvl">Level 0–1</div>
+          <div class="name">Reactive</div>
+          <p>Incident-driven ops; firefighting; linear headcount pressure</p>
+        </div>
+        <div class="maturity-step">
+          <div class="lvl">Level 2</div>
+          <div class="name">Observability</div>
+          <p>Metrics, logs, KPIs, top-offender clarity before impact spreads</p>
+        </div>
+        <div class="maturity-step">
+          <div class="lvl">Level 3</div>
+          <div class="name">Predictive</div>
+          <p>Anomaly detection, tuned alerts, prevent before customer notice</p>
+        </div>
+        <div class="maturity-step">
+          <div class="lvl">Level 4</div>
+          <div class="name">Autonomous</div>
+          <p>Self-healing + AI agents; scale MGS without proportional FTEs</p>
+        </div>
+      </div>
+
+      <div class="ops-narrative">
+        <p>
+          Across <strong>Telefonica Peru, Chile and Argentina</strong>, and continuing into <strong>H3G Ireland and H3G UK</strong>, the operating model started with establishing the right <strong>observability</strong> — monitoring that captures what is going wrong in production. With volume and categorization visible, we ran <strong>top-offender analysis</strong> to isolate root causes: code, operational gaps, data problems, or user/business constraints — then drove permanent closure by impact volume.
+        </p>
+        <p>
+          Containment followed an <strong>SRE / governance model</strong> (Git-versioned workarounds, controlled deploy, impact identification) so known issues could not hit new customers. In parallel with Dev, root-cause fixes were prioritized and workarounds <strong>sunset</strong> in a controlled manner. At H3G UK this scaled into <strong>self-healing frameworks</strong>, GenAI SOP enablement, SPOG (Grafana) business-domain monitoring, and an operating model that cut 474 → 336 FTEs while improving P1/outage outcomes — autonomy-centric KPIs in practice: incident avoidance, efficiency, scalability.
+        </p>
+      </div>
+
+      <div class="ops-flow">
+        <div class="ops-flow-step">
+          <div class="step-num">01</div>
+          <div class="step-title">Observe</div>
+          <p>Data fluency — metrics, logs, KPIs, anomaly signals that make failure modes visible.</p>
+        </div>
+        <div class="ops-flow-step">
+          <div class="step-num">02</div>
+          <div class="step-title">Categorize</div>
+          <p>Volume + top offenders by Code / Ops / Data / User — roadmap priorities from evidence.</p>
+        </div>
+        <div class="ops-flow-step">
+          <div class="step-num">03</div>
+          <div class="step-title">Contain (governed)</div>
+          <p>Trusted, controlled workarounds — versioned, deployed with impact ID and risk control.</p>
+        </div>
+        <div class="ops-flow-step">
+          <div class="step-num">04</div>
+          <div class="step-title">Autonomize &amp; reuse</div>
+          <p>Self-healing + RC closure; platform patterns reusable across accounts and offerings.</p>
+        </div>
+      </div>
+
+      <div class="ops-cycle-wrap">
+        <p class="ops-cycle-title">Stick to basics</p>
+        <p class="ops-cycle-sub">Closed-loop AO model — Predict → Prevent → Restore → RCA → Continuous Learning — hardened across TEF HISPAM and H3G</p>
+        <div class="ops-cycle-visual">
+          <svg class="ops-ring-svg" viewBox="0 0 360 360" role="img" aria-label="Operations cycle: Predict, Prevent, Restore, RCA, Continuous Learning">
+            <defs>
+              <marker id="opsArrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#58a6ff"/>
+              </marker>
+              <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#58a6ff"/>
+                <stop offset="50%" stop-color="#d4a853"/>
+                <stop offset="100%" stop-color="#3fb950"/>
+              </linearGradient>
+            </defs>
+            <circle cx="180" cy="180" r="108" fill="none" stroke="rgba(88,166,255,0.18)" stroke-width="28"/>
+            <circle cx="180" cy="180" r="108" fill="none" stroke="url(#ringGrad)" stroke-width="6" stroke-dasharray="52 18" stroke-linecap="round" transform="rotate(-90 180 180)"/>
+            <!-- curved arrow hints -->
+            <path d="M180 72 A108 108 0 0 1 268 120" fill="none" stroke="#58a6ff" stroke-width="3" marker-end="url(#opsArrow)" opacity="0.85"/>
+            <path d="M275 140 A108 108 0 0 1 255 250" fill="none" stroke="#3fb950" stroke-width="3" marker-end="url(#opsArrow)" opacity="0.85"/>
+            <path d="M230 275 A108 108 0 0 1 130 275" fill="none" stroke="#38bdf8" stroke-width="3" marker-end="url(#opsArrow)" opacity="0.85"/>
+            <path d="M105 250 A108 108 0 0 1 85 140" fill="none" stroke="#a371f7" stroke-width="3" marker-end="url(#opsArrow)" opacity="0.85"/>
+            <path d="M95 120 A108 108 0 0 1 175 72" fill="none" stroke="#d4a853" stroke-width="3" marker-end="url(#opsArrow)" opacity="0.85"/>
+            <!-- center -->
+            <circle cx="180" cy="180" r="52" fill="#0f1419" stroke="rgba(212,168,83,0.35)" stroke-width="1.5"/>
+            <text x="180" y="174" text-anchor="middle" fill="#d4a853" font-size="11" font-weight="700" font-family="Plus Jakarta Sans, system-ui, sans-serif">AO LOOP</text>
+            <text x="180" y="192" text-anchor="middle" fill="#8b9cb3" font-size="9" font-family="Plus Jakarta Sans, system-ui, sans-serif">TEF · H3G</text>
+            <!-- labels: Predict at top → … → Continuous Learning last -->
+            <text x="180" y="38" text-anchor="middle" fill="#58a6ff" font-size="14" font-weight="700" font-family="Plus Jakarta Sans, system-ui, sans-serif">Predict</text>
+            <text x="318" y="128" text-anchor="middle" fill="#3fb950" font-size="14" font-weight="700" font-family="Plus Jakarta Sans, system-ui, sans-serif">Prevent</text>
+            <text x="300" y="268" text-anchor="middle" fill="#38bdf8" font-size="14" font-weight="700" font-family="Plus Jakarta Sans, system-ui, sans-serif">Restore</text>
+            <text x="180" y="338" text-anchor="middle" fill="#a371f7" font-size="14" font-weight="700" font-family="Plus Jakarta Sans, system-ui, sans-serif">RCA</text>
+            <text x="48" y="200" text-anchor="middle" fill="#d4a853" font-size="12" font-weight="700" font-family="Plus Jakarta Sans, system-ui, sans-serif">Learning</text>
+          </svg>
+
+          <div class="ops-stage-grid">
+            <div class="ops-stage-card predict">
+              <h3>Predict</h3>
+              <ul>
+                <li>Strengthen monitoring with metrics, KPIs and log-mining for anomaly detection.</li>
+                <li>Fine-tune alerts to catch issues before business impact.</li>
+              </ul>
+            </div>
+            <div class="ops-stage-card prevent">
+              <h3>Prevent</h3>
+              <ul>
+                <li>Dedicated capacity for self-healing frameworks and AI agents adapted to customer needs.</li>
+                <li>Train LLMs on localized use cases per region/account to raise prevention success rates.</li>
+              </ul>
+            </div>
+            <div class="ops-stage-card restore">
+              <h3>Restore</h3>
+              <ul>
+                <li>A-team jumps in on prevention leakage (P1) to restore ASAP.</li>
+                <li>Detailed lessons learned feed back into stronger self-healing.</li>
+              </ul>
+            </div>
+            <div class="ops-stage-card rca">
+              <h3>RCA</h3>
+              <ul>
+                <li>Industry-standard 5 Whys with priority categorization.</li>
+                <li>Problem manager tracks ownership with responsible stakeholders through closure.</li>
+              </ul>
+            </div>
+            <div class="ops-stage-card learning">
+              <h3>Continuous Learning</h3>
+              <ul>
+                <li>Closed loop to enhance monitoring, self-healing, SOPs and quality gates.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ops-tools">
+        <span class="ops-tools-label">Observability stack</span>
+        <span class="ops-tool-chip">Grafana</span>
+        <span class="ops-tool-chip">Telegraf</span>
+        <span class="ops-tool-chip">Dynatrace</span>
+        <span class="ops-tool-chip">Splunk</span>
+      </div>
+    </section>
+
+    <!-- Fit for Ericsson AO SPM -->
+    <section class="print-keep">
+      <h2>Fit for Autonomous Operation &amp; Enablement</h2>
+      <p class="lead">How hands-on telecom managed-services leadership maps to Strategic Product Manager — AO: offering value, GTM readiness, and autonomy outcomes customers and sales can sell.</p>
+      <div class="ao-fit-grid">
+        <div class="ao-fit-card">
+          <h3>Autonomy maturity &amp; closed loop</h3>
+          <p>Lived the shift from <strong>reactive firefighting</strong> to observability, prediction, self-healing and continuous learning — the AO closed loop of design → deploy → operate → assure → improve.</p>
+        </div>
+        <div class="ao-fit-card">
+          <h3>AI + orchestration as systemic capability</h3>
+          <p>Self-healing frameworks, GenAI SOP enablement, SPOG integration and localized AI use cases — not one-off bots, but <strong>reusable platform patterns</strong> across accounts.</p>
+        </div>
+        <div class="ao-fit-card">
+          <h3>Managed services at scale</h3>
+          <p>400+ app components, 24×7 L1–L3 model, vendor consolidation — prove AO ambition: <strong>scale without proportional headcount</strong> (474 → 336 FTEs) with better P1 outcomes.</p>
+        </div>
+        <div class="ao-fit-card">
+          <h3>Data, observability &amp; KPI ownership</h3>
+          <p>75 CPI/KPIs, top-offender analytics, business-domain alerts — decisions and roadmap priorities driven by <strong>metrics that sales and delivery can trust</strong>.</p>
+        </div>
+        <div class="ao-fit-card">
+          <h3>Customer-facing services &amp; commercial value</h3>
+          <p>Pre-sales through delivery: CIO/CTO/Ops engagement, $125m / $100m MGS deals, TCO/EBIT discipline — fluent articulating <strong>business value of offerings</strong> to portfolio and sales.</p>
+        </div>
+        <div class="ao-fit-card">
+          <h3>Enablement, adoption &amp; governance</h3>
+          <p>Regional/delivery enablement, KT→shadow models, Git-governed change, risk control — the change-management muscle AO products need for <strong>sales &amp; delivery readiness</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stories which standout -->
+    <section>
+      <h2>Stories which standout</h2>
+      <p class="lead">Proof points for AO value propositions — challenges converted into scalable managed-services growth</p>
+      <div class="story-grid">
+        <div class="story-card featured">
+          <h3>H3G UK</h3>
+          <p class="deal">$125m MGS — Vendor Consolidation deal FY23–24</p>
+          <div class="story-columns">
+            <div>
+              <p class="sub">Problem</p>
+              <ul>
+                <li>Challenges with <strong>Availability &amp; Stability</strong> — 3UK platform had a high volume of Outages/P1s impacting NPS continuously across FY21–22–23</li>
+                <li>Very tight budget (<strong>OPEX cut by 20%</strong>) to build the required team as the deal came with many unknowns and vectors beyond control — sunset of ~15% of apps, missing SOPs, poorly maintained infra, back-and-forth scope ambiguity among vendors, etc.</li>
+                <li>4 major vendors across the estate: <strong>TCS</strong> — L2/L3 for IT/Infra/Cloud/50+ apps; <strong>TechM</strong> — L1/SD/NSD for full H3G scope and L2/L3 for 300+ apps; <strong>NTT</strong> — L2/L3 for Data/BI (15–20 apps); <strong>THIS (Torry Harris)</strong> — SOA / TIBCO middleware (30+ app components)</li>
+                <li>In summary: <strong>400+ major app components</strong> in Managed Services scope — won with an up-front <strong>20% discount</strong>, replacing 4 vendors via handover, SOP documentation, and a hard rule of <strong>zero transition-caused outages</strong></li>
+                <li>Transition planned in 4 phases: <strong>KT → Forward Shadow → Reverse Shadow → Need-basis engagement</strong></li>
+              </ul>
+            </div>
+            <div>
+              <p class="sub">Steps taken</p>
+              <ul>
+                <li>Led the deal with pre-sales: scoped the estate, analyzed 1 year of incidents per application component, established <strong>75 CPI/KPIs</strong>, built a strict <strong>6-month transition plan</strong>, and modeled P&amp;L from a starting team of <strong>336 FTEs</strong> replacing <strong>474 FTEs</strong> across 4 vendors — including ~15% application-scope sunset plus AI/ML, automation, SOP and efficiency levers</li>
+                <li>Deal signed after an 8-month marathon with CIO, CTO and Operations Director; triggered <strong>Jan 2024 → Jun 2024</strong></li>
+                <li>Hired <strong>36 FTEs in UK</strong> and <strong>300 in India</strong>; Security and EUC outsourced to 2 vendors while leadership for both scopes stayed under my ownership</li>
+                <li>Integrated existing Dynatrace &amp; Splunk into <strong>SPOG</strong> (Single Pane of Glass on Grafana) for business-domain monitoring alerts — delivered to 24×7 Service Delivery Managers for immediate business-impact visibility</li>
+                <li>Closed major knowledge gaps: SOPs built with Generative AI from KT recordings and manual notes into a usable knowledge repository</li>
+                <li>30–40% of servers had last startup/maintenance older than 1 year — scheduled and remediated; directly linked to prior-semester P1s/outages</li>
+                <li>Self-healing frameworks for hard-failure components (app/platform constraints); projects triggered for modernization and right-sized infra</li>
+                <li>Predict / Prevent / Restore became seamless — <strong>lowest P1/outage levels in 2024–2025</strong> despite a landmark transition: ~15% apps sunset, 474 → 336 FTEs, modernization, automation, and a new 24×7 operating lens</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="team-split" aria-label="336 FTE operating model split">
+            <div class="team-split-head">
+              <h4>Team built — 336 FTE operating model</h4>
+              <div class="total">Replacing <strong>474</strong> vendor FTEs → <strong>336</strong> optimized model</div>
+            </div>
+            <div class="team-bar" role="img" aria-label="Stacked bar of 336 FTE split across L1, L2/L3 and outsourced scopes">
+              <span class="c-mon" title="L1 Monitoring 20"></span>
+              <span class="c-sd" title="L1 Service Desk 40"></span>
+              <span class="c-nsd" title="L1 NSD 18"></span>
+              <span class="c-app" title="L2/L3 App 120"></span>
+              <span class="c-infra" title="L3 IT/Infra/Cloud 108"></span>
+              <span class="c-out" title="Outsourced Security/CSGi/EUC ~30"></span>
+            </div>
+            <div class="team-split-grid">
+              <div class="team-chip">
+                <span class="dot mon" aria-hidden="true"></span>
+                <div class="count">20</div>
+                <div class="meta">
+                  <div class="label">L1 / Monitoring</div>
+                  <div class="desc">24×7 monitoring coverage</div>
+                </div>
+              </div>
+              <div class="team-chip">
+                <span class="dot sd" aria-hidden="true"></span>
+                <div class="count">40</div>
+                <div class="meta">
+                  <div class="label">L1 / Service Desk</div>
+                  <div class="desc">Frontline incident &amp; request handling</div>
+                </div>
+              </div>
+              <div class="team-chip">
+                <span class="dot nsd" aria-hidden="true"></span>
+                <div class="count">18</div>
+                <div class="meta">
+                  <div class="label">L1 / NSD</div>
+                  <div class="desc">Network Service Desk with Ericsson / Nokia L2/L3</div>
+                </div>
+              </div>
+              <div class="team-chip">
+                <span class="dot app" aria-hidden="true"></span>
+                <div class="count">120</div>
+                <div class="meta">
+                  <div class="label">L2 / L3 App Support</div>
+                  <div class="desc">400+ application components</div>
+                </div>
+              </div>
+              <div class="team-chip">
+                <span class="dot infra" aria-hidden="true"></span>
+                <div class="count">108</div>
+                <div class="meta">
+                  <div class="label">L3 IT / Infra / Cloud</div>
+                  <div class="desc">Platform, infra &amp; cloud engineering</div>
+                </div>
+              </div>
+              <div class="team-chip">
+                <span class="dot out" aria-hidden="true"></span>
+                <div class="count">~30</div>
+                <div class="meta">
+                  <div class="label">Outsourced vendors</div>
+                  <div class="desc">Security / CSGi / EUC — ~30–50 FTEs to protect P&amp;L</div>
+                </div>
+              </div>
+            </div>
+            <p class="team-split-foot">20 + 40 + 18 + 120 + 108 + ~30 = <strong style="color:var(--accent);">336 FTEs</strong>. Outsourced Security / CSGi / EUC flexed ~30–50 to balance cost and keep P&amp;L profitable, with leadership retained in-house.</p>
+          </div>
+
+          <p class="note">This program is especially close to me — I relocated to the UK to lead it with the team, as the face of the engagement from pre-sales through delivery.</p>
+        </div>
+        <div class="story-pair print-keep">
+          <div class="story-card">
+            <h3>Telefonica Argentina</h3>
+            <p class="deal">$100m MGS renewal deal with TEF HISPAM FY22</p>
+            <p class="sub">Problem</p>
+            <ul>
+              <li>3000+ production backlog; ~500 incidents/day (2020–21, COVID)</li>
+              <li>Low C-SAT/E-SAT; TEF Arg blocking Peru/Chile MGS renewals</li>
+            </ul>
+            <p class="sub">Steps taken</p>
+            <ul>
+              <li>Backlog categorization + weekend taskforce for quick wins</li>
+              <li>Top-offender split: Data / Code / User-Business</li>
+              <li>24×7 coverage scaled across India, Cyprus, Mexico, Argentina</li>
+              <li>C-SAT: weekly CxO transparency on offenders and actions</li>
+              <li>E-SAT: morale deep-dive (progression, hiring, A-team)</li>
+              <li>Personal ownership of TEF Arg to close issues and unlock renewal</li>
+            </ul>
+          </div>
+          <div class="story-card">
+            <h3>H3G Ireland</h3>
+            <p class="deal">Stabilization &amp; single-ownership turnaround — Cloud, IT, Network &amp; MGS</p>
+            <p class="sub">Problem / Opportunity</p>
+            <ul>
+              <li>Low C-SAT in 3-Ireland; negative EBIT; leadership burnout</li>
+              <li>Cloud/IT/Network with TechM — back-and-forth, blame game</li>
+              <li>Need to stabilize and prove Amdocs as single accountable owner</li>
+            </ul>
+            <p class="sub">Steps taken</p>
+            <ul>
+              <li>Quick stabilization; pulled critical work in-house from TechM</li>
+              <li>8-month transition of 80 apps (Cloud, EUC, Security &amp; Network)</li>
+              <li>Single ownership across Cloud, Security, IT, Prod &amp; MGS — C-SAT/EBIT and delivery discipline restored</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional Summary -->
+    <section class="print-keep">
+      <h2>Professional Summary</h2>
+      <p class="role-line">Strategic Product &amp; Services Leader — Autonomous Operations Enablement (18 yrs)</p>
+      <div class="summary">
+        <p>
+          Customer-facing telecom <strong>managed services</strong> leader with deep ownership of operations at scale — from L1 monitoring through L2/L3 assurance — and a clear vision of how to evolve estates from <strong>reactive → predictive → autonomous</strong>. Track record of shaping and winning large MGS propositions ($100M–$125M), owning multi-million $ <strong>P&amp;L / EBIT</strong>, and turning operational excellence into commercial growth across LATAM, iMEA and UK/Ireland.
+        </p>
+        <p>
+          Systems thinker across the closed loop of <strong>design, transition, operation, assurance and continuous improvement</strong>. Built observability (Grafana/Telegraf/Dynatrace/Splunk), top-offender KPI frameworks, SRE-governed remediation, self-healing and GenAI-enabled knowledge — treating automation as a <strong>reusable platform capability</strong>, not isolated use cases. Comfortable integrating AI/ML into coherent service value propositions that sales and delivery can execute.
+        </p>
+        <p>
+          <strong>7+ years</strong> pre-sales and CxO engagement: offering articulation, TCO/OPEX optimization, commercial structuring, and regional enablement. Led AI Factory / GPUaaS pre-sales partnerships (Nvidia, ClearML, Prompt Security). Seeking to apply this AO operating DNA as a <strong>Strategic Product Manager — Autonomous Operation &amp; Enablement</strong>, driving GTM, SLM and portfolio profitability for next-generation services offerings.
+        </p>
+      </div>
+    </section>
+
+    <!-- Key Achievements -->
+    <section class="print-keep">
+      <h2>Key achievements</h2>
+      <div class="achieve-grid">
+        <div class="achieve-stat">
+          <div class="num">18+</div>
+          <div class="title">Years experience</div>
+          <div class="desc">IT leadership &amp; delivery excellence</div>
+        </div>
+        <div class="achieve-stat">
+          <div class="num">15+</div>
+          <div class="title">Years at Amdocs</div>
+          <div class="desc">Progressive growth &amp; transformation</div>
+        </div>
+        <div class="achieve-stat">
+          <div class="num">8+</div>
+          <div class="title">Countries</div>
+          <div class="desc">India, UK, Peru · key roles across 6 regions</div>
+        </div>
+        <div class="achieve-stat">
+          <div class="num">7</div>
+          <div class="title">Transformations</div>
+          <div class="desc">Back-to-back programs delivered globally</div>
+        </div>
+      </div>
+      <div class="achieve-highlights">
+        <div class="achieve-highlight pnl">
+          <span class="icon">$</span>
+          <p class="text"><strong>Multi-million P&amp;L</strong> portfolios with consistent EBIT growth</p>
+        </div>
+        <div class="achieve-highlight ai">
+          <span class="icon">AO</span>
+          <p class="text"><strong>Autonomous ops</strong> — self-healing, SPOG, GenAI SOPs, 474→336 FTE model</p>
+        </div>
+        <div class="achieve-highlight award">
+          <span class="icon">★</span>
+          <p class="text"><strong>CEO Award</strong> — $100M managed services deal</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Competencies -->
+    <section class="print-keep">
+      <h2>Core Competencies</h2>
+      <div class="comp-grid">
+        <div class="comp-card">
+          <span class="comp-icon gold" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span class="comp-text">Customer-facing services &amp; CxO engagement (telecom MGS)</span>
+        </div>
+        <div class="comp-card">
+          <span class="comp-icon purple" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></span>
+          <span class="comp-text">Autonomy maturity: reactive → predictive → autonomous</span>
+        </div>
+        <div class="comp-card">
+          <span class="comp-icon blue" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+          <span class="comp-text">GTM / pre-sales, offering value articulation &amp; commercial structuring</span>
+        </div>
+        <div class="comp-card">
+          <span class="comp-icon green" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg></span>
+          <span class="comp-text">Zero-touch / AI-driven autonomous operations &amp; self-healing</span>
+        </div>
+        <div class="comp-card">
+          <span class="comp-icon blue" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></span>
+          <span class="comp-text">Observability, AO KPIs, AIOps &amp; closed-loop assurance</span>
+        </div>
+        <div class="comp-card">
+          <span class="comp-icon gold" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg></span>
+          <span class="comp-text">P&amp;L ownership, TCO/OPEX efficiency &amp; services profitability</span>
+        </div>
+        <div class="comp-card">
+          <span class="comp-icon cyan" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+          <span class="comp-text">Platform reusability, regional enablement &amp; change adoption</span>
+        </div>
+        <div class="comp-card">
+          <span class="comp-icon purple" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          <span class="comp-text">Trust, governance &amp; risk control in production change</span>
+        </div>
+      </div>
+      <div class="domain-block">
+        <h3 class="section-subheading">Domain</h3>
+        <div class="domain-grid">
+          <div class="domain-card">
+            <span class="domain-icon telecom" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/></svg></span>
+            <div class="domain-text">Telecom Managed Services / Autonomous Operations<small>OSS/BSS · Cloud/IT/Network · L1–L3 · AIOps</small></div>
+          </div>
+          <div class="domain-card">
+            <span class="domain-icon fintech" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/></svg></span>
+            <div class="domain-text">Services Product &amp; Commercial Enablement<small>GTM · Pre-sales · Packaging/TCO · Regional readiness</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Global map -->
+    <section class="print-keep print-break-before">
+      <h2>Global delivery footprint</h2>
+      <p class="lead">Interactive map of locations, travel, relocations and repatriations. Role and account detail is in the career timeline below.</p>
+      <div class="map-wrap">
+        <div id="map"></div>
+      </div>
+    </section>
+
+    <!-- Career timeline (merged footprint + roles) -->
+    <section>
+      <h2>Career timeline — roles, geography & clients</h2>
+      <p class="timeline-legend">
+        <span><span class="dot gold"></span> Location</span>
+        <span><span class="dot flight"></span> Flight (travel)</span>
+        <span><span class="dot reloc"></span> Relocation</span>
+        <span><span class="dot repat"></span> Repatriation</span>
+      </p>
+      <div class="timeline">
+        <div class="timeline-item current">
+          <div class="timeline-year">2025 – Sep</div>
+          <div class="timeline-role">Amdocs UK, Acting VP: Regional Account Services Partner - EMEA CSE</div>
+          <div class="timeline-geo">🇬🇧 London, UK</div>
+          <div class="timeline-summary">Regional Customer Success for EMEA accounts; led digitalization of OSS inventory and established AI Factory for VEON Kartel (LLM/GPUaaS partnerships).</div>
+          <ul class="timeline-sites">
+            <li><span class="site-detail">P&amp;L responsibility of <strong>$21M</strong>, full accountability of the account with customer relationship, delivery, new sales (Revenue &amp; EBIT).</span></li>
+          </ul>
+          <div class="timeline-mobility">
+            <span class="tag repat"><span class="dot"></span> Repatriation: UK → Gurugram (Sep 2025)</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2023 – 2025</div>
+          <div class="timeline-role">Amdocs UK, Senior Director: Head of Engineering/ESL - H3G (UK/Ireland)</div>
+          <div class="timeline-geo">🇬🇧 Reading, UK · 🇮🇪 Ireland</div>
+          <div class="timeline-summary">Led pre-sales for $124M deal; executed transition of 400+ components; built 300+ engineering team; optimized TCO and EBIT; modernized mobile and cloud stacks.</div>
+          <ul class="timeline-sites">
+            <li><span class="site-detail">P&amp;L responsibility of <strong>$51M</strong>, expanded the MGS scope beyond Operations to include full DevSecITOps for 70/400 new applications for 3UK.</span></li>
+          </ul>
+          <div class="timeline-mobility">
+            <span class="tag reloc"><span class="dot"></span> Relocation: Gurugram → Reading, UK</span>
+            <span class="tag flight"><span class="dot"></span> Travel: UK ↔ Ireland</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2022 – 2023</div>
+          <div class="timeline-role">Amdocs India, Senior Director: Regional Operations Partner - iMEA region (India, Europe, Africa)</div>
+          <div class="timeline-geo">🇮🇳 Gurugram, India</div>
+          <div class="timeline-summary">Defined 3-year strategy; led 800+ personnel; doubled regional revenue and expanded MGS scope beyond core offerings.</div>
+          <ul class="timeline-sites">
+            <li><span class="site-detail">P&amp;L responsibility of <strong>$30M</strong> for iMEA region as ROP, and grew to take over non-DOX scope in Operations Managed services to <strong>$66M</strong>.</span></li>
+            <li><span class="site-loc">🇲🇽 Mexico · 🇨🇾 Cyprus</span> — <span class="site-detail">24×7 delivery centers · TEF support · Global delivery</span></li>
+          </ul>
+          <div class="timeline-mobility">
+            <span class="tag repat"><span class="dot"></span> Repatriation: Lima → Gurugram (2021)</span>
+            <span class="tag loc"><span class="dot"></span> Base: Gurugram, India</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2018 – 2021</div>
+          <div class="timeline-role">Amdocs Peru, Director → Regional Operations Partner - Telefonica Peru, Chile &amp; Argentina</div>
+          <div class="timeline-geo">🇵🇪 Lima, Peru · 🇦🇷 Argentina · 🇨🇱 Chile</div>
+          <div class="timeline-summary">Defined Owned IT managed services across Peru, Chile, Argentina; turned around Argentina operations; increased annual revenue by 60%; secured $100M MGS deal.</div>
+          <div class="timeline-mobility">
+            <span class="tag flight"><span class="dot"></span> Travel: Lima → Chile &amp; Argentina</span>
+            <span class="tag loc"><span class="dot"></span> Base: Lima, Peru</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2015 – 2018</div>
+          <div class="timeline-role">Amdocs India, Manager → Director: Testing Site Partner - Telefonica Peru</div>
+          <div class="timeline-geo">🇵🇪 Lima, Peru</div>
+          <div class="timeline-summary">Led testing services for phased digital transformation; promoted to Testing Site Partner; owned functional, automation, and performance testing.</div>
+          <div class="timeline-mobility">
+            <span class="tag reloc"><span class="dot"></span> Relocation: India → Lima, Peru (2015)</span>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2009 – 2015</div>
+          <div class="timeline-role">Infosys SME → Amdocs India, SME → SSME → Team Lead: ClearWire, Telkomsel, AT&amp;T, NET</div>
+          <div class="timeline-geo">🇮🇳 Pune/Gurugram, India · 🇺🇸 US · 🇮🇩 Indonesia · 🇧🇷 Brazil</div>
+          <div class="timeline-summary">Early career in OSS/BSS (CRM, OMS, Billing, Journaling); delivered transformation programs for ClearWire, Telkomsel, AT&amp;T, NET.</div>
+          <ul class="timeline-sites">
+            <li><span class="site-loc">🇮🇳 Pune, India</span> — <span class="site-detail">Software Engineer (Infosys) → Senior SME / Group Lead (Amdocs) · Telstra (CAT with Accenture), Mainframes</span></li>
+            <li><span class="site-loc">🇺🇸 USA</span> — <span class="site-detail">Senior SME (remote / engagement) · Clearwire, ATT Mobility</span></li>
+            <li><span class="site-loc">🇮🇩 Indonesia</span> — <span class="site-detail">Senior SME · TKS Indonesia (Telkomsel)</span></li>
+            <li><span class="site-loc">🇧🇷 Brazil</span> — <span class="site-detail">Group Lead, NET Brazil transformation</span></li>
+          </ul>
+          <div class="timeline-mobility">
+            <span class="tag loc"><span class="dot"></span> Base: Pune, India</span>
+            <span class="tag flight"><span class="dot"></span> Travel: Pune → Indonesia &amp; USA (Dallas)</span>
+            <span class="tag flight"><span class="dot"></span> Travel: Gurugram → São Paulo (Brazil engagement)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Global Leadership & Operations -->
+    <section class="print-keep print-break-before">
+      <h2>Global Leadership &amp; Operations</h2>
+      <ul class="bullet-list">
+        <li>Directed regional operations across APAC, EMEA, and LATAM, leading teams of up to <strong>800+ professionals</strong> and managing multi-million P&amp;L portfolios.</li>
+        <li>Built and scaled delivery organizations in India, UK, Peru, Chile, Argentina, and Africa, ensuring consistent customer intimacy at the CxO level.</li>
+        <li>Oversaw end-to-end managed services including scoping, solution design, development, quality, production, change management, and SLA governance.</li>
+        <li>Successfully executed <strong>7 back-to-back transformations</strong>, stabilizing operations and accelerating revenue growth across diverse geographies.</li>
+        <li>Partnered with global vendors (Microsoft, Dell, SNOW, Amazon, Nvidia, ClearML, telecom OEMs) to orchestrate complex ecosystems and deliver integrated solutions.</li>
+        <li>Within the transformation program across 3UK and 3Ireland, we successfully streamlined operations by simplifying processes, improving governance, and aligning delivery teams around a common operating model. A key part of the transformation was educating and enabling the organization. This was needed for the team to understand, not only the new ways of working, but also the business outcomes we were targeting.</li>
+        <li>Through operational discipline, cross-functional collaboration, and a focus on efficiency, we improved execution capability while optimizing resource utilization across both markets. This ultimately drove greater operational efficiency, faster decision-making, and a more scalable delivery model for 3UK and 3Ireland.</li>
+      </ul>
+    </section>
+
+    <!-- Financials & Satisfaction -->
+    <section class="print-keep">
+      <h2>Financials & employee / customer satisfaction</h2>
+      <div class="metrics">
+        <div class="metric-card">
+          <div class="metric-value">25%</div>
+          <div class="metric-label">Increase in revenue in LATAM (TEF) — upselling non-organic services</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">70%</div>
+          <div class="metric-label">E-SAT improvement — significant reductions in attrition</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">20%</div>
+          <div class="metric-label">C-SAT score improved from 3.2 to 3.8 (Trapped → Truly Loyal)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">$125M</div>
+          <div class="metric-label">Business growth in H3G — 5 yrs Managed Services, ~$25M annual revenue</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">30%</div>
+          <div class="metric-label">EBIT increase — AI/ML & MGS FTEs developing BAU CRs, ~$3M pure EBIT</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- P&L Ownership Growth -->
+    <section class="pnl-section">
+      <h2>P&amp;L Ownership Growth</h2>
+      <p class="lead">Revenue and EBIT accountability across progressive leadership roles (2017–2026)</p>
+      <div class="pnl-chart-wrap">
+        <div class="pnl-chart-title">Annual revenue under P&amp;L ownership ($M)</div>
+        <div class="pnl-chart" role="img" aria-label="Bar chart of P&amp;L revenue growth from $3M in 2017 to peak $66M in 2022-2024">
+          <div class="pnl-bar-col">
+            <span class="pnl-bar-value">$3M</span>
+            <div class="pnl-bar-track"><div class="pnl-bar" style="height: 4.5%;"></div></div>
+            <span class="pnl-bar-label">2017–18</span>
+          </div>
+          <div class="pnl-bar-col">
+            <span class="pnl-bar-value">$9M</span>
+            <div class="pnl-bar-track"><div class="pnl-bar" style="height: 13.6%;"></div></div>
+            <span class="pnl-bar-label">2018–20</span>
+          </div>
+          <div class="pnl-bar-col">
+            <span class="pnl-bar-value">$33M</span>
+            <div class="pnl-bar-track"><div class="pnl-bar" style="height: 50%;"></div></div>
+            <span class="pnl-bar-label">2020–22</span>
+          </div>
+          <div class="pnl-bar-col peak">
+            <span class="pnl-bar-value">$66M</span>
+            <div class="pnl-bar-track"><div class="pnl-bar" style="height: 100%;"></div></div>
+            <span class="pnl-bar-label">2022–24</span>
+          </div>
+          <div class="pnl-bar-col">
+            <span class="pnl-bar-value">$51M</span>
+            <div class="pnl-bar-track"><div class="pnl-bar" style="height: 77.3%;"></div></div>
+            <span class="pnl-bar-label">2024–25</span>
+          </div>
+          <div class="pnl-bar-col">
+            <span class="pnl-bar-value">$21M</span>
+            <div class="pnl-bar-track"><div class="pnl-bar" style="height: 31.8%;"></div></div>
+            <span class="pnl-bar-label">2025–26</span>
+          </div>
+        </div>
+        <div class="pnl-legend">
+          <span><i class="swatch"></i> Revenue scale</span>
+          <span><i class="swatch peak"></i> Peak portfolio</span>
+        </div>
+      </div>
+      <div class="pnl-cards">
+        <div class="pnl-card">
+          <div class="pnl-card-period">2017 – 2018</div>
+          <div class="pnl-card-metrics">
+            <span class="pnl-metric-pill rev"><strong>$3M</strong> Rev</span>
+            <span class="pnl-metric-pill ebit"><strong>12%</strong> EBIT</span>
+          </div>
+          <p class="pnl-card-role"><span>Role —</span> Testing Manager/Partner for TEF Peru</p>
+        </div>
+        <div class="pnl-card">
+          <div class="pnl-card-period">2018 – 2020</div>
+          <div class="pnl-card-metrics">
+            <span class="pnl-metric-pill rev"><strong>$9M</strong> Rev</span>
+            <span class="pnl-metric-pill ebit"><strong>15%</strong> EBIT</span>
+          </div>
+          <p class="pnl-card-role"><span>Role —</span> Operations Partner for TEF Peru</p>
+        </div>
+        <div class="pnl-card">
+          <div class="pnl-card-period">2020 – 2022</div>
+          <div class="pnl-card-metrics">
+            <span class="pnl-metric-pill rev"><strong>$33M</strong> Rev</span>
+            <span class="pnl-metric-pill ebit-range"><strong>5% → 12%</strong> EBIT</span>
+          </div>
+          <p class="pnl-card-role"><span>Role —</span> Regional Operations Partner for TEF HISPAM (Peru, Chile &amp; Argentina)</p>
+        </div>
+        <div class="pnl-card peak">
+          <div class="pnl-card-period">2022 – 2024</div>
+          <div class="pnl-card-metrics">
+            <span class="pnl-metric-pill rev"><strong>$66M</strong> Rev</span>
+            <span class="pnl-metric-pill ebit"><strong>13%</strong> EBIT</span>
+          </div>
+          <p class="pnl-card-role"><span>Role —</span> Regional Operations Partner for iMEA (India, Middle East, Europe, Africa)</p>
+        </div>
+        <div class="pnl-card">
+          <div class="pnl-card-period">2024 – 2025</div>
+          <div class="pnl-card-metrics">
+            <span class="pnl-metric-pill rev"><strong>$51M</strong> Rev</span>
+            <span class="pnl-metric-pill ebit-range"><strong>7% → 18%</strong> EBIT</span>
+          </div>
+          <p class="pnl-card-role"><span>Role —</span> Regional Operations Partner for H3G UK/IR</p>
+        </div>
+        <div class="pnl-card">
+          <div class="pnl-card-period">2025 – 2026</div>
+          <div class="pnl-card-metrics">
+            <span class="pnl-metric-pill rev"><strong>$21M</strong> Rev</span>
+            <span class="pnl-metric-pill ebit"><strong>25%</strong> EBIT</span>
+          </div>
+          <p class="pnl-card-role"><span>Role —</span> Client Services Partner for EMEA region</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Early Career -->
+    <section class="print-keep print-break-before">
+      <h2>Early career foundation</h2>
+      <div class="early-career">
+        <div class="early-card">
+          <div class="company">Infosys</div>
+          <div class="role">Software Engineer</div>
+          <div class="tenure">March 2009 – August 2010 (1 year 6 months)</div>
+          <p>Built foundational software development and engineering skills at one of India's leading IT services companies.</p>
+        </div>
+        <div class="early-card">
+          <div class="company">Gebr. Pfeiffer, Inc.</div>
+          <div class="role">Project Engineer</div>
+          <div class="tenure">June 2008 – March 2009 (10 months)</div>
+          <p>Applied mechanical engineering expertise in project execution and delivery.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section class="print-keep">
+      <h2>Educational background</h2>
+      <div class="edu">
+        <div class="degree">Bachelor of Technology (B.Tech.)</div>
+        <div class="school">AKTU · Ideal Institute of Technology</div>
+        <div class="years">2004 – 2008</div>
+      </div>
+    </section>
+
+    <!-- Get in Touch -->
+    <section class="print-keep">
+      <h2>Get in touch</h2>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <div class="label">Phone</div>
+          <div class="value"><a href="tel:+919650044746">+91 9650044746</a> (Mobile)</div>
+        </div>
+        <div class="contact-item">
+          <div class="label">Location</div>
+          <div class="value">Gurugram, Haryana, India</div>
+        </div>
+        <div class="contact-item">
+          <div class="label">Email</div>
+          <div class="value"><a href="mailto:gauravch86@outlook.com">Email Me</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Gaurav Chaudhary · Strategic Product / Autonomous Operations Enablement</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <style>
+    .year-tooltip { font-weight: 700 !important; color: #d4a853 !important; font-size: 11px !important; background: rgba(15,20,25,0.92) !important; border: 1px solid rgba(212,168,83,0.5) !important; padding: 3px 6px !important; border-radius: 4px !important; white-space: nowrap !important; }
+    .house-tooltip { font-weight: 600 !important; color: #3fb950 !important; font-size: 11px !important; background: rgba(15,20,25,0.95) !important; border: 1px solid rgba(63,185,80,0.5) !important; padding: 3px 6px !important; border-radius: 4px !important; white-space: nowrap !important; }
+    .path-arrow { background: none !important; border: none !important; }
+  </style>
+  <script>
+    (function() {
+      var map = L.map('map', { zoomControl: true }).setView([18, 15], 2);
+      window.__profileMap = map;
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap, &copy; CARTO',
+        subdomains: 'abcd',
+        maxZoom: 19
+      }).addTo(map);
+
+      var Pune = [18.52, 73.85], Gurgaon = [28.46, 77.08], Lima = [-12.0, -77.0];
+      var UK = [51.5, -0.1], Ireland = [53.3, -6.3];
+      var Dallas = [32.78, -96.80], Indonesia = [-6.2, 106.8], SaoPaulo = [-23.55, -46.63];
+      var Chile = [-33.45, -70.66], Argentina = [-34.60, -58.38];
+      var Guadalajara = [20.66, -103.35], SouthAfrica = [-26.2, 28.0], Seattle = [47.6, -122.33], Philippines = [14.6, 121.0];
+
+      function curvedPath(a, b, strength) {
+        strength = strength || 4;
+        var mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+        var perpLat = (b[1] - a[1]) * strength * 0.02;
+        var perpLng = -(b[0] - a[0]) * strength * 0.02;
+        var bend = [mid[0] + perpLat, mid[1] + perpLng];
+        return [a, bend, b];
+      }
+
+      function addArrow(line, color) {
+        var a = line[0], b = line[line.length - 1];
+        var dLng = b[1] - a[1], dLat = b[0] - a[0];
+        var deg = (Math.atan2(dLng, dLat) * 180 / Math.PI);
+        var arrowIcon = L.divIcon({
+          className: 'path-arrow',
+          html: '<span style="color:' + color + ';font-size:10px;display:inline-block;transform:rotate(' + deg + 'deg);">►</span>',
+          iconSize: [12, 12],
+          iconAnchor: [6, 6]
+        });
+        L.marker(b, { icon: arrowIcon, interactive: false }).addTo(map);
+      }
+
+      function addPlaneOnCurve(path) {
+        var mid = path[1];
+        var a = path[0], b = path[2];
+        var dLng = b[1] - a[1], dLat = b[0] - a[0];
+        var deg = (Math.atan2(dLng, dLat) * 180 / Math.PI);
+        var planeIcon = L.divIcon({
+          className: 'path-arrow',
+          html: '<span style="font-size:14px;opacity:0.9;display:inline-block;transform:rotate(' + deg + 'deg);">✈</span>',
+          iconSize: [16, 16],
+          iconAnchor: [8, 8]
+        });
+        L.marker(mid, { icon: planeIcon, interactive: false }).addTo(map);
+      }
+
+      var subtle = { weight: 1.5, opacity: 0.6 };
+      var subtleFlight = { color: '#7aa3d4', weight: 1.4, opacity: 0.55, dashArray: '5, 6' };
+      var subtleReloc = { color: '#5a9c6e', weight: 1.5, opacity: 0.6 };
+      var repatColor = '#a371f7';
+      var travelColor = '#8b9cb3';
+
+      // 1. Flight: Pune → Indonesia (curved, subtle, airplane)
+      var pathPuneIndonesia = curvedPath(Pune, Indonesia, 5);
+      L.polyline(pathPuneIndonesia, subtleFlight).addTo(map);
+      addPlaneOnCurve(pathPuneIndonesia);
+
+      // 2. Flight: Pune → Dallas (curved, subtle, airplane)
+      var pathPuneDallas = curvedPath(Pune, Dallas, 5);
+      L.polyline(pathPuneDallas, subtleFlight).addTo(map);
+      addPlaneOnCurve(pathPuneDallas);
+
+      // 3. Flight: Gurgaon → Sao Paulo (curved, subtle, airplane)
+      var pathGurgaonSaoPaulo = curvedPath(Gurgaon, SaoPaulo, 5);
+      L.polyline(pathGurgaonSaoPaulo, subtleFlight).addTo(map);
+      addPlaneOnCurve(pathGurgaonSaoPaulo);
+
+      // 4. Relocation: Gurgaon → Lima (curved, subtle)
+      var pathGurgaonLima = curvedPath(Gurgaon, Lima, 4);
+      L.polyline(pathGurgaonLima, subtleReloc).addTo(map);
+      addArrow(pathGurgaonLima, subtleReloc.color);
+
+      // Repatriation: Lima → Gurgaon 2021
+      var pathLimaGurgaon = curvedPath(Lima, Gurgaon, 4);
+      L.polyline(pathLimaGurgaon, { color: repatColor, weight: 1.8, opacity: 0.75 }).addTo(map);
+      addArrow(pathLimaGurgaon, repatColor);
+
+      // 5. Relocation: Gurgaon → UK (curved, subtle)
+      var pathGurgaonUK = curvedPath(Gurgaon, UK, 4);
+      L.polyline(pathGurgaonUK, subtleReloc).addTo(map);
+      addArrow(pathGurgaonUK, subtleReloc.color);
+
+      // Travel: UK ↔ Ireland
+      L.polyline([UK, Ireland], { color: travelColor, weight: 1.2, opacity: 0.55, dashArray: '4, 4' }).addTo(map);
+      L.polyline([Ireland, UK], { color: travelColor, weight: 1.2, opacity: 0.55, dashArray: '4, 4' }).addTo(map);
+
+      // Repatriation: UK → Gurgaon Sep 2025
+      var pathUKGurgaon = curvedPath(UK, Gurgaon, 4);
+      L.polyline(pathUKGurgaon, { color: repatColor, weight: 1.8, opacity: 0.75 }).addTo(map);
+      addArrow(pathUKGurgaon, repatColor);
+
+      // 6. Flight: Lima → Chile, Lima → Argentina (curved, subtle, airplane)
+      var pathLimaChile = curvedPath(Lima, Chile, 3);
+      L.polyline(pathLimaChile, subtleFlight).addTo(map);
+      addPlaneOnCurve(pathLimaChile);
+      var pathLimaArgentina = curvedPath(Lima, Argentina, 3);
+      L.polyline(pathLimaArgentina, subtleFlight).addTo(map);
+      addPlaneOnCurve(pathLimaArgentina);
+
+      // Peru → Mexico (Guadalajara) travel with airplane
+      var pathLimaMexico = curvedPath(Lima, Guadalajara, 4);
+      L.polyline(pathLimaMexico, subtleFlight).addTo(map);
+      addPlaneOnCurve(pathLimaMexico);
+
+      // Pune → South Africa (subtle, different color - remote)
+      var subtleRemote1 = { color: '#c9b896', weight: 1.3, opacity: 0.5, dashArray: '5, 6' };
+      var pathPuneSouthAfrica = curvedPath(Pune, SouthAfrica, 4);
+      L.polyline(pathPuneSouthAfrica, subtleRemote1).addTo(map);
+
+      // Pune → Seattle (subtle, different color - remote)
+      var subtleRemote2 = { color: '#9ca8b8', weight: 1.3, opacity: 0.5, dashArray: '5, 6' };
+      var pathPuneSeattle = curvedPath(Pune, Seattle, 5);
+      L.polyline(pathPuneSeattle, subtleRemote2).addTo(map);
+
+      // Pune → Philippines (subtle, different color - remote)
+      var subtleRemote3 = { color: '#a89cb8', weight: 1.3, opacity: 0.5, dashArray: '5, 6' };
+      var pathPunePhilippines = curvedPath(Pune, Philippines, 4);
+      L.polyline(pathPunePhilippines, subtleRemote3).addTo(map);
+
+      // Location markers (gold dots) + custom tags
+      var locations = [
+        { pos: Pune, tag: '2009–14', country: 'Pune, India', role: 'SME → Senior SME / Group Lead', clients: 'Infosys, Amdocs · Telstra, Clearwire, TKS Indonesia, ATT, NET Brazil' },
+        { pos: Gurgaon, tag: '2021–23', country: 'Gurugram, India', role: 'Regional Ops Partner, iMEA', clients: 'Airtel, VIL, TSA, H3G Ireland, H3G UK' },
+        { pos: Lima, tag: 'TEF Peru 2015-21', country: 'Lima, Peru', role: 'Testing Mgr → Ops Partner Director', clients: 'Telefonica Peru' },
+        { pos: UK, tag: 'H3G 2022-25', country: 'Reading, UK', role: 'Engineering Services Leader → CSE', clients: 'H3G UK · $124M Venus' },
+        { pos: Ireland, tag: 'H3G 2022-25', country: 'Ireland', role: 'Stabilization → EMEA', clients: 'H3G Ireland' },
+        { pos: Dallas, tag: 'AT&T 2013', country: 'Dallas, USA', role: 'Senior SME', clients: 'ATT Mobility' },
+        { pos: Indonesia, tag: 'TKS 2012-13', country: 'Indonesia', role: 'Senior SME', clients: 'TKS Indonesia' },
+        { pos: SaoPaulo, tag: 'NET Brazil 2013-14', country: 'Sao Paulo, Brazil', role: 'Group Lead', clients: 'NET Brazil' },
+        { pos: Chile, tag: 'TEF Chile 2019-22', country: 'Chile', role: 'Regional Ops Partner', clients: 'Telefonica HISPAM' },
+        { pos: Argentina, tag: 'TEF Argentina 2019-22', country: 'Argentina', role: 'Regional Ops Partner', clients: 'Telefonica HISPAM' },
+        { pos: [20.66, -103.35], tag: 'Nearshore center', country: 'Guadalajara, Mexico', role: 'Delivery center', clients: 'TEF support' },
+        { pos: [35.2, 33.4], tag: 'Nearshore center', country: 'Cyprus', role: 'Delivery center', clients: 'Global delivery' },
+        { pos: SouthAfrica, tag: 'Telkomsel 2022-23 Remote', country: 'South Africa', role: 'Remote engagement', clients: 'TSA / Telkomsel' },
+        { pos: Seattle, tag: 'CLWR 2010-11 remote', country: 'Seattle, USA', role: 'Senior SME', clients: 'Clearwire' },
+        { pos: Philippines, tag: 'PLDT 2012 remote', country: 'Philippines', role: 'Remote engagement', clients: 'PLDT' }
+      ];
+      var goldIcon = L.divIcon({
+        className: 'custom-marker',
+        html: '<span style="background:#d4a853;width:12px;height:12px;border-radius:50%;border:2px solid #0f1419;display:inline-block;box-shadow:0 2px 4px rgba(0,0,0,.4);"></span>',
+        iconSize: [16, 16],
+        iconAnchor: [8, 8]
+      });
+      locations.forEach(function(m) {
+        var popup = '<div style="min-width:180px;font-family:system-ui,sans-serif;">' +
+          '<strong style="color:#d4a853;">' + m.country + '</strong><br/>' +
+          '<span style="color:#58a6ff;font-size:0.85em;">' + m.role + '</span><br/>' +
+          '<span style="color:#3fb950;">' + m.clients + '</span></div>';
+        var marker = L.marker(m.pos, { icon: goldIcon }).addTo(map).bindPopup(popup);
+        marker.bindTooltip(m.tag, { permanent: true, className: 'year-tooltip', direction: 'top', offset: [0, -6] });
+      });
+    })();
+  </script>
+</body>
+</html>
