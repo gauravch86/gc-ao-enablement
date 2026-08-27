@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <title>Case Study — Reusable AO Offering Anchored on Customer KPIs/OKRs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface2: #243044;
+      --text: #e6edf3;
+      --muted: #8b9cb3;
+      --accent: #58a6ff;
+      --success: #3fb950;
+      --gold: #d4a853;
+      --purple: #a371f7;
+      --cyan: #38bdf8;
+      --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(15,20,25,.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      padding: 0.65rem 1rem;
+    }
+    .topbar-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; gap: 0.5rem 1rem;
+      align-items: center; justify-content: space-between;
+    }
+    .topbar h1 { font-size: 0.85rem; color: var(--gold); font-weight: 700; }
+    .nav { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .nav a {
+      font-size: 0.72rem; color: var(--muted); text-decoration: none;
+      border: 1px solid rgba(255,255,255,.08); border-radius: 999px;
+      padding: 0.25rem 0.65rem;
+    }
+    .nav a:hover { color: var(--accent); border-color: rgba(88,166,255,.35); }
+
+    .slide {
+      max-width: 1100px; margin: 0 auto;
+      padding: 1.75rem 1.25rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      min-height: 70vh;
+    }
+    .slide-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.35rem;
+    }
+    .slide h2 {
+      font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+      color: var(--gold); font-weight: 700;
+      margin-bottom: 0.45rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 1px solid rgba(212,168,83,.25);
+    }
+    .slide .lead { color: var(--muted); font-size: 0.92rem; margin-bottom: 1.15rem; max-width: 920px; }
+    .slide .lead strong { color: var(--text); }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.65rem; }
+    .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.55rem; }
+    @media (max-width: 900px) {
+      .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 701px) and (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr 1fr; }
+      .grid-4 { grid-template-columns: 1fr 1fr; }
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+    }
+    .card h3 {
+      font-size: 0.88rem; font-weight: 700; color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .card p, .card li { font-size: 0.8rem; color: var(--muted); line-height: 1.45; }
+    .card ul { margin: 0; padding-left: 1.05rem; }
+    .card li { margin-bottom: 0.28rem; }
+    .card li strong, .card p strong { color: var(--text); font-weight: 600; }
+    .card.accent { border-top: 3px solid var(--accent); }
+    .card.gold { border-top: 3px solid var(--gold); }
+    .card.green { border-top: 3px solid var(--success); }
+    .card.purple { border-top: 3px solid var(--purple); }
+    .card.cyan { border-top: 3px solid var(--cyan); }
+
+    .pill {
+      display: inline-block;
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 0.15rem 0.5rem; border-radius: 999px;
+      margin-bottom: 0.4rem;
+    }
+    .pill.now { background: rgba(248,113,113,.12); color: #f87171; }
+    .pill.target { background: rgba(63,185,80,.12); color: var(--success); }
+    .pill.phase { background: rgba(88,166,255,.12); color: var(--accent); }
+    .pill.proof { background: rgba(212,168,83,.12); color: var(--gold); }
+
+    .maturity {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.55rem;
+      margin: 0.85rem 0 1rem;
+    }
+    @media (max-width: 800px) { .maturity { grid-template-columns: 1fr 1fr; } }
+    .maturity-step {
+      background: rgba(15,20,25,.55);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 10px; padding: 0.75rem 0.7rem;
+      position: relative;
+    }
+    .maturity-step .lvl {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.2rem;
+    }
+    .maturity-step .name { font-size: 0.92rem; font-weight: 700; color: var(--gold); margin-bottom: 0.3rem; }
+    .maturity-step p { font-size: 0.72rem; color: var(--muted); margin: 0 0 0.35rem; }
+    .maturity-step .cap {
+      font-size: 0.7rem; color: var(--text);
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding-top: 0.35rem; margin-top: 0.25rem;
+    }
+    .maturity-step.current { box-shadow: inset 0 0 0 1px rgba(248,113,113,.35); }
+    .maturity-step.target { box-shadow: inset 0 0 0 1px rgba(63,185,80,.4); }
+
+    .lifecycle {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.45rem;
+      margin-bottom: 0.85rem;
+    }
+    @media (max-width: 900px) { .lifecycle { grid-template-columns: 1fr 1fr; } }
+    .lc-step {
+      background: var(--surface); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 10px; padding: 0.7rem 0.65rem; text-align: center;
+    }
+    .lc-step .n { font-size: 0.65rem; font-weight: 700; color: var(--accent); letter-spacing: 0.05em; }
+    .lc-step .t { font-size: 0.82rem; font-weight: 700; color: var(--gold); margin: 0.2rem 0; }
+    .lc-step p { font-size: 0.68rem; color: var(--muted); margin: 0; }
+
+    .kpi-table {
+      width: 100%; border-collapse: collapse; font-size: 0.78rem;
+      margin-top: 0.5rem;
+    }
+    .kpi-table th, .kpi-table td {
+      text-align: left; padding: 0.55rem 0.65rem;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      vertical-align: top;
+    }
+    .kpi-table th { color: var(--gold); font-weight: 700; background: rgba(26,35,50,.8); }
+    .kpi-table td { color: var(--muted); }
+    .kpi-table td strong { color: var(--text); }
+
+    .note {
+      margin-top: 0.9rem; padding: 0.75rem 0.9rem;
+      background: rgba(212,168,83,.06);
+      border: 1px solid rgba(212,168,83,.22);
+      border-radius: 10px;
+      font-size: 0.8rem; color: var(--muted);
+    }
+    .note strong { color: var(--gold); }
+    .editable {
+      outline: 1px dashed transparent;
+    }
+    .editable:hover {
+      outline-color: rgba(88,166,255,.35);
+      background: rgba(88,166,255,.04);
+    }
+    .placeholder {
+      color: var(--accent); font-style: italic; font-size: 0.78rem;
+      border-left: 2px solid rgba(88,166,255,.4);
+      padding-left: 0.55rem; margin-top: 0.45rem;
+    }
+
+    .title-slide {
+      display: flex; flex-direction: column; justify-content: center;
+      min-height: 78vh;
+    }
+    .title-slide .eyebrow {
+      color: var(--accent); font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.75rem;
+    }
+    .title-slide h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      border: none; padding: 0; margin-bottom: 0.75rem;
+    }
+    .title-slide .sub {
+      font-size: 1.05rem; color: var(--muted); max-width: 820px; margin-bottom: 1.25rem;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .chip {
+      font-size: 0.75rem; font-weight: 600; color: var(--text);
+      background: rgba(88,166,255,.1); border: 1px solid rgba(88,166,255,.28);
+      border-radius: 999px; padding: 0.3rem 0.75rem;
+    }
+    .chip.gold { background: rgba(212,168,83,.1); border-color: rgba(212,168,83,.3); color: var(--gold); }
+    .chip.green { background: rgba(63,185,80,.1); border-color: rgba(63,185,80,.3); color: var(--success); }
+
+    footer {
+      text-align: center; padding: 1.5rem 1rem 2rem;
+      color: var(--muted); font-size: 0.78rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <h1>Case Study 3 · Reusable AO Offering on Customer KPIs/OKRs</h1>
+      <nav class="nav">
+        <a href="#s0">Brief</a>
+        <a href="#s1">Autonomy path</a>
+        <a href="#s2">Lifecycle</a>
+        <a href="#s3">KPIs → Roadmap</a>
+        <a href="#s4">Reuse architecture</a>
+        <a href="#s5">Proof points</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- SLIDE 0: Brief / framing -->
+  <section class="slide title-slide" id="s0">
+    <div class="slide-label">Strategic Product Manager · Case Study 3</div>
+    <h2>Reusable Autonomous Operations offering<br/>anchored on customer-agreed KPIs / OKRs</h2>
+    <p class="sub editable">
+      Large multi-vendor, multi-domain telecom operator under <strong>margin + reliability pressure</strong>.
+      Today: reactive ops, high incident volume, manual troubleshooting, inconsistent SLAs across regions.
+      Mandate: design, commercialize and drive adoption of an AO offering that is <strong>reusable across customers</strong> — not a one-off — and tied to measurable autonomy outcomes.
+    </p>
+    <div class="chips">
+      <span class="chip">Design → Deploy → Operate → Assure → Improve</span>
+      <span class="chip gold">Autonomy maturity ladder</span>
+      <span class="chip green">KPI/OKR contract with customer</span>
+      <span class="chip">Platform reuse · not bespoke</span>
+    </div>
+    <p class="note" style="margin-top:1.25rem;max-width:820px;">
+      <strong>My lens:</strong> Built from lived MGS turnarounds — <strong>TEF Argentina</strong> (incident backlog → top-offender discipline → renewal) and <strong>H3G UK</strong> (vendor consolidation, observability/SPOG, self-healing, 474→336 FTEs, lowest P1s). Structure below is draft for your inputs.
+    </p>
+    <p class="placeholder editable">[Your input] Customer name / anonymized label · preferred OKR set · any constraints from interviewers…</p>
+  </section>
+
+  <!-- SLIDE 1: Autonomy levels -->
+  <section class="slide" id="s1">
+    <div class="slide-label">Deliverable 1 · Autonomy levels</div>
+    <h2>Current state → target state · phased evolution path</h2>
+    <p class="lead editable">
+      Map the operator from <strong>reactive firefighting</strong> to a contracted target (typically Predictive / early Autonomous).
+      Each phase adds a capability that unlocks the next — and a KPI gate agreed with the customer before we claim progress.
+    </p>
+
+    <div class="maturity">
+      <div class="maturity-step current">
+        <div class="lvl">L0–L1 · Today</div>
+        <div class="name">Reactive</div>
+        <p>High tickets/P1s · manual triage · SLA drift by region · linear headcount pressure</p>
+        <div class="cap"><strong>Capability focus:</strong> stabilize, visibility baseline</div>
+      </div>
+      <div class="maturity-step">
+        <div class="lvl">Phase A · 0–90d</div>
+        <div class="name">Observability</div>
+        <p>Single pane · domain alerts · top-offender taxonomy · KPI baseline locked with CxO</p>
+        <div class="cap"><strong>+ Added:</strong> data foundation, agreed KPI dictionary</div>
+      </div>
+      <div class="maturity-step">
+        <div class="lvl">Phase B · 3–9m</div>
+        <div class="name">Predictive</div>
+        <p>Anomaly detection · tuned alerts · prevent before customer notice · RC by volume</p>
+        <div class="cap"><strong>+ Added:</strong> ML/rules packs, policy thresholds</div>
+      </div>
+      <div class="maturity-step target">
+        <div class="lvl">Phase C · 9–18m</div>
+        <div class="name">Autonomous</div>
+        <p>Self-healing for known classes · governed auto-actions · scale without +FTE</p>
+        <div class="cap"><strong>+ Added:</strong> closed-loop agents, reuse catalog</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card accent editable">
+        <span class="pill now">Current (typical)</span>
+        <h3>What we measure at kickoff</h3>
+        <ul>
+          <li>P1 / major incident rate &amp; backlog age</li>
+          <li>MTTR / restoration time by domain</li>
+          <li>% tickets without clear taxonomy (noise)</li>
+          <li>SLA attainment variance across regions</li>
+          <li>Ops cost / FTE per 100 apps (margin pressure)</li>
+        </ul>
+      </div>
+      <div class="card green editable">
+        <span class="pill target">Target (OKR-anchored)</span>
+        <h3>What success looks like (illustrative)</h3>
+        <ul>
+          <li><strong>−40–60%</strong> P1s vs baseline (H3G-style outcome narrative)</li>
+          <li>MTTR within contracted band; fewer repeat offenders</li>
+          <li>≥X% incidents auto-contained / self-healed</li>
+          <li>SLA consistency across regions (policy-driven)</li>
+          <li>Scope growth <strong>without</strong> proportional headcount</li>
+        </ul>
+        <p class="placeholder">[Your input] Exact % / OKR wording to agree with customer…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: Lifecycle integration -->
+  <section class="slide" id="s2">
+    <div class="slide-label">Deliverable 2 · Lifecycle integration</div>
+    <h2>One coherent offering: Design → Deploy → Operate → Assure → Improve</h2>
+    <p class="lead editable">
+      AO is not a tool drop — it is a <strong>services product</strong> that wraps the closed loop.
+      Intent &amp; policy set the “what good looks like”; AI / orchestration / assurance execute and prove it.
+    </p>
+
+    <div class="lifecycle">
+      <div class="lc-step">
+        <div class="n">01</div>
+        <div class="t">Design</div>
+        <p>Intent, KPI contract, domain model, reuse catalog selection</p>
+      </div>
+      <div class="lc-step">
+        <div class="n">02</div>
+        <div class="t">Deploy</div>
+        <p>Onboarding, SPOG/connectors, shadow→live, change governance</p>
+      </div>
+      <div class="lc-step">
+        <div class="n">03</div>
+        <div class="t">Operate</div>
+        <p>L1–L3 model, auto-actions, A-team for leakage (P1)</p>
+      </div>
+      <div class="lc-step">
+        <div class="n">04</div>
+        <div class="t">Assure</div>
+        <p>SLA/OKR scorecards, audit of auto-actions, trust gates</p>
+      </div>
+      <div class="lc-step">
+        <div class="n">05</div>
+        <div class="t">Improve</div>
+        <p>Top-offender → RC → sunset workarounds → next autonomy level</p>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card cyan editable">
+        <h3>Where AI plugs in</h3>
+        <ul>
+          <li>Anomaly / log mining for Predict</li>
+          <li>Self-healing playbooks for known failure classes</li>
+          <li>GenAI SOPs / knowledge (H3G: KT → usable repo)</li>
+          <li>Localized models per region/account (reuse + adapt)</li>
+        </ul>
+      </div>
+      <div class="card purple editable">
+        <h3>Orchestration &amp; assurance</h3>
+        <ul>
+          <li>Workflow: detect → classify → act → verify</li>
+          <li>Ticket/ITSM + monitoring bus (SPOG pattern)</li>
+          <li>Assurance: did auto-action improve the KPI?</li>
+          <li>Human-in-loop for high-risk classes</li>
+        </ul>
+      </div>
+      <div class="card gold editable">
+        <h3>Intent-based &amp; policy-driven</h3>
+        <ul>
+          <li><strong>Intent:</strong> “Keep voice/data NPS, cut P1s, hold margin”</li>
+          <li><strong>Policy:</strong> thresholds, auto-approve vs escalate</li>
+          <li>Guardrails for sales/delivery (what’s in package)</li>
+          <li>Regional policy packs without forking the product</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="note editable">
+      <strong>Lived parallel (H3G UK):</strong> Observe (Dynatrace/Splunk → Grafana SPOG) → Categorize (top offenders) → Contain (governed workarounds) → Autonomize (self-healing) → Improve (RC + sunset). Same loop, productized as an offering with KPI gates.
+    </p>
+  </section>
+
+  <!-- SLIDE 3: Observability & KPIs -->
+  <section class="slide" id="s3">
+    <div class="slide-label">Deliverable 3 · Observability &amp; data foundation</div>
+    <h2>Measure outcomes · then let KPIs drive the roadmap</h2>
+    <p class="lead editable">
+      Customer-agreed KPIs/OKRs are the commercial spine of the offering.
+      If we cannot observe it, we cannot sell autonomy — or prioritize investment.
+    </p>
+
+    <div class="grid-2">
+      <div class="card accent editable">
+        <h3>Data foundation (minimum viable)</h3>
+        <ul>
+          <li><strong>Telemetry:</strong> metrics, logs, traces (existing + gaps)</li>
+          <li><strong>Topology / CMDB:</strong> app &amp; infra ownership map</li>
+          <li><strong>Incident history:</strong> 6–12 months for baseline &amp; offenders</li>
+          <li><strong>Business lens:</strong> domain alerts (not only infra noise)</li>
+          <li><strong>SPOG:</strong> one pane for 24×7 SDM / ops leadership</li>
+        </ul>
+        <p class="placeholder">[Your input] Tools already in estate · must-integrate list…</p>
+      </div>
+      <div class="card green editable">
+        <h3>How KPIs prioritize the roadmap</h3>
+        <ul>
+          <li>Rank failure classes by <strong>volume × business impact</strong></li>
+          <li>Fund self-heal / automation where ROI clears gate</li>
+          <li>Defer vanity dashboards with no OKR link</li>
+          <li>Quarterly OKR review → next autonomy phase unlock</li>
+          <li>Commercial: package tiers map to KPI bands</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0.85rem;overflow-x:auto;">
+      <h3 style="color:var(--gold);font-size:0.9rem;margin-bottom:0.35rem;">Illustrative KPI / OKR contract (edit with your numbers)</h3>
+      <table class="kpi-table editable">
+        <thead>
+          <tr>
+            <th>Outcome theme</th>
+            <th>KPI / OKR</th>
+            <th>Baseline → Target</th>
+            <th>Roadmap signal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Reliability</strong></td>
+            <td>P1 / major incidents per month</td>
+            <td class="placeholder">[base] → [−X%]</td>
+            <td>Top-offender + self-heal backlog</td>
+          </tr>
+          <tr>
+            <td><strong>Speed</strong></td>
+            <td>MTTR / restoration SLA</td>
+            <td class="placeholder">[base] → [band]</td>
+            <td>Runbooks, auto-contain, A-team design</td>
+          </tr>
+          <tr>
+            <td><strong>Autonomy</strong></td>
+            <td>% incidents auto-resolved / prevented</td>
+            <td class="placeholder">[~0%] → [Y%]</td>
+            <td>Policy packs, agent coverage by class</td>
+          </tr>
+          <tr>
+            <td><strong>Efficiency</strong></td>
+            <td>Ops FTE per scope unit / EBIT proxy</td>
+            <td class="placeholder">[e.g. 474] → [leaner]</td>
+            <td>Automation vs hiring decisions</td>
+          </tr>
+          <tr>
+            <td><strong>Consistency</strong></td>
+            <td>SLA attainment σ across regions</td>
+            <td class="placeholder">[high variance] → [tight]</td>
+            <td>Global policy + local intent params</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note editable">
+      <strong>Lived parallel (TEF Argentina):</strong> 3000+ backlog, ~500/day → categorize offenders (Data/Code/User) → CxO weekly transparency on KPIs → renewal unlocked. <strong>H3G UK:</strong> 75 CPI/KPIs from day-1 transition; SPOG for business impact; lowest P1s post-model.
+    </p>
+  </section>
+
+  <!-- SLIDE 4: Reuse architecture -->
+  <section class="slide" id="s4">
+    <div class="slide-label">Deliverable 4 · Architecture for reuse</div>
+    <h2>Productized capability · not a bespoke project</h2>
+    <p class="lead editable">
+      Leadership expects reuse across customers. Architecture separates a <strong>shared AO platform core</strong> from <strong>customer configuration</strong> (intent, policies, connectors, localized models).
+    </p>
+
+    <div class="grid-3">
+      <div class="card gold editable">
+        <h3>Reusable core (product)</h3>
+        <ul>
+          <li>Autonomy maturity framework &amp; phase gates</li>
+          <li>SPOG / alert correlation patterns</li>
+          <li>Top-offender engine &amp; taxonomy</li>
+          <li>Self-heal playbook library (versioned)</li>
+          <li>KPI scorecard &amp; OKR review cadence</li>
+          <li>GTM pack: tiers, guardrails, enablement</li>
+        </ul>
+      </div>
+      <div class="card accent editable">
+        <h3>Customer config (not fork)</h3>
+        <ul>
+          <li>Intent &amp; policy thresholds</li>
+          <li>Domain/vendor connectors</li>
+          <li>Localized LLM/use-case packs</li>
+          <li>Org model (L1–L3, A-team)</li>
+          <li>Commercial tier &amp; SLA band</li>
+        </ul>
+      </div>
+      <div class="card purple editable">
+        <h3>Trade-offs (be explicit)</h3>
+        <ul>
+          <li><strong>Speed vs reuse:</strong> more config up front, faster Nth customer</li>
+          <li><strong>Depth vs standard:</strong> deep custom = margin risk</li>
+          <li><strong>Auto vs trust:</strong> start with human-in-loop</li>
+          <li><strong>Global vs local:</strong> policy packs, not code forks</li>
+          <li><strong>Tool lock-in:</strong> abstract SPOG; keep adapters thin</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:0.85rem;">
+      <div class="card green editable">
+        <span class="pill phase">Packaging sketch</span>
+        <h3>Offering tiers (illustrative)</h3>
+        <ul>
+          <li><strong>Foundation:</strong> Observability + KPI contract + taxonomy</li>
+          <li><strong>Predict:</strong> + anomaly packs + prevention OKRs</li>
+          <li><strong>Autonomous:</strong> + self-heal catalog + efficiency OKRs</li>
+        </ul>
+        <p class="placeholder">[Your input] Pricing model preference — subscription / usage / performance-tiered…</p>
+      </div>
+      <div class="card cyan editable">
+        <span class="pill phase">Adoption plan</span>
+        <h3>Change management (non-negotiable)</h3>
+        <ul>
+          <li>KT → Forward shadow → Reverse shadow → need-basis</li>
+          <li>Sales &amp; delivery enablement kit (same as GTM)</li>
+          <li>CxO scorecard rhythm (weekly → monthly)</li>
+          <li>Region champions; policy exceptions governed</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: Proof + ask -->
+  <section class="slide" id="s5">
+    <div class="slide-label">Credibility · lived evidence</div>
+    <h2>Why this is not theoretical</h2>
+    <p class="lead">Proof points from prior MGS programs — same patterns the reusable offering productizes.</p>
+
+    <div class="grid-2">
+      <div class="card gold editable">
+        <span class="pill proof">TEF Argentina</span>
+        <h3>$100m MGS renewal · FY22</h3>
+        <ul>
+          <li>3000+ backlog; ~500 incidents/day under COVID pressure</li>
+          <li>Top-offender categorization (Data / Code / User-Business)</li>
+          <li>24×7 scale + CxO transparency on KPI progress</li>
+          <li><strong>Outcome:</strong> stability + trust → renewal unlocked</li>
+        </ul>
+        <p class="placeholder">[Your input] Any metric you want stressed for this interview…</p>
+      </div>
+      <div class="card accent editable">
+        <span class="pill proof">H3G UK</span>
+        <h3>$125m vendor consolidation · FY23–24</h3>
+        <ul>
+          <li>400+ components; 4 vendors → single operating model</li>
+          <li>75 CPI/KPIs; P&amp;L model 474 → 336 FTEs</li>
+          <li>SPOG (Grafana) + self-healing + GenAI SOPs</li>
+          <li><strong>Outcome:</strong> lowest P1/outage levels 2024–25 despite transition</li>
+        </ul>
+        <p class="placeholder">[Your input] Margin / NPS / MTTR details to add…</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0.9rem;">
+      <h3 style="color:var(--gold);margin-bottom:0.45rem;">One-slide storyline (for final PPT compression)</h3>
+      <div class="grid-4">
+        <div>
+          <div class="pill phase">1</div>
+          <p style="font-size:0.78rem;color:var(--muted);"><strong style="color:var(--text);">Frame</strong> — reactive multi-vendor pain → KPI-anchored AO offer</p>
+        </div>
+        <div>
+          <div class="pill phase">2</div>
+          <p style="font-size:0.78rem;color:var(--muted);"><strong style="color:var(--text);">Path</strong> — L1→L4 autonomy with phase gates</p>
+        </div>
+        <div>
+          <div class="pill phase">3</div>
+          <p style="font-size:0.78rem;color:var(--muted);"><strong style="color:var(--text);">Loop</strong> — lifecycle + AI/policy where they plug in</p>
+        </div>
+        <div>
+          <div class="pill phase">4</div>
+          <p style="font-size:0.78rem;color:var(--muted);"><strong style="color:var(--text);">Product</strong> — core vs config, tiers, reuse trade-offs</p>
+        </div>
+      </div>
+      <p class="placeholder editable" style="margin-top:0.75rem;">[Your input] Closing ask / recommendation sentence for leadership…</p>
+    </div>
+  </section>
+
+  <footer>
+    Draft structure for Case Study 3 · edit blue placeholders · then we lock content and export PPT/PDF<br/>
+    <a href="https://gauravch86.github.io/gc-ao-enablement/">Profile</a>
+    · Gaurav Chaudhary
+  </footer>
+</body>
+</html>
