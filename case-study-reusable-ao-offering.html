@@ -218,7 +218,7 @@
     <div class="chips">
       <span class="chip">Vendor consolidation → TCO</span>
       <span class="chip gold">Unified observability → self-healing</span>
-      <span class="chip green">KPI/OKR contract · risk-safe milestones</span>
+      <span class="chip green">SLA CPIs + OKRs · risk-safe milestones</span>
       <span class="chip">Productized reuse library</span>
       <span class="chip">P&amp;L on 3–18 month gates</span>
     </div>
@@ -345,11 +345,12 @@
         </ul>
       </div>
       <div class="card gold">
-        <h3>End-user experience as the north star</h3>
+        <h3>Phase → CPI focus</h3>
         <ul>
-          <li>CX improves only when promised service works without friction</li>
-          <li>Reliability + MTTR + prevention &gt; vanity dashboards</li>
-          <li>Market trust / NPS follow consistent delivery, not slideware AO</li>
+          <li><strong>Observability:</strong> response 30/60 min; ticket quality ≥95%</li>
+          <li><strong>Predictive:</strong> P0/P1 MTTR ≤4h; P2 ≤8h; emergency changes ≤5%</li>
+          <li><strong>Autonomous:</strong> availability tiers; proactive ≥20%; repeat P0–P2 ≤10%</li>
+          <li>CX/NPS follows holding Platinum/Gold availability without friction</li>
         </ul>
       </div>
     </div>
@@ -417,12 +418,13 @@
 
   <!-- 4 DATA-DRIVEN KPIs -->
   <section class="slide" id="s4">
-    <div class="slide-label">Step 3 · Data-driven sizing &amp; KPI/OKR design</div>
+    <div class="slide-label">Step 3 · Data-driven sizing &amp; SLA CPI / OKR design</div>
     <h2>6–12 month incident dump → maturity → risk-safe targets</h2>
     <p class="lead">
       Experts + AI/ML enrichment turn raw incidents into a clear maturity view per App / IT / Network component.
-      KPIs/OKRs are designed for the Reactive → Predictive → Autonomous journey with
-      <strong>realistic timelines</strong> that avoid penalty exposure.
+      Contractual <strong>CPIs</strong> (availability, response/restore MTTR, problem aging, change success, SR SLAs)
+      plus commercial OKRs (TCO / governance) are sized for Reactive → Predictive → Autonomous with
+      <strong>soft-ramp windows</strong> that avoid penalty cliffs.
     </p>
 
     <div class="grid-2">
@@ -437,10 +439,10 @@
         </ul>
       </div>
       <div class="card green">
-        <h3>Value of single leadership on KPIs</h3>
+        <h3>Value of single leadership on CPIs</h3>
         <ul>
           <li>L1→L3→Deploy→SDM Incident→Problem/sunset under one owner</li>
-          <li>No finger-pointing; digital KPI board watched daily by SDM governance</li>
+          <li>No finger-pointing; digital CPI board watched daily by SDM (Avail 20% credit, MTTR 10%, …)</li>
           <li>Accountability boosts NPS / partner trust / end-user experience</li>
           <li>Surfaced deep bugs/integrations become <strong>new revenue streams</strong></li>
         </ul>
@@ -448,59 +450,170 @@
     </div>
 
     <div class="card" style="margin-top:0.75rem;overflow-x:auto;">
-      <h3 style="color:var(--gold);font-size:0.88rem;margin-bottom:0.35rem;">Illustrative KPI / OKR contract (risk-safe milestones)</h3>
+      <h3 style="color:var(--gold);font-size:0.88rem;margin-bottom:0.35rem;">Commercial OKRs + SLA CPIs (illustrative catalogue from live MGS practice)</h3>
+      <p style="font-size:0.74rem;color:var(--muted);margin-bottom:0.45rem;">
+        Outcome OKRs (TCO / governance / autonomy) sit <strong style="color:var(--text);">on top of</strong> contractual CPIs measured monthly from ITSM —
+        so roadmap prioritization and milestone P&amp;L share the same scoreboard SDMs watch daily.
+        Credit % = financial exposure if breached (protects customer ROI and our margin narrative).
+      </p>
       <table class="kpi-table">
         <thead>
           <tr>
-            <th>Theme</th>
-            <th>KPI / OKR</th>
-            <th>Baseline → Target</th>
-            <th>Roadmap signal</th>
+            <th>Domain</th>
+            <th>CPI / KPI</th>
+            <th>Service level (contractual)</th>
+            <th>Credit</th>
+            <th>AO offering lever</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>TCO</strong></td>
-            <td>IT-OPS AOP run-cost</td>
-            <td>$50m → <strong>$40m</strong> (~20%)</td>
-            <td>Vendor consolidation + efficiency levers</td>
+            <td><strong>Availability</strong></td>
+            <td>Availability per service class<br/><span style="font-size:0.68rem;">((TST−TSU)/TST)×100 · TSU from P0/P1 unplanned</span></td>
+            <td>Platinum <strong>99.90%</strong> · Gold <strong>99.85%</strong> · Silver <strong>99.50%</strong> · Bronze <strong>95.00%</strong></td>
+            <td><strong>20%</strong></td>
+            <td>Consolidation + SPOG + prevent/self-heal cut P0/P1 minutes</td>
           </tr>
           <tr>
-            <td><strong>Governance tax</strong></td>
-            <td>Customer vendor-mgmt / ITIL effort</td>
-            <td>Baseline → <strong>−20%</strong></td>
-            <td>Fewer interfaces; digital SLA board</td>
+            <td><strong>Incident</strong></td>
+            <td>Response P0/P1</td>
+            <td><strong>100%</strong> within <strong>30 min</strong> (90% allowed first 6 months)</td>
+            <td>0%</td>
+            <td>Single L1/NSD ownership; correlated alerts</td>
           </tr>
           <tr>
-            <td><strong>Reliability</strong></td>
-            <td>P1 / major incidents</td>
-            <td>High → phased −% (no cliff)</td>
-            <td>Top-offender + self-heal coverage</td>
+            <td><strong>Incident</strong></td>
+            <td>Response P2</td>
+            <td><strong>100%</strong> within <strong>60 min</strong> (90% first 6 months)</td>
+            <td>0%</td>
+            <td>Unified queue; no multi-vendor handoff delay</td>
           </tr>
           <tr>
-            <td><strong>Speed</strong></td>
-            <td>MTTR / restoration</td>
-            <td>Slow / variable → contracted band</td>
-            <td>Correlation SPOG + runbooks</td>
+            <td><strong>Incident</strong></td>
+            <td>Restoration P0/P1 + MTTR</td>
+            <td><strong>100%</strong> within <strong>4h</strong> · MTTR ≤ <strong>4h</strong></td>
+            <td><strong>10%</strong></td>
+            <td>Cross-domain correlation; A-team; self-heal known classes</td>
           </tr>
           <tr>
-            <td><strong>Autonomy</strong></td>
-            <td>% prevented / auto-contained</td>
-            <td>~0% → rising by phase</td>
-            <td>Anomaly AI + policy packs</td>
+            <td><strong>Incident</strong></td>
+            <td>Restoration P2 + MTTR</td>
+            <td><strong>98%</strong> within <strong>8h</strong> · MTTR ≤ <strong>8h</strong></td>
+            <td><strong>10%</strong></td>
+            <td>Top-offender packs; GenAI SOP runbooks</td>
           </tr>
           <tr>
-            <td><strong>Experience</strong></td>
-            <td>NPS / CX stability proxies</td>
-            <td>Pressure → improving</td>
-            <td>End-user impact alerts in SPOG</td>
+            <td><strong>Incident</strong></td>
+            <td>Resolution P3 / P4</td>
+            <td>P3: <strong>98%</strong> / MTTR ≤ <strong>24 BH</strong> · P4: <strong>95%</strong> / MTTR ≤ <strong>72 BH</strong></td>
+            <td>—</td>
+            <td>Standard changes + SD automation for long-tail</td>
+          </tr>
+          <tr>
+            <td><strong>Problem</strong></td>
+            <td>Proactive Problem Management</td>
+            <td>≥ <strong>20%</strong> of problems are proactive investigations</td>
+            <td>—</td>
+            <td>AI mining on 6–12m dump → proactive PBIs</td>
+          </tr>
+          <tr>
+            <td><strong>Problem</strong></td>
+            <td>Aging — proactive / reactive</td>
+            <td>Proactive ≤<strong>30%</strong> &gt;60d · Reactive ≤<strong>10%</strong> &gt;30d</td>
+            <td>—</td>
+            <td>Single Problem ownership through sunset</td>
+          </tr>
+          <tr>
+            <td><strong>Problem</strong></td>
+            <td>Known Error permanent fix</td>
+            <td>≥<strong>60%</strong> scheduled · ≤<strong>20%</strong> of scheduled &gt;90d</td>
+            <td>—</td>
+            <td>RC backlog ranked by volume × credit risk</td>
+          </tr>
+          <tr>
+            <td><strong>Problem</strong></td>
+            <td>Repeat incident prevention</td>
+            <td>≤<strong>10%</strong> of P0–P2 from open Problem/KE already linked once</td>
+            <td>—</td>
+            <td>Self-heal until RC; forced workaround sunset</td>
+          </tr>
+          <tr>
+            <td><strong>Problem</strong></td>
+            <td>RCA initial / final (P0–P2)</td>
+            <td>Initial &gt;<strong>95%</strong> in 1 BH · Final &gt;<strong>95%</strong> in 5 BH</td>
+            <td>Final <strong>10%</strong></td>
+            <td>AI-assisted RCA drafts; human quality gate</td>
+          </tr>
+          <tr>
+            <td><strong>Change</strong></td>
+            <td>Successful IT Changes</td>
+            <td><strong>98%</strong> first-time, on schedule, no major incident / backout</td>
+            <td><strong>10%</strong></td>
+            <td>Policy risk scoring; fewer fire-drill changes</td>
+          </tr>
+          <tr>
+            <td><strong>Change</strong></td>
+            <td>Expedited / Emergency changes</td>
+            <td>≤<strong>5%</strong> expedited · ≤<strong>5%</strong> emergency</td>
+            <td>—</td>
+            <td>Predictive ops reduces emergency volume</td>
+          </tr>
+          <tr>
+            <td><strong>Change</strong></td>
+            <td>Governance / SD standard changes</td>
+            <td><strong>100%</strong> compliance · ≥<strong>10%</strong> via Service Desk</td>
+            <td>—</td>
+            <td>Productized standard-change catalog</td>
+          </tr>
+          <tr>
+            <td><strong>Service Request</strong></td>
+            <td>SR completion P1–P4</td>
+            <td>P1 <strong>99%</strong>/2h · P2 <strong>99%</strong>/24h · P3 <strong>98%</strong>/20 BH · P4 <strong>95%</strong>/40 BH</td>
+            <td>P1 <strong>10%</strong></td>
+            <td>Automation + Service Desk enablement</td>
+          </tr>
+          <tr>
+            <td><strong>Quality</strong></td>
+            <td>Ticket quality (Incident / Problem / Change)</td>
+            <td>≥<strong>95%</strong> accurate &amp; complete (audited samples)</td>
+            <td>Incident <strong>10%</strong></td>
+            <td>Clean ITSM data fuels AI SOP / autonomy</td>
+          </tr>
+          <tr>
+            <td><strong>Commercial OKR</strong></td>
+            <td>IT-OPS AOP + customer governance</td>
+            <td><strong>$50m → $40m</strong> · governance effort <strong>−20%</strong></td>
+            <td>Customer ROI</td>
+            <td>Vendor consolidation economics</td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <div class="grid-2" style="margin-top:0.75rem;">
+      <div class="card green">
+        <h3>Risk-safe ramp (avoid penalty cliff)</h3>
+        <ul>
+          <li>Response CPIs allow <strong>90%</strong> in first <strong>6 months</strong> post commencement — align Discovery→KT→Shadow to this window</li>
+          <li>Milestone P&amp;L gates (M3–M18) unlock autonomy claims only after credit-weighted CPI trends stabilize</li>
+          <li>Digital SDM board: daily watch on Availability (<strong>20%</strong> credit), P0/P1 restore (<strong>10%</strong>), P2 restore (<strong>10%</strong>), Change success (<strong>10%</strong>), Final RCA (<strong>10%</strong>), …</li>
+        </ul>
+      </div>
+      <div class="card cyan">
+        <h3>How these CPIs prioritize the AO roadmap</h3>
+        <ul>
+          <li>Rank automation backlog by <strong>credit weight × breach risk × volume</strong></li>
+          <li>First: Availability + P0/P1 MTTR ≤4h → then repeat-incident ≤10% &amp; Known Error schedule ≥60%</li>
+          <li>Change success 98% / emergency ≤5% = proof of predictive maturity</li>
+          <li>Ticket quality ≥95% = prerequisite before expanding AI autonomy</li>
+        </ul>
+      </div>
+    </div>
+
     <p class="note">
-      <strong>TEF Argentina parallel:</strong> backlog categorization + offender KPIs + CxO transparency unlocked renewal.
-      <strong>H3G UK:</strong> 75 CPI/KPIs from transition; economics and stability moved together.
+      <strong>Lived practice:</strong> Large-account MGS used a full CPI/KPI annex (availability tiers, incident MTTR, problem aging, change success, SR SLAs) —
+      ~75 operational measures from transition. TEF Argentina used offender + CxO KPI transparency to unlock renewal.
+      Catalogue above is <strong>anonymized from that SLA style</strong> — not a reproduction of any confidential annex.
     </p>
   </section>
 
@@ -522,7 +635,7 @@
           <li>Exhaustive metrics templates (Cloud / Infra / App / Network)</li>
           <li>Self-heal + anomaly packs (versioned)</li>
           <li>SPOG correlation patterns</li>
-          <li>KPI scorecard &amp; digital governance board</li>
+          <li>CPI scorecard (Avail / MTTR / Problem / Change) &amp; SDM board</li>
           <li>GTM tiers, pricing guardrails, enablement kit</li>
         </ul>
       </div>
@@ -558,20 +671,21 @@
   <!-- 6 COMMERCIAL + TRANSITION -->
   <section class="slide" id="s6">
     <div class="slide-label">Step 5 · Commercial model &amp; safe transition</div>
-    <h2>P&amp;L on KPI milestones · quality gates · AI in the loop</h2>
+    <h2>P&amp;L on CPI milestones · quality gates · AI in the loop</h2>
     <p class="lead">
-      Build P&amp;L against scope attached to KPI/OKR milestones at
+      Build P&amp;L against scope attached to credit-weighted CPI/OKR milestones at
       <strong>3 / 6 / 9 / 12 / 15 / 18 months</strong>, with executive quality gates.
-      Digitalized KPIs monitored daily by SDM governance — no end-of-quarter shocks.
+      Digital SDM board watches Availability (20% credit), restore MTTR, change success, RCA —
+      no end-of-quarter shocks.
     </p>
 
     <div class="milestone">
-      <div class="ms"><div class="m">M3</div><div class="t">Discovery done · baseline locked · library seeded</div></div>
-      <div class="ms"><div class="m">M6</div><div class="t">SPOG live · consolidation benefits visible</div></div>
-      <div class="ms"><div class="m">M9</div><div class="t">Predict packs on top offenders</div></div>
-      <div class="ms"><div class="m">M12</div><div class="t">Self-heal coverage · TCO trajectory on track</div></div>
-      <div class="ms"><div class="m">M15</div><div class="t">Autonomy KPIs rising · RC sunsets</div></div>
-      <div class="ms"><div class="m">M18</div><div class="t">Target operating model · reuse proof for next logo</div></div>
+      <div class="ms"><div class="m">M3</div><div class="t">Baseline CPIs locked · 6–12m dump · library seeded</div></div>
+      <div class="ms"><div class="m">M6</div><div class="t">End soft-ramp · response CPIs on path to 100%</div></div>
+      <div class="ms"><div class="m">M9</div><div class="t">P0/P1 MTTR ≤4h trend · SPOG correlation live</div></div>
+      <div class="ms"><div class="m">M12</div><div class="t">Availability tier on track · TCO $50→$40 path</div></div>
+      <div class="ms"><div class="m">M15</div><div class="t">Repeat P0–P2 ≤10% · KE schedule ≥60%</div></div>
+      <div class="ms"><div class="m">M18</div><div class="t">Proactive ≥20% · change success 98% · reuse proof</div></div>
     </div>
 
     <div class="grid-2">
@@ -673,7 +787,7 @@
         </div>
         <div class="card" style="padding:0.65rem;">
           <div class="pill phase">4</div>
-          <p><strong style="color:var(--text);">Contract</strong><br/>KPI/OKRs · M3–M18 gates · digital SDM board</p>
+          <p><strong style="color:var(--text);">Contract</strong><br/>SLA CPIs (Avail 99.9% / MTTR 4h) · M3–M18 · SDM board</p>
         </div>
         <div class="card" style="padding:0.65rem;">
           <div class="pill phase">5</div>
