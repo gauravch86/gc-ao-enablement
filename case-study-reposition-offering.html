@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <title>Case Study 1 — Reposition an Underperforming Offering in the Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f1419; --surface: #1a2332; --surface2: #243044;
+      --text: #e6edf3; --muted: #8b9cb3; --accent: #58a6ff;
+      --success: #3fb950; --gold: #d4a853; --purple: #a371f7;
+      --cyan: #38bdf8; --danger: #f87171;
+      --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.5; }
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(15,20,25,.94); backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.06); padding: 0.65rem 1rem;
+    }
+    .topbar-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; gap: 0.5rem 1rem;
+      align-items: center; justify-content: space-between;
+    }
+    .topbar h1 { font-size: 0.82rem; color: var(--gold); font-weight: 700; }
+    .nav { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .nav a {
+      font-size: 0.68rem; color: var(--muted); text-decoration: none;
+      border: 1px solid rgba(255,255,255,.08); border-radius: 999px; padding: 0.22rem 0.55rem;
+    }
+    .nav a:hover { color: var(--accent); border-color: rgba(88,166,255,.35); }
+    .slide {
+      max-width: 1120px; margin: 0 auto;
+      padding: 1.6rem 1.2rem 1.9rem;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .slide-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem;
+    }
+    .slide h2 {
+      font-size: clamp(1.2rem, 2.4vw, 1.55rem); color: var(--gold); font-weight: 700;
+      margin-bottom: 0.4rem; padding-bottom: 0.4rem;
+      border-bottom: 1px solid rgba(212,168,83,.25);
+    }
+    .slide .lead { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; max-width: 980px; }
+    .slide .lead strong { color: var(--text); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
+    .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; }
+    @media (max-width: 900px) {
+      .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 701px) and (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr 1fr; }
+      .grid-4 { grid-template-columns: 1fr 1fr; }
+    }
+    .card {
+      background: var(--surface); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 12px; padding: 0.85rem 0.95rem;
+    }
+    .card h3 { font-size: 0.86rem; font-weight: 700; color: var(--gold); margin-bottom: 0.35rem; }
+    .card p, .card li { font-size: 0.78rem; color: var(--muted); line-height: 1.42; }
+    .card ul { margin: 0; padding-left: 1rem; }
+    .card li { margin-bottom: 0.25rem; }
+    .card li strong, .card p strong { color: var(--text); font-weight: 600; }
+    .card.accent { border-top: 3px solid var(--accent); }
+    .card.gold { border-top: 3px solid var(--gold); }
+    .card.green { border-top: 3px solid var(--success); }
+    .card.purple { border-top: 3px solid var(--purple); }
+    .card.cyan { border-top: 3px solid var(--cyan); }
+    .card.danger { border-top: 3px solid var(--danger); }
+    .pill {
+      display: inline-block; font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 0.12rem 0.45rem; border-radius: 999px; margin-bottom: 0.35rem;
+    }
+    .pill.now { background: rgba(248,113,113,.12); color: var(--danger); }
+    .pill.target { background: rgba(63,185,80,.12); color: var(--success); }
+    .pill.phase { background: rgba(88,166,255,.12); color: var(--accent); }
+    .pill.proof { background: rgba(212,168,83,.12); color: var(--gold); }
+    .pill.money { background: rgba(212,168,83,.15); color: var(--gold); }
+    .pill.warn { background: rgba(163,113,247,.12); color: var(--purple); }
+    .money {
+      display: flex; flex-wrap: wrap; gap: 0.65rem; margin: 0.75rem 0 1rem;
+    }
+    .money-box {
+      flex: 1; min-width: 140px; background: linear-gradient(145deg, var(--surface), rgba(26,35,50,.6));
+      border: 1px solid rgba(212,168,83,.25); border-radius: 12px; padding: 0.85rem 1rem; text-align: center;
+    }
+    .money-box .lbl { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .money-box .val { font-size: 1.45rem; font-weight: 700; color: var(--gold); margin: 0.2rem 0; }
+    .money-box .sub { font-size: 0.72rem; color: var(--muted); }
+    .money-box.down .val { color: var(--danger); }
+    .money-box.flat .val { color: var(--muted); }
+    .money-box.save .val { color: var(--success); }
+    .decision-row {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin: 0.75rem 0 1rem;
+    }
+    @media (max-width: 800px) { .decision-row { grid-template-columns: 1fr; } }
+    .decision {
+      background: rgba(15,20,25,.55); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 10px; padding: 0.75rem 0.7rem;
+    }
+    .decision .name { font-size: 0.9rem; font-weight: 700; color: var(--gold); margin-bottom: 0.25rem; }
+    .decision p { font-size: 0.72rem; color: var(--muted); margin: 0; }
+    .decision.selected {
+      box-shadow: inset 0 0 0 2px rgba(63,185,80,.45);
+      background: rgba(63,185,80,.06);
+    }
+    .decision.selected .name { color: var(--success); }
+    .decision.rejected { opacity: 0.55; }
+    .kpi-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; margin-top: 0.4rem; }
+    .kpi-table th, .kpi-table td {
+      text-align: left; padding: 0.5rem 0.55rem;
+      border-bottom: 1px solid rgba(255,255,255,.06); vertical-align: top;
+    }
+    .kpi-table th { color: var(--gold); font-weight: 700; background: rgba(26,35,50,.85); }
+    .kpi-table td { color: var(--muted); }
+    .kpi-table td strong { color: var(--text); }
+    .timeline {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.45rem; margin: 0.7rem 0;
+    }
+    @media (max-width: 900px) { .timeline { grid-template-columns: 1fr 1fr; } }
+    .tl {
+      background: var(--surface); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 10px; padding: 0.6rem 0.55rem;
+    }
+    .tl .q { font-size: 0.68rem; font-weight: 700; color: var(--accent); }
+    .tl .t { font-size: 0.78rem; font-weight: 700; color: var(--gold); margin: 0.15rem 0; }
+    .tl p { font-size: 0.68rem; color: var(--muted); margin: 0; }
+    .note {
+      margin-top: 0.8rem; padding: 0.7rem 0.85rem;
+      background: rgba(212,168,83,.06); border: 1px solid rgba(212,168,83,.22);
+      border-radius: 10px; font-size: 0.78rem; color: var(--muted);
+    }
+    .note strong { color: var(--gold); }
+    .align {
+      margin-top: 0.75rem; padding: 0.65rem 0.8rem;
+      background: rgba(88,166,255,.06); border: 1px solid rgba(88,166,255,.2);
+      border-radius: 10px; font-size: 0.74rem; color: var(--muted);
+    }
+    .align strong { color: var(--accent); }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+    .chip {
+      font-size: 0.72rem; font-weight: 600; color: var(--text);
+      background: rgba(88,166,255,.1); border: 1px solid rgba(88,166,255,.28);
+      border-radius: 999px; padding: 0.28rem 0.7rem;
+    }
+    .chip.gold { background: rgba(212,168,83,.1); border-color: rgba(212,168,83,.3); color: var(--gold); }
+    .chip.green { background: rgba(63,185,80,.1); border-color: rgba(63,185,80,.3); color: var(--success); }
+    .chip.danger { background: rgba(248,113,113,.1); border-color: rgba(248,113,113,.3); color: var(--danger); }
+    .title-slide { min-height: 72vh; display: flex; flex-direction: column; justify-content: center; }
+    .title-slide h2 { font-size: clamp(1.45rem, 3.2vw, 2rem); border: none; padding: 0; }
+    .title-slide .sub { font-size: 1rem; color: var(--muted); max-width: 900px; margin: 0.6rem 0 1rem; }
+    footer {
+      text-align: center; padding: 1.4rem 1rem 2rem; color: var(--muted); font-size: 0.75rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    .stop-list li { color: var(--danger) !important; }
+    .stop-list li strong { color: var(--danger) !important; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <h1>Case Study 1 · Reposition an Underperforming Offering</h1>
+      <nav class="nav">
+        <a href="#s0">Brief</a>
+        <a href="#s1">Diagnosis</a>
+        <a href="#s2">Root cause</a>
+        <a href="#s3">Decision</a>
+        <a href="#s4">Packaging</a>
+        <a href="#s5">Guardrails</a>
+        <a href="#s6">Prioritize</a>
+        <a href="#s7">Alignment</a>
+        <a href="#s8">Metrics</a>
+        <a href="#s9">Present</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 0 BRIEF -->
+  <section class="slide title-slide" id="s0">
+    <div class="slide-label">Strategic Product Manager · Case Study 1</div>
+    <h2>Reposition an underperforming services offering<br/>in the portfolio</h2>
+    <p class="sub">
+      A world-class telecom vendor holds <strong>Application Managed Services (AMS)</strong> in the portfolio —
+      strong technical delivery and customer satisfaction on live accounts, but
+      <strong>flat net sales</strong> and <strong>declining gross margin</strong> over the last two years.
+      Global Sales cannot articulate differentiated value vs. SI competitors; pricing is
+      <strong>inconsistent across regions</strong> and Deal Desk approvals are slow on complex bids.
+      Leadership asks: <strong>evolve, reposition, or sunset</strong> — and wants a plan.
+    </p>
+    <div class="money">
+      <div class="money-box flat">
+        <div class="lbl">Net sales (2-yr trend)</div>
+        <div class="val">Flat</div>
+        <div class="sub">Pipeline conversion weak · no attach growth</div>
+      </div>
+      <div class="money-box down">
+        <div class="lbl">Gross margin</div>
+        <div class="val">−4–6 pts</div>
+        <div class="sub">Discounting · scope creep · delivery cost drift</div>
+      </div>
+      <div class="money-box save">
+        <div class="lbl">Delivery NPS / C-SAT</div>
+        <div class="val">Strong</div>
+        <div class="sub">Technical execution is not the problem</div>
+      </div>
+    </div>
+    <div class="align">
+      <strong>Working hypothesis:</strong>
+      The offering is commercially <em>mis-positioned</em> — sold as FTE headcount and effort hours
+      while the market buys <strong>outcomes, autonomy, and TCO reduction</strong>.
+      Delivery excellence exists; the product story, packaging, and pricing model do not.
+    </div>
+    <div class="chips">
+      <span class="chip gold">Diagnose before deciding</span>
+      <span class="chip">Win/loss · margin · competitive · voice-of-customer</span>
+      <span class="chip green">Reposition + evolve (not sunset)</span>
+      <span class="chip">Guardrails · enablement · feedback loop</span>
+    </div>
+    <p class="note">
+      <strong>Credibility lens:</strong> Same commercial muscles used in
+      <strong>H3G UK</strong> ($125m vendor consolidation — packaging, discount vs margin, 474→336 economics)
+      and <strong>TEF Argentina</strong> ($100m renewal — reposition accountability &amp; KPI transparency when the story was broken).
+    </p>
+  </section>
+
+  <!-- 1 DIAGNOSIS FRAMEWORK -->
+  <section class="slide" id="s1">
+    <div class="slide-label">Deliverable 1 · Diagnosis framework</div>
+    <h2>What data to gather — five lenses before any portfolio call</h2>
+    <p class="lead">
+      I would run a <strong>4-week commercial diagnostic</strong> (parallel workstreams, one steering forum)
+      before recommending evolve / reposition / sunset. Each lens has an owner, a data source, and a
+      <strong>decision trigger</strong> — so we separate delivery quality from commercial failure modes.
+    </p>
+
+    <div class="grid-2">
+      <div class="card accent">
+        <span class="pill phase">Lens A</span>
+        <h3>Win / loss &amp; pipeline quality</h3>
+        <ul>
+          <li><strong>Inputs:</strong> 24-month CRM pipeline; stage conversion; bid/no-bid; competitive set per deal</li>
+          <li><strong>Win/loss interviews:</strong> 15–20 deals (won + lost) — buyer, procurement, technical evaluator</li>
+          <li><strong>Segment:</strong> by region, deal size, tower (App / Infra / Network), greenfield vs renewal</li>
+          <li><strong>Trigger:</strong> if loss reason = “price only” &gt;40% → packaging/pricing broken; if “value unclear” &gt;30% → positioning broken</li>
+        </ul>
+      </div>
+      <div class="card gold">
+        <span class="pill money">Lens B</span>
+        <h3>Margin &amp; deal economics</h3>
+        <ul>
+          <li><strong>Inputs:</strong> P&amp;L by account × offering; GM% trend; transition cost actuals vs bid</li>
+          <li><strong>Discount waterfall:</strong> list → approved → signed; regional variance; Deal Desk override rate</li>
+          <li><strong>Scope creep:</strong> change-request volume; unpaid extras; FTE actuals vs contract</li>
+          <li><strong>Trigger:</strong> if GM erosion &gt;50% from discount (not delivery) → guardrails gap; if transition overruns systemic → packaging underestimates KT</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <span class="pill phase">Lens C</span>
+        <h3>Competitive &amp; market shift</h3>
+        <ul>
+          <li><strong>Inputs:</strong> analyst views (Gartner/IDC); competitor rate cards; AO / AIOps positioning</li>
+          <li><strong>Map:</strong> who wins on “FTE arbitrage” vs “outcome / autonomy” vs “product-led MS”</li>
+          <li><strong>Attach:</strong> Ericsson product pull-through on AMS wins vs losses</li>
+          <li><strong>Trigger:</strong> if market moving to outcome-tier pricing and we still quote pure FTE → reposition required</li>
+        </ul>
+      </div>
+      <div class="card cyan">
+        <span class="pill phase">Lens D</span>
+        <h3>Customer &amp; delivery voice</h3>
+        <ul>
+          <li><strong>Inputs:</strong> NPS / C-SAT / E-SAT by account; QBR themes; escalation logs</li>
+          <li><strong>Sales feedback:</strong> structured survey — “what do you wish you could sell?”</li>
+          <li><strong>Delivery:</strong> what customers praise vs what they refuse to pay premium for</li>
+          <li><strong>Trigger:</strong> high delivery score + low willingness to renew at rate → value prop mismatch, not execution failure</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card green" style="margin-top:0.75rem;">
+      <span class="pill target">Lens E · Portfolio fit</span>
+      <h3>Strategic adjacency &amp; sunset criteria</h3>
+      <ul>
+        <li><strong>Inputs:</strong> roadmap overlap with AO / cloud / product MS; cannibalization risk; sunk tooling cost</li>
+        <li><strong>Revenue recognition / Finance:</strong> contract structures that block outcome pricing today</li>
+        <li><strong>Sunset test:</strong> no path to GM ≥ target within 18 months AND no strategic pull-through → sunset candidate</li>
+        <li><strong>Reposition test:</strong> strong delivery + attach potential + fixable commercial model → reposition candidate</li>
+      </ul>
+    </div>
+
+    <div class="card" style="margin-top:0.75rem;overflow-x:auto;">
+      <h3 style="color:var(--gold);font-size:0.85rem;margin-bottom:0.35rem;">Diagnostic scorecard (how I synthesize the call)</h3>
+      <table class="kpi-table">
+        <thead>
+          <tr>
+            <th>Signal</th>
+            <th>Healthy</th>
+            <th>Amber</th>
+            <th>Red → action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Pipeline conversion</strong></td>
+            <td>&gt;25% qualified→won</td>
+            <td>15–25%</td>
+            <td>&lt;15% → fix value prop + sales enablement</td>
+          </tr>
+          <tr>
+            <td><strong>GM% vs portfolio target</strong></td>
+            <td>Within 2 pts</td>
+            <td>2–5 pts below</td>
+            <td>&gt;5 pts → pricing/guardrails or scope model broken</td>
+          </tr>
+          <tr>
+            <td><strong>Regional price variance</strong></td>
+            <td>&lt;10% on like-for-like</td>
+            <td>10–20%</td>
+            <td>&gt;20% → mandate rate card + Deal Desk rules</td>
+          </tr>
+          <tr>
+            <td><strong>Win reason = outcome / TCO</strong></td>
+            <td>&gt;40% of wins</td>
+            <td>20–40%</td>
+            <td>&lt;20% → offering still sold as body shop</td>
+          </tr>
+          <tr>
+            <td><strong>Delivery NPS on live AMS</strong></td>
+            <td>&gt;+30</td>
+            <td>+10 to +30</td>
+            <td>&lt;+10 → delivery fix before commercial reposition</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 2 ROOT CAUSE SYNTHESIS -->
+  <section class="slide" id="s2">
+    <div class="slide-label">Diagnosis · Expected findings (illustrative)</div>
+    <h2>What the data would likely show — root causes, not symptoms</h2>
+    <p class="lead">
+      Based on the scenario inputs and patterns from large MGS portfolios, I would expect
+      <strong>three reinforcing root causes</strong> — all commercial, none requiring a delivery turnaround.
+    </p>
+
+    <div class="grid-3">
+      <div class="card danger">
+        <span class="pill now">Root cause 1</span>
+        <h3>Commoditized packaging</h3>
+        <ul>
+          <li>Offer = <strong>FTE towers</strong> (L1/L2/L3) with weak linkage to business KPIs</li>
+          <li>Sales defaults to <strong>rate-per-FTE</strong> — easy for procurement to bench against TCS/HCL/IBM</li>
+          <li>No modular “ramp” — customer must buy the whole pyramid or nothing</li>
+          <li><strong>Symptom:</strong> flat sales; long cycles; technical wins that die in procurement</li>
+        </ul>
+      </div>
+      <div class="card danger">
+        <span class="pill now">Root cause 2</span>
+        <h3>Pricing chaos &amp; margin leakage</h3>
+        <ul>
+          <li>Regions discount independently to hit quota — <strong>no global floor</strong></li>
+          <li>Transition / KT underestimated in bid → margin bleeds in Y1–Y2</li>
+          <li>Scope creep absorbed to protect NPS — unpaid work erodes GM</li>
+          <li><strong>Symptom:</strong> −4–6 pt GM decline while delivery scores hold</li>
+        </ul>
+      </div>
+      <div class="card danger">
+        <span class="pill now">Root cause 3</span>
+        <h3>Value story gap vs market</h3>
+        <ul>
+          <li>Buyers want <strong>TCO reduction, autonomy path, single accountability</strong></li>
+          <li>We pitch <strong>headcount replacement</strong> and tool-agnostic runbooks</li>
+          <li>AO / observability IP exists elsewhere in portfolio but <strong>not attached</strong> to AMS SKU</li>
+          <li><strong>Symptom:</strong> Sales “cannot explain value”; losses on narrative, not capability</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>Implication:</strong> Sunset would destroy a delivery-capable franchise and Ericsson account footprint.
+      Pure “evolve” (incremental tooling) without repositioning the <em>commercial SKU</em> will not fix flat sales or margin.
+      The play is <strong>reposition the offering</strong> and <strong>evolve the product modules</strong> underneath.
+    </div>
+  </section>
+
+  <!-- 3 RECOMMENDATION -->
+  <section class="slide" id="s3">
+    <div class="slide-label">Deliverable 2 · Recommendation &amp; trade-offs</div>
+    <h2>Reposition — with selective evolve; do not sunset</h2>
+    <p class="lead">
+      <strong>Recommendation: REPOSITION</strong> Application Managed Services from
+      “FTE-based application support” to
+      <strong>Outcome-Tiered Application Operations</strong> — the commercial entry ramp into the
+      Autonomous Operations journey (feeds the broader AO portfolio; see Case Study 2).
+    </p>
+
+    <div class="decision-row">
+      <div class="decision rejected">
+        <div class="name">Sunset</div>
+        <p>Rejects strong delivery DNA, installed base, and Ericsson pull-through. High exit cost; competitors capture footprint. Only if Lens E shows no 18-month GM path — not met here.</p>
+      </div>
+      <div class="decision">
+        <div class="name">Evolve only</div>
+        <p>Tooling refresh without SKU/pricing change fixes delivery incrementally but not sales narrative or margin guardrails. Necessary but insufficient alone.</p>
+      </div>
+      <div class="decision selected">
+        <div class="name">Reposition ✓</div>
+        <p>Reframe what we sell (outcome tiers + modular packs), how we price (CPI bands + platform fee), and how Sales tells the story (TCO → autonomy path). Evolve modules underneath.</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card green">
+        <span class="pill target">What reposition means</span>
+        <h3>From → To</h3>
+        <ul>
+          <li><strong>From:</strong> “We provide X FTEs for application support”</li>
+          <li><strong>To:</strong> “We guarantee application availability &amp; MTTR tiers — with a defined path to observability, predictive ops, and autonomy”</li>
+          <li>Three commercial tiers: <strong>Stabilize</strong> · <strong>Optimize</strong> · <strong>Autonomize</strong></li>
+          <li>AMS becomes the <strong>land</strong>; AO modules become the <strong>expand</strong></li>
+        </ul>
+      </div>
+      <div class="card gold">
+        <span class="pill warn">Trade-offs accepted</span>
+        <h3>What we give up / risks</h3>
+        <ul>
+          <li><strong>Short-term revenue:</strong> smaller initial deals (tier entry vs full FTE pyramid) — compensated by attach &amp; renewal uplift</li>
+          <li><strong>Sales retraining:</strong> 1–2 quarter productivity dip during enablement</li>
+          <li><strong>Delivery refactor:</strong> standardize KPI catalogues — upfront product/GTM cost</li>
+          <li><strong>Risk mitigated:</strong> sunset avoids these costs but surrenders market; evolve-only prolongs margin bleed</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="align" style="margin-top:0.75rem;">
+      <strong>Updated value proposition (one line):</strong>
+      “Ericsson Application Operations — outcome-guaranteed managed applications with a built-in ramp from
+      stabilization to autonomous operations, reducing customer TCO and governance load while protecting margin through standardized tiers and global pricing guardrails.”
+    </div>
+  </section>
+
+  <!-- 4 PACKAGING & PRICING -->
+  <section class="slide" id="s4">
+    <div class="slide-label">Deliverable 3 · Pricing, packaging &amp; value proposition</div>
+    <h2>Revised commercial model — tiers, not towers</h2>
+    <p class="lead">
+      Packaging shifts from <strong>headcount blocks</strong> to <strong>outcome tiers + modular capability packs</strong>.
+      FTE sizing stays internal (for delivery planning) — customer buys <strong>service classes &amp; CPI attainment</strong>.
+    </p>
+
+    <div class="card" style="overflow-x:auto;">
+      <table class="kpi-table">
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th>Customer outcome</th>
+            <th>What's included</th>
+            <th>Pricing model</th>
+            <th>Typical buyer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Stabilize</strong></td>
+            <td>Restore control — backlog burn, SLA baseline, single accountability</td>
+            <td>L1–L3 app ops · ITSM integration · monthly CPI board · top-offender program</td>
+            <td><strong>Platform fee</strong> + per-app-class unit · <strong>floor GM 22%</strong></td>
+            <td>CIO / Head of Apps — “stop the bleeding”</td>
+          </tr>
+          <tr>
+            <td><strong>Optimize</strong></td>
+            <td>−15–20% ops TCO · faster MTTR · proactive problem ratio</td>
+            <td>Stabilize + <strong>unified observability</strong> · SPOG · GenAI SOP · automation factory</td>
+            <td><strong>Outcome band</strong> pricing (Avail / MTTR tiers) + gain-share on TCO proof</td>
+            <td>COO / VP Ops — “prove TCO before full AO”</td>
+          </tr>
+          <tr>
+            <td><strong>Autonomize</strong></td>
+            <td>Path to L3–L4 autonomy · self-heal on policy-approved classes</td>
+            <td>Optimize + <strong>closed-loop agents</strong> · policy packs · reuse library · soft-ramp CPI contract</td>
+            <td><strong>Milestone + performance</strong> (M3/M12/M18 gates) · links to Case Study 2 AO SKU</td>
+            <td>CTO / Chief Digital — “autonomy as product”</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-3" style="margin-top:0.75rem;">
+      <div class="card accent">
+        <h3>Modular attach packs</h3>
+        <ul>
+          <li><strong>Observability jump-start</strong> — 90-day SPOG stand-up</li>
+          <li><strong>Top-offender sprint</strong> — 6-month RC backlog program</li>
+          <li><strong>Transition accelerator</strong> — KT/shadow factory (priced, not free)</li>
+          <li><strong>Vendor consolidation bridge</strong> — pre-AO operating-model unlock</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <h3>Pricing mechanics</h3>
+        <ul>
+          <li><strong>Global rate card</strong> — list price by tier × app criticality class</li>
+          <li><strong>Regional index</strong> — ±15% band (not ±40% ad hoc)</li>
+          <li><strong>Transition</strong> — fixed-fee KT module; no margin bleed in Y1</li>
+          <li><strong>Renewal uplift</strong> — tier step-up clause when CPI gates met</li>
+        </ul>
+      </div>
+      <div class="card cyan">
+        <h3>What Sales can finally say</h3>
+        <ul>
+          <li>“Buy stabilization now — not a 5-year FTE gamble”</li>
+          <li>“TCO reduction is contractual, not a slide promise”</li>
+          <li>“One throat to choke from app ops → autonomy”</li>
+          <li>“Ericsson product + 3PP under one MS operating model”</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="note">
+      <strong>H3G UK parallel:</strong> Won by scoping 400+ components, 75 CPI/KPIs, and a
+      <strong>6-month transition plan</strong> — not by being cheapest per FTE. Repositioned the bid as
+      operating-model transformation with priced economics (474→336), not staff augmentation.
+    </p>
+  </section>
+
+  <!-- 5 GUARDRAILS -->
+  <section class="slide" id="s5">
+    <div class="slide-label">Deliverable 3 (cont.) · Commercial guardrails &amp; Deal Desk</div>
+    <h2>Pricing guidelines for Sales &amp; Deal Desk on complex deals</h2>
+    <p class="lead">
+      Guardrails turn regional chaos into <strong>predictable margin</strong> — Deal Desk becomes a
+      <strong>deal architect</strong>, not a discount gate.
+    </p>
+
+    <div class="card" style="overflow-x:auto;">
+      <table class="kpi-table">
+        <thead>
+          <tr>
+            <th>Guardrail</th>
+            <th>Rule</th>
+            <th>Deal Desk action if breached</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Floor GM%</strong></td>
+            <td>Stabilize ≥22% · Optimize ≥26% · Autonomize ≥30% (post-transition)</td>
+            <td>Auto-escalate to Regional Product Head; require scope reduction or tier downgrade</td>
+          </tr>
+          <tr>
+            <td><strong>Max discount</strong></td>
+            <td>≤12% off list without EVP approval; ≤8% for renewals</td>
+            <td>Discount must be traded for scope, term, or tier step-up at M12</td>
+          </tr>
+          <tr>
+            <td><strong>Transition pricing</strong></td>
+            <td>KT module mandatory on all new logos; min 8% of Y1 ACV</td>
+            <td>No exceptions — underpriced KT is #1 margin killer in diagnostic</td>
+          </tr>
+          <tr>
+            <td><strong>Scope change</strong></td>
+            <td>Out-of-scope CR within 5 business days; unpaid work cap 2% ACV</td>
+            <td>SDM + Product Owner sign-off; feeds account P&amp;L review</td>
+          </tr>
+          <tr>
+            <td><strong>Regional variance</strong></td>
+            <td>Like-for-like bid within ±15% of global rate card index</td>
+            <td>&gt;15% requires written competitive intel + win-strategy approval</td>
+          </tr>
+          <tr>
+            <td><strong>CPI / penalty</strong></td>
+            <td>Soft-ramp months 1–6; credit caps aligned to tier; penalty parking lot in P&amp;L</td>
+            <td>Finance sign-off on rev-rec treatment before signature</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-2" style="margin-top:0.75rem;">
+      <div class="card gold">
+        <h3>Deal Desk toolkit (enablement)</h3>
+        <ul>
+          <li><strong>ROI calculator</strong> — TCO baseline vs tier outcome (customer-facing)</li>
+          <li><strong>Margin waterfall</strong> — internal bid model (FTE + tools + transition + risk)</li>
+          <li><strong>Tier selector</strong> — discovery questionnaire → recommended SKU</li>
+          <li><strong>Competitive battlecards</strong> — vs FTE arbitrage SIs; vs cloud-native MSPs</li>
+          <li><strong>Executive one-pager</strong> per tier — “what buyer gets in 90 days”</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <h3>Complex deal playbook</h3>
+        <ul>
+          <li><strong>Multi-tower:</strong> App Ops land → Network/Infra expand — separate SOWs, one governance</li>
+          <li><strong>Consolidation bid:</strong> mandate vendor-reduction narrative; price governance −20% as customer ROI</li>
+          <li><strong>Renewal at risk:</strong> tier step-up or modular attach — never pure rate cut</li>
+          <li><strong>Partner / 3PP:</strong> thin-adapter pricing; Ericsson MS umbrella owns CPI outcome</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 PRIORITIZATION -->
+  <section class="slide" id="s6">
+    <div class="slide-label">Deliverable 4 · Investment prioritization</div>
+    <h2>Sequence for ROI — what to fund, defer, and stop</h2>
+    <p class="lead">
+      Repositioning fails if we fund everything at once. I would sequence
+      <strong>commercial assets first</strong> (they unblock sales this quarter), then
+      <strong>reusable delivery IP</strong> (margin next year), and explicitly <strong>deprioritize</strong> low-ROI work.
+    </p>
+
+    <div class="timeline">
+      <div class="tl">
+        <div class="q">Q1 · 0–90 days</div>
+        <div class="t">Sell differently</div>
+        <p>Rate card · tier definitions · ROI calc · battlecards · Deal Desk rules live</p>
+      </div>
+      <div class="tl">
+        <div class="q">Q2 · 3–6 months</div>
+        <div class="t">Deliver to tier</div>
+        <p>Standard CPI catalogue · top-offender template · transition factory · 2 pilot accounts</p>
+      </div>
+      <div class="tl">
+        <div class="q">Q3–Q4 · 6–12 months</div>
+        <div class="t">Reuse &amp; attach</div>
+        <p>Observability pack · SPOG patterns · automation library · tier step-up renewals</p>
+      </div>
+      <div class="tl">
+        <div class="q">Year 2</div>
+        <div class="t">Autonomize scale</div>
+        <p>Closed-loop agents · policy packs · full AO SKU merge (Case Study 2)</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card green">
+        <span class="pill target">Fund (high ROI)</span>
+        <h3>Priority investments</h3>
+        <ul>
+          <li><strong>Global rate card + margin model</strong> — stops bleeding immediately</li>
+          <li><strong>CPI / SLA catalogue</strong> (reuse H3G 75-KPI pattern) — one language for Sales &amp; Delivery</li>
+          <li><strong>Sales enablement</strong> — tier pitch, discovery kit, executive demo (SPOG + CPI board)</li>
+          <li><strong>Transition pricing module</strong> — protects Y1 GM on every new logo</li>
+          <li><strong>2 regional pilots</strong> (e.g. UK + LATAM) — prove reposition before global mandate</li>
+        </ul>
+      </div>
+      <div class="card danger">
+        <span class="pill now">Deprioritize / stop</span>
+        <h3>Explicitly not now</h3>
+        <ul class="stop-list">
+          <li><strong>Custom SIEM/observability builds per account</strong> — use standard pack; charge for exceptions</li>
+          <li><strong>Greenfield tool R&amp;D</strong> without reuse thesis — portfolio funds AO platform, not AMS one-offs</li>
+          <li><strong>Headcount-heavy PoCs</strong> sold below floor GM to “win logo”</li>
+          <li><strong>Regional bespoke offerings</strong> — breaks global rate card; route through adapter packs</li>
+          <li><strong>Marketing rebrand without sales kit</strong> — story without Deal Desk tools = no conversion</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>ROI logic:</strong> Q1 investments are mostly <em>product/GTM labor</em> — low capex, immediate guardrail effect.
+      Q2–Q4 reuse delivery IP already proven in H3G/TEF accounts — amortize across AMS base.
+      Year-2 autonomy spend links to Case Study 2 reusable AO offering — avoid duplicate tooling tax.
+    </div>
+  </section>
+
+  <!-- 7 CROSS-FUNCTIONAL ALIGNMENT -->
+  <section class="slide" id="s7">
+    <div class="slide-label">Deliverable 5 · Cross-functional alignment</div>
+    <h2>Who does what — Sales, Marketing, Finance, Regions</h2>
+    <p class="lead">
+      Repositioning is a <strong>portfolio program</strong>, not a product deck in isolation.
+      Each function has a named outcome, artifact, and cadence.
+    </p>
+
+    <div class="grid-2">
+      <div class="card accent">
+        <h3>Sales &amp; Bid / Deal Desk</h3>
+        <ul>
+          <li><strong>Outcome:</strong> ≥80% of new AMS bids use tier SKU + rate card by Q2</li>
+          <li><strong>Artifacts:</strong> discovery kit · ROI calc · margin waterfall · approval matrix</li>
+          <li><strong>Cadence:</strong> weekly deal review on reposition pilots; win/loss tagged to tier</li>
+          <li><strong>Lead:</strong> Global Sales Enablement + Regional Product Manager (matrix)</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <h3>Marketing &amp; Portfolio</h3>
+        <ul>
+          <li><strong>Outcome:</strong> one external narrative — “Application Operations → Autonomy”</li>
+          <li><strong>Artifacts:</strong> tier one-pagers · customer proof stories (H3G/TEF anonymized) · analyst brief</li>
+          <li><strong>Cadence:</strong> monthly message test with Sales; retire “FTE tower” language from collaterals</li>
+          <li><strong>Lead:</strong> Services Portfolio Marketing + SPM owner</li>
+        </ul>
+      </div>
+      <div class="card gold">
+        <h3>Finance — P&amp;L, rev-rec, compliance</h3>
+        <ul>
+          <li><strong>Outcome:</strong> tier pricing compliant with revenue recognition; GM floors in ERP bid model</li>
+          <li><strong>Artifacts:</strong> rev-rec memo per tier (platform fee vs outcome/milestone) · penalty parking lot accounting</li>
+          <li><strong>Cadence:</strong> Deal Desk sign-off on any outcome/milestone element before customer proposal</li>
+          <li><strong>Lead:</strong> Regional Finance BP + Global Services Controller</li>
+        </ul>
+      </div>
+      <div class="card cyan">
+        <h3>Regional enablement &amp; Delivery</h3>
+        <ul>
+          <li><strong>Outcome:</strong> pilot regions deliver to CPI catalogue; transition factory repeatable</li>
+          <li><strong>Artifacts:</strong> KT/shadow playbook · SDM CPI board · escalation path to Product</li>
+          <li><strong>Cadence:</strong> bi-weekly pilot steering; QBR tier step-up proposals on live accounts</li>
+          <li><strong>Lead:</strong> Regional Delivery Head + AO CoE (reuse library)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0.75rem;">
+      <h3 style="color:var(--gold);margin-bottom:0.4rem;">Program governance</h3>
+      <ul>
+        <li><strong>Steering forum:</strong> SPM (chair) · Sales VP · Marketing · Finance · 2 Regional MDs — monthly</li>
+        <li><strong>Decision rights:</strong> SPM owns SKU/tier; Finance owns rev-rec; Sales owns pipeline targets; Delivery owns CPI attainment</li>
+        <li><strong>Change management:</strong> train-the-trainer in pilot regions; resist “shadow rate cards” via Deal Desk audit</li>
+        <li><strong>Link to Case Study 2:</strong> Autonomize tier is the commercial on-ramp to the reusable AO offering — shared KPI catalogue and reuse library</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 8 SUCCESS METRICS -->
+  <section class="slide" id="s8">
+    <div class="slide-label">Deliverable 6 · Success metrics &amp; feedback loop</div>
+    <h2>How we know reposition worked — and how we keep refining</h2>
+    <p class="lead">
+      Metrics split into <strong>leading</strong> (commercial motion) and <strong>lagging</strong> (P&amp;L outcomes).
+      A quarterly <strong>pricing council</strong> adjusts tiers, floors, and packs based on field data — not annual slide refresh.
+    </p>
+
+    <div class="card" style="overflow-x:auto;">
+      <table class="kpi-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Baseline (today)</th>
+            <th>12-month target</th>
+            <th>Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Net sales growth (AMS)</strong></td>
+            <td>Flat (~0%)</td>
+            <td><strong>+8–12%</strong> (tier land + attach)</td>
+            <td>Sales VP</td>
+          </tr>
+          <tr>
+            <td><strong>Gross margin %</strong></td>
+            <td>−4–6 pts vs 2yr ago</td>
+            <td><strong>Recover 3–4 pts</strong>; within 2 pts of portfolio target</td>
+            <td>Finance / SPM</td>
+          </tr>
+          <tr>
+            <td><strong>Bids using tier SKU + rate card</strong></td>
+            <td>&lt;20% (ad hoc FTE)</td>
+            <td><strong>≥80%</strong> of qualified pipeline</td>
+            <td>Deal Desk</td>
+          </tr>
+          <tr>
+            <td><strong>Regional price variance (like-for-like)</strong></td>
+            <td>&gt;25%</td>
+            <td><strong>&lt;15%</strong></td>
+            <td>SPM</td>
+          </tr>
+          <tr>
+            <td><strong>Win rate — “value/TCO” cited</strong></td>
+            <td>&lt;20%</td>
+            <td><strong>≥40%</strong> of wins</td>
+            <td>Marketing / Sales</td>
+          </tr>
+          <tr>
+            <td><strong>Tier step-up / attach at renewal</strong></td>
+            <td>N/A (no tiers)</td>
+            <td><strong>≥25%</strong> of renewals upsell Optimize+</td>
+            <td>Regional Delivery</td>
+          </tr>
+          <tr>
+            <td><strong>Delivery NPS (hold)</strong></td>
+            <td>Strong</td>
+            <td><strong>≥ baseline</strong> — no trade-down for margin</td>
+            <td>Delivery</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-3" style="margin-top:0.75rem;">
+      <div class="card accent">
+        <h3>Feedback loop — quarterly pricing council</h3>
+        <ul>
+          <li>Review win/loss tagged by tier, discount depth, competitor</li>
+          <li>Adjust rate card index ±3% max per cycle</li>
+          <li>Add/retire modular packs based on attach data</li>
+          <li>Escalate systematic delivery gaps to AO CoE</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <h3>Field signals — monthly</h3>
+        <ul>
+          <li>Deal Desk override log → guardrail patches</li>
+          <li>Scope CR volume per account → packaging fix</li>
+          <li>Sales survey: “what blocked the bid?”</li>
+          <li>Pilot CPI attainment → tier credibility proof</li>
+        </ul>
+      </div>
+      <div class="card gold">
+        <h3>Annual portfolio review</h3>
+        <ul>
+          <li>Sunset test re-run — GM trajectory vs 18-month rule</li>
+          <li>Merge Autonomize tier into AO SKU (Case Study 2)</li>
+          <li>Investor narrative: AMS as land, AO as expand</li>
+          <li>Retire legacy FTE-only contracts on renewal</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 PRESENTATION COMPRESS -->
+  <section class="slide" id="s9">
+    <div class="slide-label">Credibility &amp; close · Compress to 1–2 slides</div>
+    <h2>Presentation storyline — what I would show live</h2>
+
+    <div class="grid-2">
+      <div class="card gold">
+        <span class="pill proof">Slide 1 · Diagnose → Decide</span>
+        <h3>“Strong delivery, broken commercial model”</h3>
+        <ul>
+          <li><strong>5-lens diagnostic</strong> — win/loss, margin, competitive, VoC, portfolio fit</li>
+          <li><strong>Root cause:</strong> FTE commoditization · pricing chaos · value story gap</li>
+          <li><strong>Decision: REPOSITION</strong> — not sunset (delivery asset); not evolve-only (insufficient)</li>
+          <li><strong>To:</strong> Outcome-Tiered Application Operations (Stabilize → Optimize → Autonomize)</li>
+        </ul>
+      </div>
+      <div class="card accent">
+        <span class="pill proof">Slide 2 · Plan → Measure</span>
+        <h3>“Tier SKU + guardrails + sequenced investment”</h3>
+        <ul>
+          <li><strong>Packaging/pricing:</strong> global rate card · CPI bands · transition module · Deal Desk rules</li>
+          <li><strong>Prioritize:</strong> Q1 commercial kit → Q2 pilots → reuse IP → Year-2 AO attach</li>
+          <li><strong>Align:</strong> Sales · Marketing · Finance (rev-rec) · regional delivery enablement</li>
+          <li><strong>Success:</strong> +8–12% sales · +3–4 pts GM · 80% tier adoption · quarterly pricing council</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:0.75rem;">
+      <div class="card green">
+        <span class="pill proof">TEF Argentina</span>
+        <h3>Reposition when the story was broken</h3>
+        <ul>
+          <li>Low C-SAT threatened $100m renewal — accountability &amp; KPI transparency repositioned the relationship</li>
+          <li>Top-offender discipline + CxO visibility → renewal won on <strong>trust</strong>, not rate card</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <span class="pill proof">H3G UK</span>
+        <h3>Packaging &amp; guardrails at scale</h3>
+        <ul>
+          <li>$125m bid: 75 CPI/KPIs, 6-month transition, 474→336 economics — sold transformation, not FTEs</li>
+          <li>Discount vs margin trade-offs with explicit Deal Desk envelope</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="align" style="margin-top:0.85rem;">
+      <strong>Recommendation (close):</strong>
+      Reposition AMS as <em>Outcome-Tiered Application Operations</em> — land with Stabilize/Optimize,
+      expand to Autonomize and the reusable AO portfolio. Fund commercial guardrails and enablement first;
+      sequence delivery IP reuse from proven accounts; measure with a quarterly pricing council until
+      net sales and margin recover without trading away delivery excellence.
+    </div>
+  </section>
+
+  <footer>
+    Case Study 1 · Reposition an underperforming offering · Gaurav Chaudhary<br/>
+    <a href="https://gauravch86.github.io/gc-ao-enablement/">Profile</a>
+    · <a href="https://gauravch86.github.io/gc-ao-enablement/case-study-reposition-offering.html">This page</a>
+    · <a href="case-study-reusable-ao-offering.html">Case Study 2</a>
+  </footer>
+</body>
+</html>
