@@ -54,15 +54,15 @@ def fmt_mmss(seconds: int) -> str:
     return f"{seconds // 60}:{seconds % 60:02d}"
 
 
-def add_countdown_wipe(slide, shape, dur_ms: int) -> None:
-    """Attach an automatic exit wipe (right→left) lasting dur_ms when the slide opens."""
-    spid = str(shape.shape_id)
-    # Remove existing timing if any
+def add_countdown_wipe(slide, bar_shape, nudge_shape, dur_ms: int) -> None:
+    """Countdown wipe on bar, then reveal MOVE ON nudge after budget (Slideshow)."""
+    bar_id = str(bar_shape.shape_id)
+    nudge_id = str(nudge_shape.shape_id)
     existing = slide._element.find(qn("p:timing"))
     if existing is not None:
         slide._element.remove(existing)
 
-    # PowerPoint timing tree: auto-start on slide enter, wipe-out the timer fill
+    # Hide nudge immediately, wipe bar over dur_ms, then fade nudge in (still no auto-advance).
     xml = f"""
     <p:timing xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"
               xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
@@ -85,14 +85,58 @@ def add_countdown_wipe(slide, shape, dur_ms: int) -> None:
                                 <p:cond delay="0"/>
                               </p:stCondLst>
                               <p:childTnLst>
+                                <p:set>
+                                  <p:cBhvr>
+                                    <p:cTn id="5" dur="1" fill="hold"/>
+                                    <p:tgtEl>
+                                      <p:spTgt spid="{nudge_id}"/>
+                                    </p:tgtEl>
+                                    <p:attrNameLst>
+                                      <p:attrName>style.visibility</p:attrName>
+                                    </p:attrNameLst>
+                                  </p:cBhvr>
+                                  <p:to>
+                                    <p:strVal val="hidden"/>
+                                  </p:to>
+                                </p:set>
                                 <p:animEffect transition="out" filter="wipe(left)">
                                   <p:cBhvr>
-                                    <p:cTn id="5" dur="{dur_ms}" fill="hold"/>
+                                    <p:cTn id="6" dur="{dur_ms}" fill="hold"/>
                                     <p:tgtEl>
-                                      <p:spTgt spid="{spid}"/>
+                                      <p:spTgt spid="{bar_id}"/>
                                     </p:tgtEl>
                                   </p:cBhvr>
                                 </p:animEffect>
+                                <p:animEffect transition="in" filter="fade">
+                                  <p:cBhvr>
+                                    <p:cTn id="7" dur="400" fill="hold">
+                                      <p:stCondLst>
+                                        <p:cond delay="{dur_ms}"/>
+                                      </p:stCondLst>
+                                    </p:cTn>
+                                    <p:tgtEl>
+                                      <p:spTgt spid="{nudge_id}"/>
+                                    </p:tgtEl>
+                                  </p:cBhvr>
+                                </p:animEffect>
+                                <p:set>
+                                  <p:cBhvr>
+                                    <p:cTn id="8" dur="1" fill="hold">
+                                      <p:stCondLst>
+                                        <p:cond delay="{dur_ms}"/>
+                                      </p:stCondLst>
+                                    </p:cTn>
+                                    <p:tgtEl>
+                                      <p:spTgt spid="{nudge_id}"/>
+                                    </p:tgtEl>
+                                    <p:attrNameLst>
+                                      <p:attrName>style.visibility</p:attrName>
+                                    </p:attrNameLst>
+                                  </p:cBhvr>
+                                  <p:to>
+                                    <p:strVal val="visible"/>
+                                  </p:to>
+                                </p:set>
                               </p:childTnLst>
                             </p:cTn>
                           </p:par>
@@ -196,14 +240,37 @@ def add_slide_timer(
     legend = slide.shapes.add_textbox(track_left, bar_top - Inches(0.22), Inches(5.5), Inches(0.22))
     _para(
         legend.text_frame,
-        "Countdown bar starts in Slideshow · does not auto-advance — you click when ready",
+        "Countdown starts in Slideshow · red MOVE ON appears when budget ends · does not auto-advance",
         size=8,
         bold=False,
         color=MUTED,
         space_after=0,
     )
 
-    add_countdown_wipe(slide, fill, max(1000, int(budget_sec * 1000)))
+    # Over-budget nudge (hidden until countdown completes)
+    nudge = slide.shapes.add_shape(
+        MSO_SHAPE.ROUNDED_RECTANGLE,
+        Inches(10.05),
+        bar_top - Inches(0.38),
+        Inches(2.7),
+        Inches(0.32),
+    )
+    _fill(nudge, DANGER)
+    try:
+        nudge.adjustments[0] = 0.2
+    except Exception:
+        pass
+    ntf = nudge.text_frame
+    ntf.word_wrap = False
+    # Clear default empty para then set centered label on the shape itself
+    p = ntf.paragraphs[0]
+    p.alignment = PP_ALIGN.CENTER
+    p.clear()
+    run = p.add_run()
+    run.text = "MOVE ON  →"
+    _set_run(run, size=12, bold=True, color=TEXT)
+
+    add_countdown_wipe(slide, fill, nudge, max(1000, int(budget_sec * 1000)))
 
     return {
         "budget_sec": budget_sec,
@@ -218,7 +285,9 @@ def add_slide_timer(
 def timer_notes_blurb(meta: dict) -> str:
     return (
         f"\n\nON-SLIDE TIMER: Budget {meta['budget_label']} for this slide. "
-        f"Gold bar counts down when Slideshow opens (does not auto-advance). "
+        f"Gold bar counts down in Slideshow; red MOVE ON appears when budget ends "
+        f"(does not auto-advance). Prefer presenter-timer.html on a second screen for a "
+        f"live stopwatch that records actual seconds per slide. "
         f"By end of this slide you should be at ~{meta['used_by_end_label']} of 10:00 "
         f"(~{meta['after_label']} remaining)."
     )

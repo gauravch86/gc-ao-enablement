@@ -184,7 +184,8 @@ def build():
     add_para(tf, "STORYLINE  ·  ONE STAGE PER SLIDE  ·  10 MIN + 5 MIN QUESTIONS", size=11, bold=True, color=GOLD, space_after=8)
     add_para(tf, "1  Economic unlock   →   2  Autonomy path   →   3  Measure from data", size=14, bold=True, color=TEXT, space_after=4)
     add_para(tf, "4  Reuse library   →   5  Enablement cadence   →   6  Five-year profit-and-loss   →   7  Proof & ask", size=14, bold=True, color=TEXT, space_after=6)
-    add_para(tf, "Top-right SLIDE BUDGET + gold bar = live countdown in Slideshow (does not auto-advance).", size=12, color=MUTED, space_after=0)
+    add_para(tf, "Top-right SLIDE BUDGET + gold bar countdown; red MOVE ON when budget ends (Slideshow).", size=12, color=MUTED, space_after=2)
+    add_para(tf, "For a live stopwatch that records actual seconds/slide: open presenter-timer.html on a second screen.", size=12, color=MUTED, space_after=0)
     footer(s, 1)
     set_notes(s, """TIMING: ~1:15
 

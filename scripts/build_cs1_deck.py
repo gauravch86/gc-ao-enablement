@@ -224,7 +224,8 @@ def build():
     add_para(tf, "2  Illustrative findings (what the data would show)", size=14, bold=True, color=TEXT, space_after=3)
     add_para(tf, "3  Decision framework → Reposition", size=14, bold=True, color=TEXT, space_after=3)
     add_para(tf, "4  Package & price   ·   5  Guardrails & invest   ·   6  Align & measure   ·   7  Ask", size=14, bold=True, color=TEXT, space_after=6)
-    add_para(tf, "Top-right SLIDE BUDGET + gold bar = live countdown in Slideshow (does not auto-advance).", size=12, color=MUTED, space_after=0)
+    add_para(tf, "Top-right SLIDE BUDGET + gold bar countdown; red MOVE ON when budget ends (Slideshow).", size=12, color=MUTED, space_after=2)
+    add_para(tf, "For a live stopwatch that records actual seconds/slide: open presenter-timer.html on a second screen.", size=12, color=MUTED, space_after=0)
     footer(s, 1)
     set_notes(s, """TIMING: 1:15
 
