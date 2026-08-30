@@ -317,7 +317,7 @@ GLOSSARY:
             "Playbooks from the reuse library",
             "Deal Desk guardrails by autonomy tier",
             "Demo: single pane + self-heal + performance board",
-            "Executive quality gates at month 3 / 12 / 18",
+            "Executive quality gates at month 3 / 12 / 15",
         ], PURPLE),
         ("COMMERCIAL PACKAGING", [
             "Outcome bands mapped to autonomy phases",
