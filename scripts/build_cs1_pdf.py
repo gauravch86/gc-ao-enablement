@@ -85,7 +85,7 @@ def build(path="/workspace/case-study-1-reposition-executive.pdf"):
 
     cards = [
         ("NET SALES (2 YEARS)", "Flat", "Weak conversion · little attach", MUTED),
-        ("GROSS MARGIN", "−4–6 points", "Discount · scope creep · transition overrun", DANGER),
+        ("GROSS MARGIN (ILLUSTRATIVE)", "28% → 22–24%", "−4 to −6 percentage points over 2 years", DANGER),
         ("DELIVERY SATISFACTION", "Strong", "Execution is not the failure mode", SUCCESS),
     ]
     cw = (W - 1.3 * inch) / 3
@@ -264,7 +264,7 @@ def build(path="/workspace/case-study-1-reposition-executive.pdf"):
     c.setFillColor(GOLD); c.setFont("Helvetica-Bold", 10)
     c.drawString(0.75 * inch, 2.3 * inch, "12-MONTH SCOREBOARD  ·  Quarterly Pricing Council")
     c.setFillColor(TEXT); c.setFont("Helvetica", 10)
-    c.drawString(0.75 * inch, 1.9 * inch, "Net sales  Flat → +8–12%     Gross margin  +3–4 points     Tier adoption  ≥80%")
+    c.drawString(0.75 * inch, 1.9 * inch, "Net sales  Flat → +8–12%     Gross margin  recover 3–4 pts (e.g. →25–27%)     Tier adoption  ≥80%")
     c.drawString(0.75 * inch, 1.6 * inch, "Price variance  <15%     Wins on value/total-cost  ≥40%     Renewal step-up  ≥25%")
     c.setFillColor(MUTED); c.setFont("Helvetica", 9)
     wrap_text(c, "Feedback: monthly Deal Desk overrides + change requests → quarterly Pricing Council (±3% rate card) → annual sunset re-test",

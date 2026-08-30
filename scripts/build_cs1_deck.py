@@ -128,7 +128,7 @@ def build():
     metric_card(s, Inches(0.55), Inches(2.05), Inches(3.9), Inches(1.5),
                 "Net sales (2 years)", "Flat", "Weak conversion · little attach", MUTED)
     metric_card(s, Inches(4.7), Inches(2.05), Inches(3.9), Inches(1.5),
-                "Gross margin", "−4–6 points", "Discount · scope creep · transition overrun", DANGER)
+                "Gross margin (illustrative)", "28% → 22–24%", "−4 to −6 percentage points over 2 years", DANGER)
     metric_card(s, Inches(8.85), Inches(2.05), Inches(3.9), Inches(1.5),
                 "Delivery satisfaction", "Strong", "Execution is not the failure mode", SUCCESS)
 
@@ -163,7 +163,7 @@ def build():
     set_notes(s, """TIMING: ~1 minute 30 seconds
 
 WHAT TO SAY:
-Open with the paradox: delivery Net Promoter Score / customer satisfaction is strong, yet net sales are flat and gross margin is down four to six points. That means this is NOT a delivery crisis — it is a commercial and go-to-market failure.
+Open with the paradox: delivery Net Promoter Score / customer satisfaction is strong, yet net sales are flat and gross margin has fallen illustratively from about 28% to 22–24% — that is a drop of four to six percentage points over two years. That means this is NOT a delivery crisis — it is a commercial and go-to-market failure.
 
 Define the offering once: Application Managed Services — application support sold today as staffing (people and hours).
 
@@ -171,7 +171,7 @@ State the executive framing: buyers purchase outcomes, cost predictability, and 
 
 GLOSSARY (if asked):
 • Net sales = booked revenue after discounts, before cost
-• Gross margin = net sales minus direct delivery cost (points = percentage points)
+• Gross margin = (net sales − direct delivery cost) ÷ net sales. Example 28% → 22–24% = −4 to −6 percentage points (not “percent of percent”)
 • Deal Desk = the commercial approval function that reviews discounts, terms, and exceptions
 • Attach = selling additional modules or higher tiers onto an existing deal or renewal
 
@@ -435,7 +435,7 @@ GLOSSARY:
     add_para(tf, "12-MONTH SCOREBOARD  ·  Quarterly Pricing Council adjusts tiers / floors / packs", size=12, bold=True, color=GOLD, space_after=8)
     add_para(
         tf,
-        "Net sales  Flat → +8–12%          Gross margin  recover +3–4 points          Tier adoption  ≥80% of pipeline",
+        "Net sales  Flat → +8–12%          Gross margin  recover 3–4 percentage points (e.g. toward 25–27%)          Tier adoption  ≥80% of pipeline",
         size=13, color=TEXT, space_after=6,
     )
     add_para(
