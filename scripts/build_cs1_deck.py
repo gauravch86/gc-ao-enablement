@@ -6,6 +6,11 @@ from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pptx_timer import add_slide_timer, timer_notes_blurb, fmt_mmss
 
 BG = RGBColor(0x0F, 0x14, 0x19)
 SURFACE = RGBColor(0x1A, 0x23, 0x32)
@@ -79,7 +84,8 @@ def label(slide, text):
 
 
 def title(slide, text, top=Inches(0.48)):
-    tb = textbox(slide, Inches(0.55), top, Inches(12.2), Inches(0.65))
+    # Leave room for top-right slide-budget HUD
+    tb = textbox(slide, Inches(0.55), top, Inches(9.7), Inches(0.65))
     tf = tb.text_frame
     tf.word_wrap = True
     add_para(tf, text, size=24, bold=True, color=GOLD, space_after=0)
@@ -106,6 +112,22 @@ def set_notes(slide, text):
     slide.notes_slide.notes_text_frame.text = text
 
 
+def finish_slide(slide, page, notes, budget_sec, elapsed_before, active_strip=None):
+    """Footer + optional flow strip + on-slide timer + notes with timer blurb."""
+    if active_strip is not None:
+        flow_strip(slide, active_strip)
+    footer(slide, page)
+    meta = add_slide_timer(
+        slide,
+        budget_sec=budget_sec,
+        elapsed_before_sec=elapsed_before,
+        talk_total_sec=600,
+        bar_top=Inches(6.52),
+    )
+    set_notes(slide, notes + timer_notes_blurb(meta))
+    return elapsed_before + budget_sec
+
+
 def flow_strip(slide, active):
     """Top progress: Diagnose → Findings → Decide → Package → Guardrails → Align → Ask"""
     steps = [
@@ -117,8 +139,7 @@ def flow_strip(slide, active):
         "6 Align",
         "7 Ask",
     ]
-    # Map slide numbers 2..8 to strip indices 0..6
-    y = Inches(6.72)
+    y = Inches(6.78)
     n = len(steps)
     width = Inches(1.65)
     gap = Inches(0.12)
@@ -155,6 +176,11 @@ def build():
     prs = Presentation()
     prs.slide_width = W
     prs.slide_height = H
+
+    # Exact 10:00 talk budgets (seconds). Q&A is after slide 8 — not counted here.
+    # 1:15 + 1:20 + 1:20 + 1:15 + 1:25 + 1:15 + 1:05 + 1:05 = 10:00
+    B = [75, 80, 80, 75, 85, 75, 65, 65]
+    t = 0
 
     # ─── SLIDE 1 · Situation ───
     s = blank_slide(prs)
@@ -197,14 +223,16 @@ def build():
     add_para(tf, "1  Five-lens diagnosis", size=14, bold=True, color=TEXT, space_after=3)
     add_para(tf, "2  Illustrative findings (what the data would show)", size=14, bold=True, color=TEXT, space_after=3)
     add_para(tf, "3  Decision framework → Reposition", size=14, bold=True, color=TEXT, space_after=3)
-    add_para(tf, "4  Package & price   ·   5  Guardrails & invest   ·   6  Align & measure   ·   7  Ask", size=14, bold=True, color=TEXT, space_after=0)
+    add_para(tf, "4  Package & price   ·   5  Guardrails & invest   ·   6  Align & measure   ·   7  Ask", size=14, bold=True, color=TEXT, space_after=6)
+    add_para(tf, "Top-right SLIDE BUDGET + gold bar = live countdown in Slideshow (does not auto-advance).", size=12, color=MUTED, space_after=0)
     footer(s, 1)
-    set_notes(s, """TIMING: ~1:15
+    set_notes(s, """TIMING: 1:15
 
 WHAT TO SAY:
 Paradox first: delivery satisfaction strong, sales flat, margin illustratively 28% → 22–24% (−4 to −6 percentage points). Commercial problem, not delivery.
 
 Tell them the storyline is sequential — one stage per slide — so they need not hold everything at once.
+Point at the top-right timer: each slide has a budget; gold bar counts down when Slideshow starts; you still click to advance.
 
 GLOSSARY: Net sales · Gross margin · Deal Desk · Attach — as before.""")
 
@@ -536,7 +564,10 @@ Q&A prep same as before (sunset / deal size / rate card / Finance / consolidatio
 
     out = "/workspace/case-study-1-reposition-executive.pptx"
     prs.save(out)
-    print(f"Wrote {out} ({TOTAL} slides)")
+    # Inject on-slide countdown HUDs (Slideshow-visible budgets summing to 10:00)
+    from inject_slide_timers import apply_timers
+    apply_timers(out, [75, 80, 80, 75, 85, 75, 65, 65], talk_total_sec=600)
+    print(f"Wrote {out} ({TOTAL} slides) with live slide timers")
     return out
 
 

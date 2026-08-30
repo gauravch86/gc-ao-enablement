@@ -80,7 +80,7 @@ def label(slide, text):
 
 
 def title(slide, text):
-    tb = textbox(slide, Inches(0.55), Inches(0.48), Inches(12.2), Inches(0.65))
+    tb = textbox(slide, Inches(0.55), Inches(0.48), Inches(9.7), Inches(0.65))
     tf = tb.text_frame
     tf.word_wrap = True
     add_para(tf, text, size=24, bold=True, color=GOLD, space_after=0)
@@ -99,7 +99,7 @@ def set_notes(slide, text):
 
 def flow_strip(slide, active):
     steps = ["1 Unlock", "2 Autonomy", "3 Measure", "4 Reuse", "5 Enable", "6 P&L", "7 Ask"]
-    y = Inches(6.72)
+    y = Inches(6.78)
     width = Inches(1.65)
     gap = Inches(0.12)
     start = Inches(0.55)
@@ -183,7 +183,8 @@ def build():
     tf.word_wrap = True
     add_para(tf, "STORYLINE  ·  ONE STAGE PER SLIDE  ·  10 MIN + 5 MIN QUESTIONS", size=11, bold=True, color=GOLD, space_after=8)
     add_para(tf, "1  Economic unlock   →   2  Autonomy path   →   3  Measure from data", size=14, bold=True, color=TEXT, space_after=4)
-    add_para(tf, "4  Reuse library   →   5  Enablement cadence   →   6  Five-year profit-and-loss   →   7  Proof & ask", size=14, bold=True, color=TEXT, space_after=0)
+    add_para(tf, "4  Reuse library   →   5  Enablement cadence   →   6  Five-year profit-and-loss   →   7  Proof & ask", size=14, bold=True, color=TEXT, space_after=6)
+    add_para(tf, "Top-right SLIDE BUDGET + gold bar = live countdown in Slideshow (does not auto-advance).", size=12, color=MUTED, space_after=0)
     footer(s, 1)
     set_notes(s, """TIMING: ~1:15
 
@@ -519,7 +520,10 @@ LIKELY Qs:
 
     out = "/workspace/case-study-2-ao-offering-executive.pptx"
     prs.save(out)
-    print(f"Wrote {out} ({TOTAL} slides)")
+    from inject_slide_timers import apply_timers
+    # 1:15×4 + 1:00 + 1:15 + 1:30 + 1:15 = 10:00
+    apply_timers(out, [75, 75, 75, 75, 60, 75, 90, 75], talk_total_sec=600)
+    print(f"Wrote {out} ({TOTAL} slides) with live slide timers")
     return out
 
 
