@@ -90,13 +90,13 @@ def build(path="/workspace/case-study-1-reposition-executive.pdf"):
     bg(c)
     c.setFillColor(ACCENT)
     c.setFont("Helvetica-Bold", 9)
-    c.drawString(0.55 * inch, H - 0.4 * inch, "STRATEGIC PRODUCT MANAGER · CASE STUDY 1 · DUAL MANDATE: NEW REVENUE + MARGIN")
+    c.drawString(0.55 * inch, H - 0.4 * inch, "STRATEGIC PRODUCT MANAGER · CASE STUDY 1 · 10-MINUTE COMMERCIAL BRIEF")
     c.setFillColor(GOLD)
-    c.setFont("Helvetica-Bold", 17)
-    c.drawString(0.55 * inch, H - 0.8 * inch, "Grow topline. Protect EBIT. Reposition the offering.")
+    c.setFont("Helvetica-Bold", 18)
+    c.drawString(0.55 * inch, H - 0.8 * inch, "Reposition an underperforming portfolio offering")
     wrap(
         c,
-        "Application Managed Services: strong delivery, but commercially stuck — flat net sales, gross margin 28% → 22–24%, Sales cannot sell value, regions discount without trading scope.",
+        "Application Managed Services: strong technical delivery, but commercially stuck — flat net sales, declining gross margin, Sales cannot articulate value, inconsistent regional pricing.",
         0.55 * inch,
         H - 1.15 * inch,
         W - 1.1 * inch,
@@ -104,42 +104,42 @@ def build(path="/workspace/case-study-1-reposition-executive.pdf"):
         color=MUTED,
     )
     cards = [
-        ("SPM OWNS — NEW SALES", "Topline", "Net sales · attach · expansion", ACCENT),
-        ("SPM OWNS — PROFITABILITY", "Margin / EBIT", "Gross margin · deal quality", GOLD),
-        ("TODAY’S PARADOX", "Strong NPS", "Flat sales · eroding GM", DANGER),
+        ("NET SALES (2 YRS)", "Flat", "Weak conversion · little attach", MUTED),
+        ("GROSS MARGIN (ILLUSTRATIVE)", "28% → 22–24%", "−4 to −6 percentage points over 2 years", DANGER),
+        ("DELIVERY SATISFACTION", "Strong", "Execution is not the failure mode", SUCCESS),
     ]
     cw = (W - 1.3 * inch) / 3
     for i, (lbl, val, sub, col) in enumerate(cards):
         x = 0.55 * inch + i * (cw + 0.1 * inch)
-        rr(c, x, H - 3.15 * inch, cw, 1.3 * inch, SURFACE)
+        rr(c, x, H - 3.2 * inch, cw, 1.35 * inch, SURFACE)
         c.setFillColor(MUTED)
         c.setFont("Helvetica-Bold", 7)
         c.drawCentredString(x + cw / 2, H - 2.1 * inch, lbl)
         c.setFillColor(col)
-        c.setFont("Helvetica-Bold", 15)
-        c.drawCentredString(x + cw / 2, H - 2.45 * inch, val)
+        c.setFont("Helvetica-Bold", 16)
+        c.drawCentredString(x + cw / 2, H - 2.5 * inch, val)
         c.setFillColor(MUTED)
         c.setFont("Helvetica", 8)
-        c.drawCentredString(x + cw / 2, H - 2.8 * inch, sub)
-    rr(c, 0.55 * inch, H - 4.55 * inch, W - 1.1 * inch, 1.15 * inch, SURFACE)
+        c.drawCentredString(x + cw / 2, H - 2.85 * inch, sub)
+    rr(c, 0.55 * inch, H - 4.5 * inch, W - 1.1 * inch, 1.0 * inch, SURFACE)
     c.setFillColor(ACCENT)
     c.setFont("Helvetica-Bold", 9)
-    c.drawString(0.75 * inch, H - 3.6 * inch, "THE JOB IN THIS ROLE")
+    c.drawString(0.75 * inch, H - 3.7 * inch, "EXECUTIVE FRAMING")
     wrap(
         c,
-        "Accountable for new revenue (new sales / topline) and profitability (gross margin / EBIT). Discounts sustain revenue only when traded for additional scope, term, or customer investment — never free margin bleed.",
+        "Commercial / go-to-market problem — not a delivery turnaround. Sold as headcount; buyers purchase outcomes, cost predictability, and risk reduction. Restore net sales and gross margin together — discounts only when traded for scope, term, or attach. Leadership asks: evolve, reposition, or sunset.",
         0.75 * inch,
-        H - 3.9 * inch,
+        H - 4.0 * inch,
         W - 1.5 * inch,
         size=10,
     )
     c.setFillColor(GOLD)
     c.setFont("Helvetica-Bold", 9)
-    c.drawString(0.55 * inch, 1.55 * inch, "WHAT LEADERSHIP GETS IN 10 MINUTES")
+    c.drawString(0.55 * inch, 1.55 * inch, "STORYLINE · ONE STAGE PER SLIDE")
     c.setFillColor(TEXT)
-    c.setFont("Helvetica", 10)
-    c.drawString(0.55 * inch, 1.25 * inch, "1 Diagnose → 2 Findings → 3 Reposition  ·  4 Packaging & value prop  ·  5 Guardrails + invest ROI")
-    c.drawString(0.55 * inch, 1.0 * inch, "6 Sales · Marketing · Finance · regions + metrics feedback loop  ·  7 Asks")
+    c.setFont("Helvetica", 11)
+    c.drawString(0.55 * inch, 1.25 * inch, "1 Five-lens diagnosis  →  2 Illustrative findings  →  3 Decision → Reposition")
+    c.drawString(0.55 * inch, 1.0 * inch, "4 Package & price  ·  5 Guardrails & invest  ·  6 Align & measure  ·  7 Ask")
     foot(c, 1)
     c.showPage()
 
@@ -343,11 +343,11 @@ def build(path="/workspace/case-study-1-reposition-executive.pdf"):
     rr(c, 0.55 * inch, 1.05 * inch, W - 1.1 * inch, 1.45 * inch, SURFACE)
     c.setFillColor(GOLD)
     c.setFont("Helvetica-Bold", 9)
-    c.drawString(0.75 * inch, 2.2 * inch, "12-MONTH SCOREBOARD · BOTH SPM LEVERS · QUARTERLY PRICING COUNCIL")
+    c.drawString(0.75 * inch, 2.2 * inch, "12-MONTH SCOREBOARD · QUARTERLY PRICING COUNCIL")
     c.setFillColor(TEXT)
     c.setFont("Helvetica", 9)
-    c.drawString(0.75 * inch, 1.85 * inch, "NEW REVENUE: Net sales Flat→+8–12% · Tier ≥80% · Value/TCO wins ≥40% · Renewal step-up ≥25%")
-    c.drawString(0.75 * inch, 1.55 * inch, "MARGIN/EBIT: Recover 3–4 GM pts · Price variance <15% · ≥70% discounts have documented scope/term trade")
+    c.drawString(0.75 * inch, 1.85 * inch, "Net sales Flat→+8–12%  ·  GM recover 3–4 pts (e.g. →25–27%)  ·  Tier adoption ≥80%")
+    c.drawString(0.75 * inch, 1.55 * inch, "Price variance <15%  ·  Value/TCO wins ≥40%  ·  Renewal step-up ≥25%  ·  ≥70% discounts have a documented trade")
     c.setFillColor(MUTED)
     c.setFont("Helvetica", 8)
     c.drawString(0.75 * inch, 1.25 * inch, "Feedback: monthly Deal Desk overrides → quarterly Pricing Council → annual sunset / reposition re-test")
@@ -362,7 +362,7 @@ def build(path="/workspace/case-study-1-reposition-executive.pdf"):
     c.drawString(0.55 * inch, H - 0.4 * inch, "STORYLINE STEP 7 OF 7 · CLOSE")
     c.setFillColor(GOLD)
     c.setFont("Helvetica-Bold", 16)
-    c.drawString(0.55 * inch, H - 0.8 * inch, "Reposition. Win new revenue. Restore margin.")
+    c.drawString(0.55 * inch, H - 0.8 * inch, "Reposition. Land with tiers. Expand when value is proven.")
     badge(c, "7", "ASK", SUCCESS)
     rr(c, 0.55 * inch, H - 3.25 * inch, W - 1.1 * inch, 1.3 * inch, SURFACE)
     c.setFillColor(ACCENT)
@@ -370,7 +370,7 @@ def build(path="/workspace/case-study-1-reposition-executive.pdf"):
     c.drawString(0.75 * inch, H - 2.15 * inch, "THE CALL")
     wrap(
         c,
-        "Reposition AMS as Outcome-Tiered Application Operations. Discount to sustain topline only when traded for scope/term/investment. Fund Deal Desk in Q1; two regional pilots; Pricing Council.",
+        "Reposition AMS as Outcome-Tiered Application Operations. Discount to sustain net sales only when traded for scope/term/attach. Fund Deal Desk in Q1; two regional pilots; Pricing Council.",
         0.75 * inch,
         H - 2.5 * inch,
         W - 1.5 * inch,
@@ -379,19 +379,18 @@ def build(path="/workspace/case-study-1-reposition-executive.pdf"):
     rr(c, 0.55 * inch, 1.15 * inch, 5.4 * inch, 2.0 * inch, SURFACE)
     c.setFillColor(GOLD)
     c.setFont("Helvetica-Bold", 9)
-    c.drawString(0.75 * inch, 2.85 * inch, "CASE ASKS — COVERED")
+    c.drawString(0.75 * inch, 2.85 * inch, "THOUGHT PROCESS")
     c.setFillColor(TEXT)
     c.setFont("Helvetica", 10)
     for i, line in enumerate(
         [
-            "✓ Packaging · pricing · value proposition",
-            "✓ Commercial / Deal Desk guardrails",
-            "✓ Invest sequence + what to stop",
-            "✓ Sales · Marketing · Finance · regions",
-            "✓ Metrics + Pricing Council feedback loop",
+            "1 Diagnose with five lenses",
+            "2 Synthesize commercial root causes",
+            "3 Decide with trade-offs → Reposition",
+            "4 Package / guardrail / enable / measure",
         ]
     ):
-        c.drawString(0.75 * inch, 2.5 * inch - i * 16, line)
+        c.drawString(0.75 * inch, 2.5 * inch - i * 18, line)
     rr(c, 6.2 * inch, 1.15 * inch, 5.0 * inch, 2.0 * inch, SURFACE)
     c.setFillColor(SUCCESS)
     c.setFont("Helvetica-Bold", 9)
@@ -403,7 +402,7 @@ def build(path="/workspace/case-study-1-reposition-executive.pdf"):
             "Approve reposition + global rate card",
             "Stand up Deal Desk trade rules",
             "Authorize two regional pilots",
-            "Name owner + steering on sales + GM",
+            "Name Product owner + monthly steering",
         ]
     ):
         c.drawString(6.4 * inch, 2.5 * inch - i * 18, "▸  " + line)

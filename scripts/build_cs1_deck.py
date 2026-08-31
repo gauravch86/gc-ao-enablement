@@ -160,16 +160,16 @@ def build():
 
     # ─── SLIDE 1 · Situation ───
     s = blank_slide(prs)
-    label(s, "Strategic Product Manager  ·  Case Study 1  ·  Dual mandate: new revenue + margin")
-    title(s, "Grow topline. Protect EBIT. Reposition the offering.")
+    label(s, "Strategic Product Manager  ·  Case Study 1  ·  10-minute commercial brief")
+    title(s, "Reposition an underperforming portfolio offering")
 
     tb = textbox(s, Inches(0.55), Inches(1.2), Inches(12.2), Inches(0.55))
     tf = tb.text_frame
     tf.word_wrap = True
     add_para(
         tf,
-        "Application Managed Services: strong delivery, but commercially stuck — flat net sales, "
-        "gross margin 28% → 22–24%, Sales cannot sell value, regions discount without trading scope.",
+        "Application Managed Services: strong technical delivery, but commercially stuck — "
+        "flat net sales, declining gross margin, Sales cannot articulate value, inconsistent regional pricing.",
         size=14,
         color=MUTED,
         space_after=0,
@@ -178,68 +178,62 @@ def build():
     metric_card(
         s,
         Inches(0.55),
-        Inches(1.9),
+        Inches(1.95),
         Inches(3.9),
-        Inches(1.35),
-        "SPM owns — New sales",
-        "Topline",
-        "Net sales · attach · expansion",
-        ACCENT,
+        Inches(1.45),
+        "Net sales (2 years)",
+        "Flat",
+        "Weak conversion · little attach",
+        MUTED,
     )
     metric_card(
         s,
         Inches(4.7),
-        Inches(1.9),
+        Inches(1.95),
         Inches(3.9),
-        Inches(1.35),
-        "SPM owns — Profitability",
-        "Margin / EBIT",
-        "Gross margin · deal quality",
-        GOLD,
+        Inches(1.45),
+        "Gross margin (illustrative)",
+        "28% → 22–24%",
+        "−4 to −6 percentage points over 2 years",
+        DANGER,
     )
     metric_card(
         s,
         Inches(8.85),
-        Inches(1.9),
+        Inches(1.95),
         Inches(3.9),
-        Inches(1.35),
-        "Today’s paradox",
-        "Strong NPS",
-        "Flat sales · eroding GM",
-        DANGER,
+        Inches(1.45),
+        "Delivery satisfaction",
+        "Strong",
+        "Execution is not the failure mode",
+        SUCCESS,
     )
 
-    rect(s, Inches(0.55), Inches(3.45), Inches(12.2), Inches(1.2), SURFACE)
-    tb = textbox(s, Inches(0.75), Inches(3.58), Inches(11.8), Inches(0.95))
+    rect(s, Inches(0.55), Inches(3.65), Inches(12.2), Inches(1.15), SURFACE)
+    tb = textbox(s, Inches(0.75), Inches(3.8), Inches(11.8), Inches(0.9))
     tf = tb.text_frame
     tf.word_wrap = True
-    add_para(tf, "THE JOB IN THIS ROLE", size=11, bold=True, color=ACCENT, space_after=4)
+    add_para(tf, "EXECUTIVE FRAMING", size=11, bold=True, color=ACCENT, space_after=4)
     add_para(
         tf,
-        "Strategic Product Manager is accountable for both new revenue (new sales / topline) and profitability "
-        "(gross margin / EBIT contribution). Discounts are a growth tool — used to sustain revenue only when "
-        "traded for additional scope, term, or customer investment that increases total value — never free margin bleed.",
+        "Commercial / go-to-market problem — not a delivery turnaround. Sold as headcount; buyers purchase outcomes, "
+        "cost predictability, and risk reduction. Plan must restore net sales and gross margin together — "
+        "discounts only when traded for scope, term, or attach. Leadership asks: evolve, reposition, or sunset.",
         size=13,
         color=TEXT,
         space_after=0,
     )
 
-    tb = textbox(s, Inches(0.55), Inches(4.85), Inches(12.2), Inches(1.75))
+    tb = textbox(s, Inches(0.55), Inches(5.05), Inches(12.2), Inches(1.55))
     tf = tb.text_frame
     tf.word_wrap = True
-    add_para(tf, "WHAT LEADERSHIP GETS IN 10 MINUTES", size=11, bold=True, color=GOLD, space_after=6)
-    add_para(tf, "1  Diagnose  →  2  Findings  →  3  Reposition decision", size=14, bold=True, color=TEXT, space_after=4)
+    add_para(tf, "STORYLINE  ·  ONE STAGE PER SLIDE  ·  10 MIN + 5 MIN QUESTIONS", size=11, bold=True, color=GOLD, space_after=8)
+    add_para(tf, "1  Five-lens diagnosis", size=14, bold=True, color=TEXT, space_after=3)
+    add_para(tf, "2  Illustrative findings (what the data would show)", size=14, bold=True, color=TEXT, space_after=3)
+    add_para(tf, "3  Decision framework → Reposition", size=14, bold=True, color=TEXT, space_after=3)
     add_para(
         tf,
-        "4  Revised packaging & value proposition   ·   5  Guardrails + investment ROI sequence",
-        size=14,
-        bold=True,
-        color=TEXT,
-        space_after=4,
-    )
-    add_para(
-        tf,
-        "6  Sales · Marketing · Finance · regional enablement + metrics feedback loop   ·   7  Asks",
+        "4  Package & price   ·   5  Guardrails & invest   ·   6  Align & measure   ·   7  Ask",
         size=14,
         bold=True,
         color=TEXT,
@@ -250,10 +244,10 @@ def build():
         s,
         """TIMING: ~1:15
 
-Open on the dual SPM mandate: new revenue AND margin/EBIT — not “fix delivery” alone.
-Paradox: NPS strong, sales flat, GM illustratively 28%→22–24%.
-Preview the storyline as answering the case asks in order: package/price → guardrails/invest → align/metrics → ask.
-Discount thesis in one line: discount to protect topline only when we trade for scope/term/investment.""",
+Paradox first: delivery satisfaction strong, sales flat, margin illustratively 28% → 22–24%.
+Commercial problem, not delivery. Storyline is sequential — one stage per slide.
+In framing: we will fix packaging/pricing so net sales and gross margin recover together;
+discounts are a trade for scope/term/attach — not free bleed.""",
     )
 
     # ─── SLIDE 2 · Diagnosis ───
@@ -378,13 +372,13 @@ All three causes are commercial; delivery is fine.""",
     # ─── SLIDE 4 · Decision ───
     s = blank_slide(prs)
     label(s, "Storyline step 3 of 7  ·  Portfolio call with explicit trade-offs")
-    title(s, "Decision → Reposition (grow sales + restore margin)")
+    title(s, "Decision framework → Reposition")
     stage_badge(s, "3", "DECISION FRAMEWORK", SUCCESS)
 
     tb = textbox(s, Inches(3.55), Inches(1.2), Inches(9.2), Inches(0.35))
     add_para(
         tb.text_frame,
-        "Change what Sales sells and how Deal Desk prices — tooling alone will not fix either P&L lever",
+        "Change what Sales sells and how Deal Desk prices — tooling alone will not fix conversion or margin",
         size=13,
         color=MUTED,
         space_after=0,
@@ -621,17 +615,17 @@ Fund commercial assets before tooling. Explicit stop list = ROI discipline.""",
     tb = textbox(s, Inches(0.75), Inches(4.4), Inches(11.8), Inches(1.85))
     tf = tb.text_frame
     tf.word_wrap = True
-    add_para(tf, "12-MONTH SCOREBOARD  ·  BOTH SPM LEVERS  ·  Quarterly Pricing Council", size=12, bold=True, color=GOLD, space_after=6)
+    add_para(tf, "12-MONTH SCOREBOARD  ·  Quarterly Pricing Council", size=12, bold=True, color=GOLD, space_after=6)
     add_para(
         tf,
-        "NEW REVENUE: Net sales Flat → +8–12%   ·   Tier adoption ≥80%   ·   Wins on value/TCO ≥40%   ·   Renewal step-up ≥25%",
+        "Net sales Flat → +8–12%   ·   Gross margin recover 3–4 pts (e.g. toward 25–27%)   ·   Tier adoption ≥80%",
         size=13,
         color=TEXT,
         space_after=4,
     )
     add_para(
         tf,
-        "MARGIN / EBIT: Recover 3–4 GM pts (e.g. toward 25–27%)   ·   Price variance <15%   ·   ≥70% discounts have documented scope/term trade",
+        "Price variance <15%   ·   Wins on value/TCO ≥40%   ·   Renewal step-up ≥25%   ·   ≥70% discounts have a documented scope/term trade",
         size=13,
         color=TEXT,
         space_after=6,
@@ -651,14 +645,14 @@ Fund commercial assets before tooling. Explicit stop list = ROI discipline.""",
         """TIMING: ~1:10
 
 Answers: cross-functional alignment + success metrics + continuous feedback loop.
-Scoreboard splits NEW REVENUE vs MARGIN/EBIT so interviewers hear the dual SPM mandate.
+Scoreboard tracks net sales and gross margin recovery plus commercial hygiene (tier adoption, discount trades).
 Pricing Council = how pricing/commercial models stay alive from market performance.""",
     )
 
     # ─── SLIDE 8 · Ask ───
     s = blank_slide(prs)
     label(s, "Storyline step 7 of 7  ·  Close and hand to questions")
-    title(s, "Reposition. Win new revenue. Restore margin.")
+    title(s, "Reposition. Land with tiers. Expand when value is proven.")
     stage_badge(s, "7", "ASK", SUCCESS)
 
     rect(s, Inches(0.55), Inches(1.7), Inches(12.2), Inches(1.5), SURFACE)
@@ -670,7 +664,7 @@ Pricing Council = how pricing/commercial models stay alive from market performan
         tf,
         "Reposition Application Managed Services as Outcome-Tiered Application Operations "
         "(Stabilize → Optimize → Transform). Do not sunset. Do not evolve tooling without fixing the sellable unit. "
-        "Use discounts to sustain topline only when traded for scope, term, or investment. "
+        "Use discounts to sustain net sales only when traded for scope, term, or attach. "
         "Fund Deal Desk guardrails in Q1; pilot in two regions; govern with a quarterly Pricing Council.",
         size=13,
         color=TEXT,
@@ -681,13 +675,12 @@ Pricing Council = how pricing/commercial models stay alive from market performan
     tb = textbox(s, Inches(0.75), Inches(3.55), Inches(5.6), Inches(2.55))
     tf = tb.text_frame
     tf.word_wrap = True
-    add_para(tf, "CASE ASKS — COVERED", size=11, bold=True, color=GOLD, space_after=6)
+    add_para(tf, "THOUGHT PROCESS THEY SHOULD HEAR", size=11, bold=True, color=GOLD, space_after=6)
     for line in [
-        "✓ Packaging · pricing · value proposition",
-        "✓ Commercial / Deal Desk guardrails",
-        "✓ Invest sequence + what to stop",
-        "✓ Sales · Marketing · Finance · regions",
-        "✓ Metrics + Pricing Council feedback loop",
+        "1 Diagnose with five lenses",
+        "2 Synthesize commercial root causes",
+        "3 Decide with trade-offs → Reposition",
+        "4 Package / guardrail / enable / measure",
     ]:
         add_para(tf, line, size=13, color=TEXT, space_after=5)
 
@@ -699,8 +692,8 @@ Pricing Council = how pricing/commercial models stay alive from market performan
     for line in [
         "Approve reposition + global rate card",
         "Stand up Deal Desk trade rules this quarter",
-        "Authorize two regional pilots (new sales)",
-        "Name Product owner + monthly steering on sales + GM",
+        "Authorize two regional pilots",
+        "Name Product owner + monthly steering",
     ]:
         add_para(tf, "▸  " + line, size=13, color=TEXT, space_after=5)
 
@@ -710,11 +703,10 @@ Pricing Council = how pricing/commercial models stay alive from market performan
         s,
         """TIMING: ~1:00 then Q&A
 
-Restate dual outcome: new revenue + margin recovery.
-Point at “case asks covered” — packaging, guardrails, invest, align, metrics.
-Four asks. Hand to questions.
+Restate call. Point at the four-step thought process — that is the interview signal.
+Then four asks. Hand to questions.
 
-Q&A: discount philosophy · sunset · deal size dip · Finance rev-rec · optional multi-vendor pack.""",
+Q&A: discount-as-trade · sunset · deal size dip · Finance rev-rec · optional multi-vendor pack.""",
     )
 
     out = "/workspace/case-study-1-reposition-executive.pptx"
