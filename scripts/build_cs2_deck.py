@@ -168,7 +168,7 @@ def build():
     for i, (h, body, col) in enumerate([
         ("GIVEN", "Ericsson products + third-party portfolio under one Managed Services umbrella", GOLD),
         ("METHOD", "Design → Deploy → Operate → Assure → Improve · pilots before scale", ACCENT),
-        ("PROOF", "Telefónica Argentina renewal · Three UK consolidation & autonomy economics", SUCCESS),
+        ("PROOF", "LATAM Tier-1 renewal · Tier-1 UK consolidation & autonomy economics", SUCCESS),
     ]):
         left = Inches(0.55) + i * Inches(4.15)
         rect(s, left, Inches(3.55), Inches(3.95), Inches(1.35), SURFACE)
@@ -471,8 +471,8 @@ GLOSSARY: FTE · B · X · EBIT · Site-mix · Penalty lot · Earn-back.""")
     tb = textbox(s, Inches(0.75), Inches(1.95), Inches(5.6), Inches(2.05))
     tf = tb.text_frame
     tf.word_wrap = True
-    add_para(tf, "TELEFÓNICA ARGENTINA — ~$100m RENEWAL", size=12, bold=True, color=GOLD, space_after=8)
-    add_para(tf, "3,000+ backlog · ~500/day → offender taxonomy", size=13, color=TEXT, space_after=4)
+    add_para(tf, "LATAM TIER-1 — NINE-FIGURE MGS RENEWAL", size=12, bold=True, color=GOLD, space_after=8)
+    add_para(tf, "Thousands of backlog items · high daily volume → offender taxonomy", size=13, color=TEXT, space_after=4)
     add_para(tf, "Executive key-performance-indicator transparency · 24×7 scale", size=13, color=TEXT, space_after=4)
     add_para(tf, "Accountability restored → renewal won on trust", size=13, color=TEXT, space_after=0)
 
@@ -480,10 +480,10 @@ GLOSSARY: FTE · B · X · EBIT · Site-mix · Penalty lot · Earn-back.""")
     tb = textbox(s, Inches(7.0), Inches(1.95), Inches(5.55), Inches(2.05))
     tf = tb.text_frame
     tf.word_wrap = True
-    add_para(tf, "THREE UK — ~$125m VENDOR CONSOLIDATION", size=12, bold=True, color=ACCENT, space_after=8)
-    add_para(tf, "Four vendors · 400+ components · ~75 contractual performance indicators", size=13, color=TEXT, space_after=4)
+    add_para(tf, "TIER-1 UK — NINE-FIGURE VENDOR CONSOLIDATION", size=12, bold=True, color=ACCENT, space_after=8)
+    add_para(tf, "Multi-vendor estate · 400+ components · ~75 contractual performance indicators", size=13, color=TEXT, space_after=4)
     add_para(tf, "Single pane of glass + self-heal + generative-AI runbooks", size=13, color=TEXT, space_after=4)
-    add_para(tf, "474→336 full-time-equivalent economics · lowest Priority-1s", size=13, color=TEXT, space_after=0)
+    add_para(tf, "~30% FTE right-size · lowest Priority-1s after transition", size=13, color=TEXT, space_after=0)
 
     rect(s, Inches(0.55), Inches(4.4), Inches(12.2), Inches(1.85), SURFACE)
     tb = textbox(s, Inches(0.75), Inches(4.55), Inches(11.8), Inches(1.55))
@@ -494,8 +494,8 @@ GLOSSARY: FTE · B · X · EBIT · Site-mix · Penalty lot · Earn-back.""")
         tf,
         "Launch a reusable Autonomous Operations managed-services offering (Ericsson + third-party under Managed Services) "
         "that sells autonomy maturity + unified observability + outcome key performance indicators as one productized journey — "
-        "with enablement for customer operations and Ericsson regions, and pilots that validate total cost of ownership, "
-        "soft-ramp, and library reuse before scaling. Enablement: Reverse shadow M6–M9 · Auto classes M12–M15.",
+        "the commercial answer to multivendor managed IT / application development & maintenance style deals under one MS umbrella. "
+        "Enablement: Reverse shadow M6–M9 · Auto classes M12–M15. Pilots validate TCO, soft-ramp, and library reuse before scale.",
         size=13, color=TEXT, space_after=0,
     )
 
@@ -509,7 +509,10 @@ GLOSSARY: FTE · B · X · EBIT · Site-mix · Penalty lot · Earn-back.""")
     footer(s, 8)
     set_notes(s, """TIMING: ~1:00 then Q&A
 
-Two proof anchors then recommendation sentence. Invite depth on CPIs, five-year economics, or enablement.
+Two proof anchors (genericized — no client names / precise $ out loud unless you choose to). Then recommendation.
+Say explicitly: this answers multivendor managed IT / ADM-style deal priorities — single accountability under MS.
+Bridge: “This is the kind of trade-off conversation I’d bring to this role.”
+HTML is leave-behind — not the live walkthrough. On P&L slide hit 2–3 numbers only.
 
 LIKELY Qs:
 • Why consolidation first? Unlock — not north star.

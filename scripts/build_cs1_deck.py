@@ -413,7 +413,7 @@ All three causes are commercial; delivery is fine.""",
             True,
             [
                 "Outcome-tiered Application Operations",
-                "Stabilize → Optimize → Transform",
+                "Stabilize → Optimize → Autonomize",
                 "New value prop + pricing + Deal Desk rules",
                 "Trade-off: near-term deal size may dip; attach + renewals + cleaner GM recover",
             ],
@@ -471,20 +471,20 @@ Evolve-only fails both levers. Sunset destroys the footprint SPM would grow.""",
             ACCENT,
             "Expand — prove efficiency",
             [
-                "+ Monitoring / automation packs",
-                "Outcome-band vs service levels",
+                "+ Monitoring / GenAI SOP packs",
+                "Subscription / outcome-band pricing",
                 "Optional gain-share on savings",
                 "Floor GM ≥ 26% · attach engine",
             ],
         ),
         (
-            "TRANSFORM",
+            "AUTONOMIZE",
             SUCCESS,
-            "Deepen — operating uplift",
+            "Deepen — closed-loop uplift",
             [
-                "+ Continuous improvement",
-                "Milestone elements (Finance OK)",
-                "Executive scorecard",
+                "+ Continuous improvement / self-heal",
+                "Value-/subscription + milestones",
+                "Executive scorecard (Finance OK)",
                 "Floor GM ≥ 28% · premium renewals",
             ],
         ),
@@ -511,7 +511,7 @@ Evolve-only fails both levers. Sunset destroys the footprint SPM would grow.""",
         tf,
         "“Ericsson Application Operations — outcome-tiered managed applications that restore control, "
         "improve total cost of ownership where contracted, and give Sales a globally consistent story "
-        "with Deal Desk pricing discipline that grows revenue without giving margin away.”",
+        "with value-/subscription-ready pricing and Deal Desk discipline that grows revenue without giving margin away.”",
         size=13,
         color=TEXT,
         space_after=0,
@@ -523,7 +523,7 @@ Evolve-only fails both levers. Sunset destroys the footprint SPM would grow.""",
         """TIMING: ~1:25
 
 This slide answers: revised packaging + pricing + updated value proposition.
-Ladder: Stabilize lands new logos → Optimize expands → Transform deepens.
+Ladder: Stabilize lands new logos → Optimize expands → Autonomize deepens.
 Each tier has a GM floor — topline growth with margin discipline.""",
     )
 
@@ -539,9 +539,13 @@ Each tier has a GM floor — topline growth with margin discipline.""",
     tf.word_wrap = True
     add_para(tf, "COMMERCIAL GUARDRAILS  ·  DEAL DESK", size=12, bold=True, color=GOLD, space_after=8)
     for name, detail in [
-        ("Floor gross margin", "Stabilize ≥22% · Optimize ≥26% · Transform ≥28%"),
-        ("Discount = trade, not gift", "≤12% off list only if traded for scope, term ≥24 mo, or attach pack"),
-        ("Sustain topline rule", "If discount needed to keep/win revenue → must increase contracted value or commitment"),
+        ("Floor gross margin", "Stabilize ≥22% · Optimize ≥26% · Autonomize ≥28%"),
+        ("Discount = trade (not price cut)", "≤12% only if traded for scope / term / attach — never free volume"),
+        ("Sustain topline rule", "Discount to win/keep revenue must raise contracted value"),
+        ("AI Deal Desk assist", "Comps + override flags · human approval mandatory"),
+        ("Transition pricing", "Knowledge-transfer mandatory · min 8% Year-1 contract value"),
+        ("Scope / regional", "Unpaid work ≤2% ACV · like-for-like within ±15% rate card"),
+        ("Credits / penalties", "Soft-ramp M1–6 · Finance revenue-recognition OK"),
         ("Transition pricing", "Knowledge-transfer mandatory · min 8% Year-1 contract value"),
         ("Scope change", "Unpaid work cap 2% of annual contract value"),
         ("Regional variance", "Like-for-like within ±15% of global rate card"),
@@ -582,8 +586,8 @@ Each tier has a GM floor — topline growth with margin discipline.""",
         s,
         """TIMING: ~1:20
 
-This slide answers: commercial guardrails/pricing guidelines AND investment prioritization.
-Discount rule to verbalize: discount protects topline only when negotiated for more scope, longer term, or attach — increasing total contracted value / investment, not giving margin away.
+Hit only 2–3 numbers verbally (floor GM ladder; discount=trade; fund Q1 Deal Desk). Rest is backup.
+Why not just cut price? One line on the slide. AI Deal Desk assist = commercializing AI intelligence without removing human approval.
 Fund commercial assets before tooling. Explicit stop list = ROI discipline.""",
     )
 
@@ -663,7 +667,7 @@ Pricing Council = how pricing/commercial models stay alive from market performan
     add_para(
         tf,
         "Reposition Application Managed Services as Outcome-Tiered Application Operations "
-        "(Stabilize → Optimize → Transform). Do not sunset. Do not evolve tooling without fixing the sellable unit. "
+        "(Stabilize → Optimize → Autonomize). Do not sunset. Do not evolve tooling without fixing the sellable unit. "
         "Use discounts to sustain net sales only when traded for scope, term, or attach. "
         "Fund Deal Desk guardrails in Q1; pilot in two regions; govern with a quarterly Pricing Council.",
         size=13,
@@ -705,8 +709,12 @@ Pricing Council = how pricing/commercial models stay alive from market performan
 
 Restate call. Point at the four-step thought process — that is the interview signal.
 Then four asks. Hand to questions.
+Bridge: “This is the kind of trade-off conversation I’d bring to this role.”
+HTML is leave-behind depth — not the live walkthrough.
 
-Q&A: discount-as-trade · sunset · deal size dip · Finance rev-rec · optional multi-vendor pack.""",
+Q&A:
+• Why not just cut price? Free discount buys volume that destroys GM and trains the market — we trade discount for scope/term/attach.
+• Sunset / deal size dip / Finance rev-rec / optional multi-vendor pack.""",
     )
 
     out = "/workspace/case-study-1-reposition-executive.pptx"

@@ -211,7 +211,7 @@ def build(path="/workspace/case-study-1-reposition-executive.pdf"):
     decisions = [
         ("SUNSET", MUTED, False, "Rejects footprint. Only if no 18-month path to sales + margin AND no pull-through. Not indicated."),
         ("EVOLVE ONLY", MUTED, False, "More tooling, same sellable unit. Fixes neither Sales narrative nor discount-without-trade."),
-        ("REPOSITION  ✓", SUCCESS, True, "Outcome-tiered Application Ops. Stabilize → Optimize → Transform. New value prop + Deal Desk rules."),
+        ("REPOSITION  ✓", SUCCESS, True, "Outcome-tiered Application Ops. Stabilize → Optimize → Autonomize. New value prop + Deal Desk rules."),
     ]
     cw = (W - 1.3 * inch) / 3
     for i, (h, col, sel, body) in enumerate(decisions):
@@ -240,8 +240,8 @@ def build(path="/workspace/case-study-1-reposition-executive.pdf"):
     badge(c, "4", "PACKAGE & PRICE", GOLD)
     tiers = [
         ("STABILIZE", GOLD, "Land — restore control", ["Service-level baseline", "Platform + criticality", "Floor GM ≥ 22% · new logos"]),
-        ("OPTIMIZE", ACCENT, "Expand — prove efficiency", ["Monitoring / automation", "Outcome-band pricing", "Floor GM ≥ 26% · attach"]),
-        ("TRANSFORM", SUCCESS, "Deepen — operating uplift", ["Continuous improvement", "Milestone (Finance OK)", "Floor GM ≥ 28% · renewals"]),
+        ("OPTIMIZE", ACCENT, "Expand — prove efficiency", ["Monitoring / GenAI SOPs", "Subscription / outcome-band", "Floor GM ≥ 26% · attach"]),
+        ("AUTONOMIZE", SUCCESS, "Deepen — closed-loop uplift", ["Continuous improvement / self-heal", "Value-/subscription + milestones", "Floor GM ≥ 28% · renewals"]),
     ]
     tw = (W - 1.3 * inch) / 3
     for i, (name, col, tag, lines) in enumerate(tiers):
@@ -261,7 +261,7 @@ def build(path="/workspace/case-study-1-reposition-executive.pdf"):
     rr(c, 0.55 * inch, 1.05 * inch, W - 1.1 * inch, 0.65 * inch, SURFACE)
     c.setFillColor(ACCENT)
     c.setFont("Helvetica-Bold", 8)
-    c.drawString(0.75 * inch, 1.45 * inch, "VALUE PROP: Outcome-tiered Application Operations — restore control, improve TCO where contracted, global Sales story with Deal Desk discipline that grows revenue without giving margin away.")
+    c.drawString(0.75 * inch, 1.45 * inch, "VALUE PROP: Outcome-tiered Application Operations — restore control, improve TCO where contracted, value-/subscription-ready pricing, Deal Desk discipline that grows revenue without giving margin away.")
     flow(c, 3)
     foot(c, 5)
     c.showPage()
@@ -281,7 +281,8 @@ def build(path="/workspace/case-study-1-reposition-executive.pdf"):
     c.drawString(0.75 * inch, 4.5 * inch, "COMMERCIAL GUARDRAILS")
     rules = [
         ("Floor GM", "≥22% / 26% / 28% by tier"),
-        ("Discount = trade", "≤12% only if traded for scope, term ≥24 mo, or attach"),
+        ("Discount ≠ free cut", "≤12% only with scope/term/attach trade — never free volume"),
+        ("AI Deal Desk assist", "Comps + override flags · human approval"),
         ("Sustain topline", "Discount to keep/win revenue must raise contracted value"),
         ("Transition", "KT mandatory · min 8% Y1 value"),
         ("Scope CR", "Unpaid cap 2% ACV"),

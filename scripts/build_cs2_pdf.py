@@ -77,7 +77,7 @@ def build(path="/workspace/case-study-2-ao-offering-executive.pdf"):
     c.setFillColor(ACCENT); c.setFont("Helvetica-Bold", 9); c.drawString(0.75 * inch, H - 2.05 * inch, "NORTH STAR")
     wrap(c, "End-user experience and Net Promoter Score · contractual performance-indicator attainment · market trust. Total cost of ownership funds the outcome — it is not the outcome.",
          0.75 * inch, H - 2.4 * inch, W - 1.5 * inch, size=10)
-    for i, (h, b, col) in enumerate([("GIVEN", "Ericsson + third-party under Managed Services", GOLD), ("METHOD", "Design→Deploy→Operate→Assure→Improve · pilots first", ACCENT), ("PROOF", "Telefónica Argentina · Three UK", SUCCESS)]):
+    for i, (h, b, col) in enumerate([("GIVEN", "Ericsson + third-party under Managed Services", GOLD), ("METHOD", "Design→Deploy→Operate→Assure→Improve · pilots first", ACCENT), ("PROOF", "LATAM Tier-1 · Tier-1 UK", SUCCESS)]):
         x = 0.55 * inch + i * ((W - 1.3 * inch) / 3 + 0.1 * inch); ww = (W - 1.3 * inch) / 3
         rr(c, x, 1.55 * inch, ww, 1.2 * inch, SURFACE)
         c.setFillColor(col); c.setFont("Helvetica-Bold", 10); c.drawString(x + 0.12 * inch, 2.45 * inch, h)
@@ -213,14 +213,14 @@ def build(path="/workspace/case-study-2-ao-offering-executive.pdf"):
     c.drawString(0.55 * inch, H - 0.8 * inch, "Lived proof. One recommendation.")
     badge(c, "7", "PROOF & ASK", SUCCESS)
     rr(c, 0.55 * inch, H - 3.5 * inch, 5.4 * inch, 1.55 * inch, SURFACE)
-    c.setFillColor(GOLD); c.setFont("Helvetica-Bold", 10); c.drawString(0.75 * inch, H - 2.15 * inch, "TELEFÓNICA ARGENTINA — ~$100m")
+    c.setFillColor(GOLD); c.setFont("Helvetica-Bold", 10); c.drawString(0.75 * inch, H - 2.15 * inch, "LATAM TIER-1 — NINE-FIGURE RENEWAL")
     wrap(c, "Top-offender discipline · KPI transparency · accountability → renewal", 0.75 * inch, H - 2.5 * inch, 5.0 * inch, size=9)
     rr(c, 6.2 * inch, H - 3.5 * inch, 5.0 * inch, 1.55 * inch, SURFACE)
-    c.setFillColor(ACCENT); c.setFont("Helvetica-Bold", 10); c.drawString(6.4 * inch, H - 2.15 * inch, "THREE UK — ~$125m")
-    wrap(c, "Consolidation · ~75 CPIs · SPOG + self-heal · 474→336 FTE · lowest P1s", 6.4 * inch, H - 2.5 * inch, 4.6 * inch, size=9)
+    c.setFillColor(ACCENT); c.setFont("Helvetica-Bold", 10); c.drawString(6.4 * inch, H - 2.15 * inch, "TIER-1 UK — NINE-FIGURE CONSOLIDATION")
+    wrap(c, "Consolidation · ~75 CPIs · SPOG + self-heal · ~30% FTE right-size · lowest P1s", 6.4 * inch, H - 2.5 * inch, 4.6 * inch, size=9)
     rr(c, 0.55 * inch, 1.05 * inch, W - 1.1 * inch, 1.9 * inch, SURFACE)
     c.setFillColor(SUCCESS); c.setFont("Helvetica-Bold", 10); c.drawString(0.75 * inch, 2.65 * inch, "RECOMMENDATION")
-    wrap(c, "Launch reusable Autonomous Operations managed services (Ericsson + third-party under MS) selling autonomy maturity + observability + outcome KPIs as one journey — with enablement and pilots before scale. Reverse shadow M6–M9 · Auto classes M12–M15.",
+    wrap(c, "Launch reusable Autonomous Operations managed services (Ericsson + third-party under MS) selling autonomy maturity + observability + outcome KPIs — the commercial answer to multivendor managed IT / ADM-style deals under one MS umbrella. Reverse shadow M6–M9 · Auto classes M12–M15.",
          0.75 * inch, 2.3 * inch, W - 1.5 * inch, size=10)
     c.setFillColor(MUTED); c.setFont("Helvetica-Bold", 10)
     c.drawCentredString(W / 2, 0.95 * inch, "QUESTIONS · 5 MINUTES · Deep dive on any stage: HTML case study")
