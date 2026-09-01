@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Operator KPI Control Tower — Sample End State</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0b1220; --surface: #141e2e; --surface2: #1c2a40;
+      --text: #e8eef7; --muted: #8fa3bc; --accent: #58a6ff;
+      --gold: #d4a853; --ok: #3fb950; --warn: #d4a853; --bad: #f87171;
+      --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.45; }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 1rem 1.1rem 2.5rem; }
+    header { margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,.08); }
+    header h1 { font-size: clamp(1.35rem, 3vw, 1.85rem); color: var(--gold); font-weight: 700; }
+    header p { color: var(--muted); margin-top: 0.35rem; font-size: 0.92rem; max-width: 52rem; }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.75rem; }
+    .badge { font-size: 0.72rem; font-weight: 600; padding: 0.25rem 0.55rem; border-radius: 999px;
+      background: rgba(88,166,255,.12); border: 1px solid rgba(88,166,255,.28); color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Operator KPI Control Tower</h1>
+      <p>
+        Sample end-state view for a Tier-1 telecom (BSS + OSS/IT + Network + Infra/Cloud).
+        Illustrative data only — shows how executive, domain, and journey KPIs come together in one SPOG-style dashboard.
+      </p>
+      <div class="badge-row">
+        <span class="badge">Executive layer</span>
+        <span class="badge">BSS / revenue cycle</span>
+        <span class="badge">OSS / IT</span>
+        <span class="badge">Network</span>
+        <span class="badge">Infra / Cloud</span>
+        <span class="badge">Autonomy maturity</span>
+      </div>
+    </header>
+
+    <!-- KPI cards injected by JS -->
+    <div class="kpi-grid" id="kpiGrid"></div>
+
+    <div class="chart-grid" id="chartGrid"></div>
+
+    <section class="table-section" id="tableSection"></section>
+
+    <footer>
+      Sample dashboard · Gaurav Chaudhary ·
+      <a href="operator-kpi-catalog.pdf">PDF catalogue</a> ·
+      <a href="operator-kpi-catalog.docx">Word catalogue</a> ·
+      <a href="index.html">Profile</a>
+    </footer>
+  </div>
+
+  <script>
+    const KPI_CARDS = [
+      { label: "Net sales (MTD)", value: "+4.2%", sub: "vs plan +2.1%", trend: "up", color: "ok" },
+      { label: "Voluntary churn", value: "1.38%", sub: "target ≤1.5%", trend: "ok", color: "ok" },
+      { label: "NPS", value: "+34", sub: "+3 pts QoQ", trend: "up", color: "ok" },
+      { label: "App availability (gold)", value: "99.94%", sub: "SLA 99.9%", trend: "ok", color: "ok" },
+      { label: "Order-to-activate", value: "18.4h", sub: "target ≤24h", trend: "ok", color: "ok" },
+      { label: "Bill cycle close", value: "T+3.1d", sub: "target T+4d", trend: "ok", color: "ok" },
+      { label: "Billing reruns", value: "2", sub: "last cycle", trend: "down", color: "warn" },
+      { label: "DSO", value: "28d", sub: "target ≤32d", trend: "ok", color: "ok" },
+      { label: "P1 MTTR", value: "2.1h", sub: "target ≤4h", trend: "ok", color: "ok" },
+      { label: "Network availability", value: "99.82%", sub: "customer-facing", trend: "warn", color: "warn" },
+      { label: "Auto-remediation", value: "41%", sub: "autonomy path", trend: "up", color: "accent" },
+      { label: "Cloud spend vs budget", value: "96%", sub: "FinOps", trend: "ok", color: "ok" },
+    ];
+
+    const style = document.createElement('style');
+    style.textContent = `
+      .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.65rem; margin-bottom: 1rem; }
+      @media (max-width: 1000px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 520px) { .kpi-grid { grid-template-columns: 1fr; } }
+      .kpi-card { background: var(--surface); border: 1px solid rgba(255,255,255,.07); border-radius: 12px; padding: 0.85rem 0.95rem; }
+      .kpi-card .lbl { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+      .kpi-card .val { font-size: 1.55rem; font-weight: 700; margin: 0.2rem 0; }
+      .kpi-card .val.ok { color: var(--ok); } .kpi-card .val.warn { color: var(--warn); }
+      .kpi-card .val.bad { color: var(--bad); } .kpi-card .val.accent { color: var(--accent); }
+      .kpi-card .sub { font-size: 0.78rem; color: var(--muted); }
+      .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem; }
+      @media (max-width: 900px) { .chart-grid { grid-template-columns: 1fr; } }
+      .chart-panel { background: var(--surface); border: 1px solid rgba(255,255,255,.07); border-radius: 12px; padding: 0.9rem 1rem 1rem; }
+      .chart-panel.wide { grid-column: 1 / -1; }
+      .chart-panel h2 { font-size: 0.88rem; color: var(--gold); margin-bottom: 0.15rem; }
+      .chart-panel .hint { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.65rem; }
+      .chart-wrap { position: relative; height: 220px; }
+      .chart-wrap.tall { height: 260px; }
+      .table-section { background: var(--surface); border: 1px solid rgba(255,255,255,.07); border-radius: 12px; padding: 1rem; margin-bottom: 1.25rem; overflow-x: auto; }
+      .table-section h2 { font-size: 0.95rem; color: var(--gold); margin-bottom: 0.65rem; }
+      table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+      th, td { text-align: left; padding: 0.45rem 0.5rem; border-bottom: 1px solid rgba(255,255,255,.06); }
+      th { color: var(--muted); font-weight: 600; font-size: 0.72rem; text-transform: uppercase; }
+      td .pill { display: inline-block; font-size: 0.68rem; font-weight: 700; padding: 0.12rem 0.4rem; border-radius: 999px; }
+      .pill.g { background: rgba(63,185,80,.15); color: var(--ok); }
+      .pill.a { background: rgba(212,168,83,.15); color: var(--warn); }
+      .pill.r { background: rgba(248,113,113,.15); color: var(--bad); }
+      footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding-top: 0.5rem; }
+      footer a { color: var(--accent); }
+    `;
+    document.head.appendChild(style);
+
+    const grid = document.getElementById('kpiGrid');
+    KPI_CARDS.forEach(k => {
+      const d = document.createElement('div');
+      d.className = 'kpi-card';
+      d.innerHTML = `<div class="lbl">${k.label}</div><div class="val ${k.color}">${k.value}</div><div class="sub">${k.sub}</div>`;
+      grid.appendChild(d);
+    });
+
+    const charts = [
+      { id: 'churnChart', title: 'Churn — port-out by operator', hint: 'MNP “from / to” view (illustrative)', wide: false },
+      { id: 'salesChart', title: 'Sales by channel (COP · CHQ · Digital)', hint: 'Gross adds this month', wide: false },
+      { id: 'billingChart', title: 'Billing & collections funnel', hint: 'Your BSS revenue-cycle stages', wide: false },
+      { id: 'availChart', title: 'Availability by domain', hint: 'App · Network · Cloud platform', wide: false },
+      { id: 'journeyChart', title: 'Customer journey KPI trend (13 weeks)', hint: 'Buy → Activate → Use → Bill → Pay', wide: true },
+      { id: 'autonomyChart', title: 'Autonomy maturity', hint: 'Reactive → Predictive → Autonomous', wide: false },
+      { id: 'incidentChart', title: 'P1/P2 incidents & MTTR', hint: 'OSS/IT + network correlated', wide: false },
+    ];
+
+    const cg = document.getElementById('chartGrid');
+    charts.forEach(c => {
+      const p = document.createElement('div');
+      p.className = 'chart-panel' + (c.wide ? ' wide' : '');
+      p.innerHTML = `<h2>${c.title}</h2><div class="hint">${c.hint}</div><div class="chart-wrap${c.wide ? ' tall' : ''}"><canvas id="${c.id}"></canvas></div>`;
+      cg.appendChild(p);
+    });
+
+    const tableRows = [
+      ['Sales (COP)', 'Commercial', 'Gross adds / conversion', 'CRM + channel', 'Weekly', 'g'],
+      ['Sales (CHQ)', 'Commercial', 'Telesales conversion / attach', 'CRM + dialer', 'Weekly', 'g'],
+      ['Churn (operator-wise)', 'Lifecycle', 'MNP port-out / port-in', 'BSS + regulator feed', 'Weekly', 'g'],
+      ['Application availability', 'OSS/IT', 'Uptime by tier (gold/silver)', 'APM + ITSM', 'Real-time', 'g'],
+      ['Order capture lead time', 'BSS', 'Order created → accepted', 'Order mgmt', 'Daily', 'g'],
+      ['Order-to-activate', 'BSS + Network', 'Order → live service', 'Provisioning', 'Daily', 'a'],
+      ['Billing E2E completion', 'BSS', 'Cycle close T+n days', 'Billing', 'Monthly', 'g'],
+      ['Billing reruns', 'BSS', 'Count + root cause', 'Billing ops', 'Monthly', 'a'],
+      ['Bill prep → confirm', 'BSS', 'Hours in prep/approval', 'Billing', 'Monthly', 'g'],
+      ['Ready for collection', 'Finance', 'Accounts staged', 'Collections', 'Daily', 'g'],
+      ['In collection (by step)', 'Finance', 'Stage clarity + aging', 'Collections', 'Daily', 'a'],
+      ['Pending write-off', 'Finance', 'Approval queue', 'Finance', 'Weekly', 'g'],
+      ['Network availability', 'Network', 'RAN/core/transport', 'NMS/assurance', 'Real-time', 'a'],
+      ['Cloud spend vs budget', 'Infra/Cloud', 'FinOps variance', 'Cloud billing', 'Weekly', 'g'],
+      ['Auto-remediation rate', 'AO maturity', '% closed-loop', 'SPOG + automation', 'Weekly', 'g'],
+    ];
+
+    document.getElementById('tableSection').innerHTML = `
+      <h2>KPI catalogue snapshot (sample definitions)</h2>
+      <table>
+        <thead><tr><th>KPI</th><th>Domain</th><th>Definition</th><th>Source</th><th>Cadence</th><th>Status</th></tr></thead>
+        <tbody>${tableRows.map(r => `<tr><td><strong>${r[0]}</strong></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td><span class="pill ${r[5]}">${r[5]==='g'?'On target':r[5]==='a'?'Watch':'At risk'}</span></td></tr>`).join('')}</tbody>
+      </table>`;
+
+    Chart.defaults.color = '#8fa3bc';
+    Chart.defaults.borderColor = 'rgba(255,255,255,.08)';
+    Chart.defaults.font.family = "'Plus Jakarta Sans', system-ui, sans-serif";
+
+    new Chart(document.getElementById('churnChart'), {
+      type: 'bar',
+      data: {
+        labels: ['O2', 'EE', 'Vodafone', 'MVNOs', 'Other'],
+        datasets: [{ label: 'Port-out %', data: [0.42, 0.31, 0.28, 0.19, 0.18], backgroundColor: '#f87171' },
+                   { label: 'Port-in %', data: [0.35, 0.22, 0.25, 0.12, 0.15], backgroundColor: '#3fb950' }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } },
+        scales: { y: { ticks: { callback: v => v + '%' } } } }
+    });
+
+    new Chart(document.getElementById('salesChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['COP (stores)', 'CHQ (contact centre)', 'Digital / app', 'Partners'],
+        datasets: [{ data: [28, 22, 35, 15], backgroundColor: ['#d4a853','#58a6ff','#3fb950','#a371f7'] }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
+    });
+
+    new Chart(document.getElementById('billingChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Bill prep', 'Confirmed', 'Ready coll.', 'In collection', 'Paid', 'Write-off queue'],
+        datasets: [{ label: 'Accounts (000s)', data: [420, 398, 62, 48, 310, 8], backgroundColor: '#58a6ff' }]
+      },
+      options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+    });
+
+    new Chart(document.getElementById('availChart'), {
+      type: 'radar',
+      data: {
+        labels: ['BSS apps', 'OSS apps', 'CRM', 'Network RAN', 'Network core', 'Cloud platform'],
+        datasets: [{ label: 'Availability %', data: [99.94, 99.88, 99.91, 99.82, 99.90, 99.95], borderColor: '#58a6ff', backgroundColor: 'rgba(88,166,255,.2)' }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, scales: { r: { min: 99.5, max: 100 } } }
+    });
+
+    new Chart(document.getElementById('journeyChart'), {
+      type: 'line',
+      data: {
+        labels: ['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12','W13'],
+        datasets: [
+          { label: 'O2A (hours)', data: [26,24,22,21,20,19,19,18,18,17,18,18,18], borderColor: '#58a6ff', tension: .3 },
+          { label: 'Bill disputes (index)', data: [100,98,95,94,92,90,88,87,86,85,84,83,82], borderColor: '#d4a853', tension: .3 },
+          { label: 'FCR %', data: [68,69,70,71,72,73,74,74,75,76,76,77,78], borderColor: '#3fb950', tension: .3 },
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+    });
+
+    new Chart(document.getElementById('autonomyChart'), {
+      type: 'line',
+      data: {
+        labels: ['Q1','Q2','Q3','Q4','Q1','Q2'],
+        datasets: [
+          { label: 'Reactive %', data: [72,65,58,50,42,35], borderColor: '#f87171', tension: .3 },
+          { label: 'Predictive %', data: [20,25,28,32,35,38], borderColor: '#d4a853', tension: .3 },
+          { label: 'Autonomous %', data: [8,10,14,18,23,27], borderColor: '#3fb950', tension: .3 },
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, stacked: false, plugins: { legend: { position: 'bottom' } },
+        scales: { y: { ticks: { callback: v => v + '%' } } } }
+    });
+
+    new Chart(document.getElementById('incidentChart'), {
+      type: 'bar',
+      data: {
+        labels: ['W9','W10','W11','W12','W13'],
+        datasets: [
+          { label: 'P1 count', data: [3,2,4,1,2], backgroundColor: '#f87171', yAxisID: 'y' },
+          { label: 'MTTR (hrs)', data: [3.8,2.9,4.2,2.1,2.4], type: 'line', borderColor: '#d4a853', yAxisID: 'y1' },
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: {
+          y: { position: 'left', title: { display: true, text: 'P1 count' } },
+          y1: { position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'MTTR (hrs)' } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
