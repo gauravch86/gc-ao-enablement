@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <title>Presenter Timer — 10-minute case study coach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b1220;
+      --bg2: #121a2b;
+      --surface: #1a2438;
+      --line: rgba(230, 237, 243, 0.1);
+      --text: #e8eef7;
+      --muted: #8fa3bc;
+      --ok: #3fb950;
+      --warn: #d4a853;
+      --danger: #f87171;
+      --accent: #58a6ff;
+      --font: "IBM Plex Sans", system-ui, sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background:
+        radial-gradient(900px 420px at 12% -10%, rgba(88, 166, 255, 0.16), transparent 55%),
+        radial-gradient(700px 380px at 90% 0%, rgba(212, 168, 83, 0.12), transparent 50%),
+        linear-gradient(180deg, var(--bg) 0%, #070b14 100%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.45;
+    }
+    body.over {
+      background:
+        radial-gradient(900px 420px at 50% -10%, rgba(248, 113, 113, 0.22), transparent 55%),
+        linear-gradient(180deg, #1a0f12 0%, #070b14 100%);
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 1.25rem 1.1rem 2.5rem; }
+    header { margin-bottom: 1.25rem; }
+    header h1 {
+      font-size: clamp(1.35rem, 3vw, 1.85rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    header p { color: var(--muted); margin-top: 0.35rem; font-size: 0.95rem; max-width: 42rem; }
+    .deck-pick {
+      display: flex; flex-wrap: wrap; gap: 0.55rem; margin: 1rem 0 1.25rem;
+    }
+    .deck-pick button {
+      font: inherit; cursor: pointer; border: 1px solid var(--line);
+      background: var(--surface); color: var(--text);
+      padding: 0.55rem 0.9rem; border-radius: 8px; font-weight: 600;
+    }
+    .deck-pick button.active {
+      border-color: rgba(88, 166, 255, 0.55);
+      box-shadow: inset 0 0 0 1px rgba(88, 166, 255, 0.35);
+      background: #1e2d48;
+    }
+    .panel {
+      background: rgba(26, 36, 56, 0.88);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.15rem 1.2rem 1.3rem;
+      backdrop-filter: blur(8px);
+    }
+    .meta-row {
+      display: flex; flex-wrap: wrap; gap: 0.65rem 1.25rem;
+      justify-content: space-between; align-items: baseline;
+      margin-bottom: 0.85rem;
+    }
+    .slide-label { color: var(--muted); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+    .slide-title { font-size: clamp(1.15rem, 2.6vw, 1.55rem); font-weight: 700; margin-top: 0.2rem; }
+    .clocks {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin: 1rem 0 1.1rem;
+    }
+    @media (max-width: 720px) { .clocks { grid-template-columns: 1fr; } }
+    .clock {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.85rem 0.9rem;
+    }
+    .clock .k { color: var(--muted); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+    .clock .v {
+      font-family: var(--mono);
+      font-size: clamp(1.55rem, 4vw, 2.15rem);
+      font-weight: 700;
+      margin-top: 0.2rem;
+      tabular-nums: true;
+      font-variant-numeric: tabular-nums;
+    }
+    .clock .hint { color: var(--muted); font-size: 0.8rem; margin-top: 0.15rem; }
+    .clock.ok .v { color: var(--ok); }
+    .clock.warn .v { color: var(--warn); }
+    .clock.danger .v { color: var(--danger); }
+    .bar-wrap { margin: 0.35rem 0 0.9rem; }
+    .bar-track {
+      height: 12px; border-radius: 999px; background: #243044; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .bar-fill {
+      height: 100%; width: 100%; transform-origin: left center;
+      background: linear-gradient(90deg, #3fb950, #d4a853);
+      transition: width 0.2s linear, background 0.25s ease;
+    }
+    .bar-fill.warn { background: linear-gradient(90deg, #d4a853, #f0b429); }
+    .bar-fill.danger { background: linear-gradient(90deg, #f87171, #ef4444); }
+    .nudge {
+      display: none;
+      align-items: center; justify-content: space-between; gap: 0.75rem;
+      margin: 0.4rem 0 0.75rem;
+      padding: 0.75rem 0.95rem;
+      border-radius: 10px;
+      border: 1px solid rgba(248, 113, 113, 0.45);
+      background: rgba(248, 113, 113, 0.12);
+      color: #fecaca;
+      font-weight: 700;
+      animation: pulse 1.1s ease-in-out infinite;
+    }
+    .nudge.show { display: flex; }
+    .nudge + .controls { margin-top: 0.15rem; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.72; }
+    }
+    .controls {
+      display: flex; flex-wrap: wrap; gap: 0.55rem;
+      margin-top: 0.35rem;
+    }
+    .controls button {
+      font: inherit; cursor: pointer; border: 0; border-radius: 8px;
+      padding: 0.7rem 1rem; font-weight: 700;
+    }
+    .btn-primary { background: var(--accent); color: #061018; }
+    .btn-secondary { background: #2a3a55; color: var(--text); }
+    .btn-danger { background: #7f1d1d; color: #fecaca; }
+    .keys { color: var(--muted); font-size: 0.82rem; margin-top: 0.85rem; }
+    .keys kbd {
+      font-family: var(--mono); font-size: 0.78rem;
+      background: #243044; border: 1px solid var(--line);
+      border-radius: 4px; padding: 0.1rem 0.35rem;
+    }
+    .history { margin-top: 1.35rem; }
+    .history h2 { font-size: 1rem; color: var(--warn); margin-bottom: 0.65rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { text-align: left; padding: 0.45rem 0.35rem; border-bottom: 1px solid var(--line); }
+    th { color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    td.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+    .delta-ok { color: var(--ok); }
+    .delta-over { color: var(--danger); font-weight: 700; }
+    .summary {
+      display: none; margin-top: 1rem; padding: 0.9rem 1rem;
+      border-radius: 10px; background: #152033; border: 1px solid var(--line);
+    }
+    .summary.show { display: block; }
+    .summary strong { color: var(--warn); }
+    footer { margin-top: 1.5rem; color: var(--muted); font-size: 0.85rem; }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Presenter Timer</h1>
+      <p>
+        Live stopwatch for your 10-minute talk. Tracks actual time per slide, compares to budget,
+        and nudges you to move on when you run long. Use on a second screen / phone while Powerpoint is in Slideshow.
+      </p>
+    </header>
+
+    <div class="deck-pick" role="tablist" aria-label="Choose deck">
+      <button type="button" id="pick-cs1" class="active" data-deck="cs1">Case Study 1 · Reposition</button>
+      <button type="button" id="pick-cs2" data-deck="cs2">Case Study 2 · AO offering</button>
+    </div>
+
+    <section class="panel" id="coach">
+      <div class="meta-row">
+        <div>
+          <div class="slide-label" id="slideIndex">Slide 1 of 8</div>
+          <div class="slide-title" id="slideTitle">Loading…</div>
+        </div>
+        <div class="slide-label" id="deckName">Case Study 1</div>
+      </div>
+
+      <div class="clocks">
+        <div class="clock ok" id="clockSlide">
+          <div class="k">This slide (elapsed)</div>
+          <div class="v" id="elapsedSlide">0:00</div>
+          <div class="hint" id="budgetHint">Budget 1:15</div>
+        </div>
+        <div class="clock" id="clockRemain">
+          <div class="k">Slide budget left</div>
+          <div class="v" id="remainSlide">1:15</div>
+          <div class="hint" id="paceHint">On pace</div>
+        </div>
+        <div class="clock" id="clockTalk">
+          <div class="k">Overall talk</div>
+          <div class="v" id="elapsedTalk">0:00</div>
+          <div class="hint">Target 10:00</div>
+        </div>
+      </div>
+
+      <div class="bar-wrap">
+        <div class="bar-track" aria-hidden="true">
+          <div class="bar-fill" id="barFill"></div>
+        </div>
+      </div>
+
+      <div class="nudge" id="nudge" role="status" aria-live="assertive">
+        <span>MOVE ON — this slide is over budget</span>
+        <span id="overBy">+0:00</span>
+      </div>
+
+      <div class="controls">
+        <button type="button" class="btn-primary" id="btnStart">Start / Resume</button>
+        <button type="button" class="btn-secondary" id="btnPause">Pause</button>
+        <button type="button" class="btn-secondary" id="btnNext">Next slide →</button>
+        <button type="button" class="btn-secondary" id="btnPrev">← Prev</button>
+        <button type="button" class="btn-danger" id="btnReset">Reset run</button>
+      </div>
+      <p class="keys">
+        Keys: <kbd>Space</kbd> / <kbd>→</kbd> next · <kbd>←</kbd> prev · <kbd>P</kbd> pause/resume · <kbd>R</kbd> reset
+      </p>
+    </section>
+
+    <section class="history">
+      <h2>Recorded time per slide</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Slide</th>
+            <th>Budget</th>
+            <th>Actual</th>
+            <th>Delta</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+      <div class="summary" id="summary"></div>
+    </section>
+
+    <footer>
+      Open with the executive deck:
+      <a href="case-study-1-reposition-executive.pptx">CS1 PPTX</a> ·
+      <a href="case-study-2-ao-offering-executive.pptx">CS2 PPTX</a> ·
+      <a href="index.html">Profile</a>
+    </footer>
+  </div>
+
+  <script>
+    const DECKS = {
+      cs1: {
+        name: "Case Study 1 · Reposition",
+        talkSec: 600,
+        slides: [
+          { title: "Situation — underperforming portfolio offering", budget: 75 },
+          { title: "Five-lens diagnosis — what we would gather", budget: 80 },
+          { title: "Likely findings — commercial root causes", budget: 80 },
+          { title: "Decision framework → Reposition", budget: 75 },
+          { title: "Package & price — sell tiers and outcomes", budget: 85 },
+          { title: "Guardrails & invest — Deal Desk + sequence", budget: 75 },
+          { title: "Align & measure — one program", budget: 65 },
+          { title: "Ask — land with tiers, expand on proof", budget: 65 },
+        ],
+      },
+      cs2: {
+        name: "Case Study 2 · AO offering",
+        talkSec: 600,
+        slides: [
+          { title: "Situation — reusable AO on customer KPIs / OKRs", budget: 75 },
+          { title: "Economic unlock — vendor consolidation", budget: 75 },
+          { title: "Autonomy path — reactive → predictive → autonomous", budget: 75 },
+          { title: "Measure — size from incidents, soft-ramp", budget: 75 },
+          { title: "Reuse library — productize for the next logo", budget: 60 },
+          { title: "Enable — shortened, gated cadence", budget: 75 },
+          { title: "P&L construct — FTE ramp · site-mix · tools", budget: 90 },
+          { title: "Proof & ask — one recommendation", budget: 75 },
+        ],
+      },
+    };
+
+    const el = (id) => document.getElementById(id);
+
+    let deckKey = "cs1";
+    let idx = 0;
+    let running = false;
+    let slideStartedAt = null;
+    let talkStartedAt = null;
+    let pausedSlideAccum = 0;
+    let pausedTalkAccum = 0;
+    let pauseStartedAt = null;
+    let actuals = [];
+    let raf = null;
+
+    function fmt(sec) {
+      sec = Math.max(0, Math.floor(sec));
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${m}:${String(s).padStart(2, "0")}`;
+    }
+
+    function signedFmt(sec) {
+      const sign = sec > 0 ? "+" : sec < 0 ? "−" : "";
+      return sign + fmt(Math.abs(sec));
+    }
+
+    function deck() { return DECKS[deckKey]; }
+    function slide() { return deck().slides[idx]; }
+
+    function nowMs() { return performance.now(); }
+
+    function slideElapsedSec() {
+      if (slideStartedAt == null) return pausedSlideAccum;
+      if (!running) return pausedSlideAccum;
+      return pausedSlideAccum + (nowMs() - slideStartedAt) / 1000;
+    }
+
+    function talkElapsedSec() {
+      if (talkStartedAt == null) return pausedTalkAccum;
+      if (!running) return pausedTalkAccum;
+      return pausedTalkAccum + (nowMs() - talkStartedAt) / 1000;
+    }
+
+    function setDeck(key) {
+      if (key === deckKey && actuals.some((x) => x != null)) return;
+      stopLoop();
+      deckKey = key;
+      document.querySelectorAll(".deck-pick button").forEach((b) => {
+        b.classList.toggle("active", b.dataset.deck === key);
+      });
+      hardReset(false);
+      render();
+    }
+
+    function hardReset(keepDeckPick = true) {
+      stopLoop();
+      running = false;
+      idx = 0;
+      slideStartedAt = null;
+      talkStartedAt = null;
+      pausedSlideAccum = 0;
+      pausedTalkAccum = 0;
+      pauseStartedAt = null;
+      actuals = deck().slides.map(() => null);
+      document.body.classList.remove("over");
+      if (keepDeckPick) render();
+    }
+
+    function startOrResume() {
+      if (running) return;
+      if (talkStartedAt == null && pausedTalkAccum === 0) {
+        talkStartedAt = nowMs();
+        pausedTalkAccum = 0;
+      } else if (!running) {
+        talkStartedAt = nowMs();
+      }
+      if (slideStartedAt == null && pausedSlideAccum === 0) {
+        slideStartedAt = nowMs();
+      } else {
+        slideStartedAt = nowMs();
+      }
+      running = true;
+      pauseStartedAt = null;
+      loop();
+      render();
+    }
+
+    function pause() {
+      if (!running) return;
+      pausedSlideAccum = slideElapsedSec();
+      pausedTalkAccum = talkElapsedSec();
+      slideStartedAt = null;
+      talkStartedAt = null;
+      running = false;
+      stopLoop();
+      render();
+    }
+
+    function commitCurrentSlide() {
+      const spent = slideElapsedSec();
+      actuals[idx] = Math.round(spent);
+    }
+
+    function goNext() {
+      // First Space/→ only starts the clock on slide 1 — do not skip ahead.
+      if (!running && talkStartedAt == null && pausedTalkAccum === 0 && actuals.every((x) => x == null) && idx === 0) {
+        startOrResume();
+        return;
+      }
+      if (!running && talkStartedAt == null && pausedTalkAccum === 0) {
+        startOrResume();
+      }
+      commitCurrentSlide();
+      if (idx >= deck().slides.length - 1) {
+        pause();
+        render();
+        return;
+      }
+      idx += 1;
+      pausedSlideAccum = 0;
+      slideStartedAt = running ? nowMs() : null;
+      render();
+    }
+
+    function goPrev() {
+      if (idx === 0) return;
+      commitCurrentSlide();
+      idx -= 1;
+      actuals[idx] = null;
+      pausedSlideAccum = 0;
+      slideStartedAt = running ? nowMs() : null;
+      render();
+    }
+
+    function stopLoop() {
+      if (raf) cancelAnimationFrame(raf);
+      raf = null;
+    }
+
+    function loop() {
+      renderClocks();
+      if (running) raf = requestAnimationFrame(loop);
+    }
+
+    function paceClass(elapsed, budget) {
+      const ratio = elapsed / budget;
+      if (ratio >= 1) return "danger";
+      if (ratio >= 0.75) return "warn";
+      return "ok";
+    }
+
+    function renderClocks() {
+      const s = slide();
+      const elapsed = slideElapsedSec();
+      const remain = s.budget - elapsed;
+      const talk = talkElapsedSec();
+      const cls = paceClass(elapsed, s.budget);
+
+      el("elapsedSlide").textContent = fmt(elapsed);
+      el("remainSlide").textContent = remain >= 0 ? fmt(remain) : signedFmt(Math.round(-remain)).replace("−", "-");
+      if (remain < 0) el("remainSlide").textContent = "−" + fmt(-remain);
+      el("elapsedTalk").textContent = fmt(talk);
+      el("budgetHint").textContent = `Budget ${fmt(s.budget)}`;
+
+      const clockSlide = el("clockSlide");
+      clockSlide.className = "clock " + cls;
+      const clockRemain = el("clockRemain");
+      clockRemain.className = "clock " + (remain < 0 ? "danger" : remain <= s.budget * 0.25 ? "warn" : "ok");
+
+      const talkClock = el("clockTalk");
+      talkClock.className = "clock " + (talk > deck().talkSec ? "danger" : talk > deck().talkSec * 0.85 ? "warn" : "");
+
+      const pctLeft = Math.max(0, Math.min(100, (remain / s.budget) * 100));
+      const bar = el("barFill");
+      bar.style.width = pctLeft + "%";
+      bar.className = "bar-fill" + (cls === "ok" ? "" : " " + cls);
+
+      const over = elapsed > s.budget;
+      el("nudge").classList.toggle("show", over);
+      el("overBy").textContent = over ? "+" + fmt(elapsed - s.budget) : "+0:00";
+      document.body.classList.toggle("over", over);
+      el("paceHint").textContent = over
+        ? "Over — advance now"
+        : cls === "warn"
+          ? "Wrap the point"
+          : running
+            ? "On pace"
+            : "Paused / ready";
+    }
+
+    function renderHistory() {
+      const body = el("historyBody");
+      body.innerHTML = "";
+      let sumBudget = 0;
+      let sumActual = 0;
+      let completed = 0;
+      deck().slides.forEach((s, i) => {
+        const tr = document.createElement("tr");
+        const actual = actuals[i];
+        const live = i === idx ? Math.round(slideElapsedSec()) : null;
+        const shown = actual != null ? actual : live;
+        const delta = shown != null ? shown - s.budget : null;
+        sumBudget += s.budget;
+        if (shown != null) {
+          sumActual += shown;
+          completed += 1;
+        }
+        const deltaHtml =
+          delta == null
+            ? "—"
+            : `<span class="${delta > 0 ? "delta-over" : "delta-ok"}">${signedFmt(delta)}</span>`;
+        tr.innerHTML = `
+          <td>${i + 1}</td>
+          <td>${s.title}${i === idx ? " <em>(current)</em>" : ""}</td>
+          <td class="mono">${fmt(s.budget)}</td>
+          <td class="mono">${shown == null ? "—" : fmt(shown)}</td>
+          <td class="mono">${deltaHtml}</td>`;
+        body.appendChild(tr);
+      });
+
+      const summary = el("summary");
+      if (completed === 0 && !running) {
+        summary.classList.remove("show");
+        summary.textContent = "";
+        return;
+      }
+      const talk = Math.round(talkElapsedSec());
+      const totalDelta = sumActual - sumBudget * (completed / deck().slides.length);
+      // clearer: compare recorded slides only
+      let budgetDone = 0;
+      let actualDone = 0;
+      deck().slides.forEach((s, i) => {
+        if (actuals[i] != null || i === idx) {
+          budgetDone += s.budget;
+          actualDone += actuals[i] != null ? actuals[i] : Math.round(slideElapsedSec());
+        }
+      });
+      const gap = actualDone - budgetDone;
+      const finished = actuals.every((x) => x != null);
+      summary.classList.add("show");
+      summary.innerHTML = finished
+        ? `<strong>Run complete.</strong> Talk time ${fmt(talk)} vs 10:00 target.
+           Slide time total ${fmt(actualDone)} vs ${fmt(budgetDone)} budget
+           (${signedFmt(gap)}). ${gap > 15 ? "You ran long — tighten anecdotes next rehearsal." : gap < -20 ? "You finished early — you can add one proof point." : "Pace looks interview-ready."}`
+        : `<strong>In progress.</strong> Elapsed talk ${fmt(talk)}.
+           Through current slide: ${fmt(actualDone)} used vs ${fmt(budgetDone)} budgeted (${signedFmt(gap)}).`;
+    }
+
+    function render() {
+      el("deckName").textContent = deck().name;
+      el("slideIndex").textContent = `Slide ${idx + 1} of ${deck().slides.length}`;
+      el("slideTitle").textContent = slide().title;
+      el("btnStart").textContent = running ? "Running…" : talkStartedAt == null && pausedTalkAccum === 0 ? "Start" : "Resume";
+      renderClocks();
+      renderHistory();
+    }
+
+    el("pick-cs1").addEventListener("click", () => setDeck("cs1"));
+    el("pick-cs2").addEventListener("click", () => setDeck("cs2"));
+    el("btnStart").addEventListener("click", startOrResume);
+    el("btnPause").addEventListener("click", pause);
+    el("btnNext").addEventListener("click", goNext);
+    el("btnPrev").addEventListener("click", goPrev);
+    el("btnReset").addEventListener("click", () => hardReset(true));
+
+    window.addEventListener("keydown", (e) => {
+      if (["INPUT", "TEXTAREA"].includes((e.target || {}).tagName)) return;
+      if (e.code === "Space" || e.code === "ArrowRight") {
+        e.preventDefault();
+        goNext();
+      } else if (e.code === "ArrowLeft") {
+        e.preventDefault();
+        goPrev();
+      } else if (e.code === "KeyP") {
+        e.preventDefault();
+        if (running) pause();
+        else startOrResume();
+      } else if (e.code === "KeyR") {
+        e.preventDefault();
+        hardReset(true);
+      }
+    });
+
+    // Warn before leaving mid-run
+    window.addEventListener("beforeunload", (e) => {
+      if (running || actuals.some((x) => x != null)) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    });
+
+    hardReset(true);
+  </script>
+</body>
+</html>
