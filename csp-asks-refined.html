@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>What CSPs are asking us to solve — refined</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #121214; --card: #f5f5f5; --text: #1a1a1a; --muted: #4a4a4a;
+      --blue: #2a6fdb; --white: #fff; --gold: #d4a853; --sub: #a8b4c4;
+      --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font); background: #0a0a0c; color: var(--white);
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 1.25rem;
+    }
+    .slide {
+      width: min(1100px, 100%);
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 1.35rem 1.4rem 1.2rem;
+      box-shadow: 0 24px 60px rgba(0,0,0,.45);
+    }
+    h1 { font-size: clamp(1.15rem, 2.4vw, 1.45rem); font-weight: 700; margin-bottom: 0.35rem; }
+    .sub { color: var(--sub); font-size: 0.82rem; margin-bottom: 1.1rem; }
+    .pillars {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.65rem; margin-bottom: 0.85rem;
+    }
+    @media (max-width: 900px) { .pillars { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .pillars { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--card); color: var(--text); border-radius: 10px; padding: 0.85rem 0.9rem; min-height: 240px;
+    }
+    .card h3 { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.45rem; }
+    .card .num { color: var(--blue); }
+    .card p { font-size: 0.78rem; color: var(--muted); line-height: 1.4; margin-bottom: 0.55rem; }
+    .card .need-lbl { font-size: 0.72rem; font-weight: 700; color: var(--blue); margin-bottom: 0.2rem; }
+    .card .need { font-size: 0.78rem; color: var(--text); line-height: 1.4; }
+    .outcomes {
+      background: var(--blue); border-radius: 10px; padding: 0.75rem 0.95rem; margin-bottom: 0.85rem;
+    }
+    .outcomes h2 { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .outcomes p { font-size: 0.8rem; line-height: 1.45; }
+    .answer h2 { font-size: 0.8rem; font-weight: 700; color: var(--gold); margin-bottom: 0.25rem; }
+    .answer p { font-size: 0.86rem; line-height: 1.45; color: #e8eef7; }
+    footer { margin-top: 1rem; font-size: 0.75rem; color: var(--sub); }
+    footer a { color: #58a6ff; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <h1>What CSPs are asking us to solve — and how we answer as a portfolio</h1>
+    <p class="sub">Problem ? sellable offer ? operated outcome · Productized core + configured edge · Growth with margin discipline</p>
+
+    <div class="pillars">
+      <div class="card">
+        <h3><span class="num">01</span> Multi-vendor complexity</h3>
+        <p>Heterogeneous BSS/OSS estates make every integration and change slow, risky, and costly — with unclear accountability across vendors.</p>
+        <div class="need-lbl">What they need</div>
+        <div class="need">A governed multi-vendor integration layer, safe change paths, and single accountability for outcomes — not another point-to-point project.</div>
+      </div>
+      <div class="card">
+        <h3><span class="num">02</span> New digital / B2B2X offers</h3>
+        <p>New IoT and partner services need capabilities the current estate was never designed to deliver — without multi-year rebuilds.</p>
+        <div class="need-lbl">What they need</div>
+        <div class="need">Reusable capability packs and thin adapters to launch offers faster — custom only where it creates durable differentiation.</div>
+      </div>
+      <div class="card">
+        <h3><span class="num">03</span> Faster differentiation</h3>
+        <p>Off-the-shelf products rarely create advantage; CSPs need speed without locking into one-off builds that cannot scale.</p>
+        <div class="need-lbl">What they need</div>
+        <div class="need">Configurable offer ladder (land ? expand ? deepen) with clear time-to-market commitments and reuse across markets.</div>
+      </div>
+      <div class="card">
+        <h3><span class="num">04</span> AI inside operations</h3>
+        <p>Generic AI pilots do not fit CSP workflows; value appears only when intelligence is embedded in run, change, and commercial processes.</p>
+        <div class="need-lbl">What they need</div>
+        <div class="need">Domain AI &amp; automation delivered as a managed service — with human override, auditability, and model lifecycle governance.</div>
+      </div>
+    </div>
+
+    <div class="outcomes">
+      <h2>Customer outcome / value</h2>
+      <p>
+        Faster time-to-market for new offers · Lower integration &amp; rework · 30–40% engineering effort reduction where scoped ·
+        Measurable run outcomes (availability, order/billing cycle, incident load) · Reuse across logos with maintainable cost-to-serve
+      </p>
+    </div>
+
+    <div class="answer">
+      <h2>Our answer</h2>
+      <p>
+        Solve inside the CSP’s BSS/OSS with a productized services portfolio: reusable core + configured edge + embedded AI,
+        sold as clear offers (subscription / managed service), operated under shared KPIs — with Ericsson domain depth and day-2 accountability.
+        Custom build only where it becomes reusable IP; not as the default.
+      </p>
+    </div>
+
+    <footer>
+      Refined portfolio view · Gaurav Chaudhary ·
+      <a href="csp-asks-refined.pptx">PPTX</a> ·
+      <a href="index.html">Profile</a>
+    </footer>
+  </div>
+</body>
+</html>
