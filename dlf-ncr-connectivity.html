@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <title>DLF × NHAI — Gurugram–NCR Connectivity Briefing</title>
+  <meta name="description" content="Executive briefing for government stakeholders: DLF-tracked NCR highway projects, Gurgaon–Ghaziabad before/after commute demo, and citizen mobility outcomes." />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --dlf: #0a5c3b;
+      --dlf-deep: #063d28;
+      --dlf-soft: #e6f2ec;
+      --ink: #14201a;
+      --muted: #4d5c55;
+      --sand: #f3efe6;
+      --sand-2: #e8e1d2;
+      --line: rgba(20, 32, 26, 0.12);
+      --warn: #b45309;
+      --good: #0a7a45;
+      --north: #1d6fd8;
+      --south: #c2410c;
+      --restricted: #9a3412;
+      --font-display: "Fraunces", Georgia, serif;
+      --font: "Sora", system-ui, sans-serif;
+      --shadow: 0 18px 50px rgba(6, 61, 40, 0.12);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(10, 92, 59, 0.14), transparent 55%),
+        radial-gradient(900px 500px at 95% 5%, rgba(180, 140, 60, 0.12), transparent 50%),
+        linear-gradient(180deg, #f7f4ed 0%, #eef5f0 42%, #f6f3ec 100%);
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+    a { color: var(--dlf); }
+    img { max-width: 100%; display: block; }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(12px);
+      background: rgba(247, 244, 237, 0.86);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner {
+      max-width: 1180px; margin: 0 auto; padding: 0.7rem 1.25rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 0.7rem; text-decoration: none; color: inherit;
+    }
+    .brand-mark {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(145deg, var(--dlf), var(--dlf-deep));
+      color: #fff; font-weight: 700; display: grid; place-items: center;
+      font-family: var(--font-display); letter-spacing: -0.03em;
+    }
+    .brand strong { display: block; font-size: 0.92rem; }
+    .brand span { display: block; font-size: 0.72rem; color: var(--muted); }
+    .top-nav { display: flex; flex-wrap: wrap; gap: 0.85rem; font-size: 0.82rem; }
+    .top-nav a { text-decoration: none; color: var(--muted); font-weight: 500; }
+    .top-nav a:hover { color: var(--dlf); }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      min-height: min(92vh, 760px);
+      display: grid;
+      align-items: end;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(105deg, rgba(6, 61, 40, 0.88) 0%, rgba(6, 61, 40, 0.55) 38%, rgba(20, 32, 26, 0.28) 68%, rgba(20, 32, 26, 0.15) 100%),
+        url("assets/ncr-maps/01-overview-ncr.jpg") center/cover no-repeat;
+      transform: scale(1.02);
+      animation: heroDrift 18s ease-in-out infinite alternate;
+    }
+    @media (max-width: 720px) {
+      .hero-bg {
+        background:
+          linear-gradient(180deg, rgba(6, 61, 40, 0.72) 0%, rgba(6, 61, 40, 0.55) 55%, rgba(6, 61, 40, 0.78) 100%),
+          url("assets/ncr-maps/01-overview-ncr.jpg") 62% center/cover no-repeat;
+      }
+      .hero { min-height: auto; }
+      .hero-inner { padding-top: 3rem; padding-bottom: 2.4rem; }
+      .top-nav { display: none; }
+    }
+    @keyframes heroDrift {
+      from { transform: scale(1.02) translate3d(0, 0, 0); }
+      to { transform: scale(1.06) translate3d(-1.2%, -0.8%, 0); }
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      max-width: 1180px; width: 100%; margin: 0 auto;
+      padding: 4.5rem 1.25rem 3.25rem;
+      color: #f7f4ed;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #d7e8dd; margin-bottom: 1rem;
+    }
+    .eyebrow::before {
+      content: ""; width: 1.4rem; height: 2px; background: #c9a44a;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      line-height: 0.98; letter-spacing: -0.03em;
+      max-width: 14ch; margin-bottom: 1rem;
+      text-wrap: balance;
+    }
+    .hero-lead {
+      font-size: clamp(1.02rem, 2vw, 1.22rem);
+      max-width: 38rem; color: rgba(247, 244, 237, 0.9);
+      margin-bottom: 1.6rem;
+    }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .btn {
+      appearance: none; border: 0; cursor: pointer;
+      border-radius: 999px; padding: 0.85rem 1.25rem;
+      font: inherit; font-weight: 600; font-size: 0.9rem;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: #c9a44a; color: #14201a; box-shadow: 0 10px 28px rgba(0,0,0,.22); }
+    .btn-ghost { background: rgba(247,244,237,.12); color: #f7f4ed; border: 1px solid rgba(247,244,237,.28); }
+
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 1.25rem; }
+    section { padding: 3.25rem 0; }
+    .section-kicker {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--dlf); margin-bottom: 0.55rem;
+    }
+    h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.7rem, 3.4vw, 2.45rem);
+      letter-spacing: -0.02em; line-height: 1.12;
+      margin-bottom: 0.65rem;
+    }
+    .lede { color: var(--muted); max-width: 46rem; margin-bottom: 1.6rem; }
+
+    .exec-strip {
+      margin-top: -2.4rem; position: relative; z-index: 2;
+    }
+    .exec-card {
+      background: rgba(255,255,255,0.92);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.2rem 1.35rem;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 800px) {
+      .exec-card { grid-template-columns: 1.4fr 1fr 1fr; align-items: center; }
+    }
+    .exec-card h3 {
+      font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 0.25rem;
+    }
+    .exec-card p { font-size: 0.9rem; color: var(--muted); }
+    .pill {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      border-radius: 999px; padding: 0.35rem 0.7rem;
+      font-size: 0.75rem; font-weight: 600;
+      background: var(--dlf-soft); color: var(--dlf-deep);
+    }
+    .stat-mini strong {
+      display: block; font-family: var(--font-display); font-size: 1.55rem; line-height: 1;
+      color: var(--dlf-deep);
+    }
+    .stat-mini span { font-size: 0.78rem; color: var(--muted); }
+
+    .compare {
+      display: grid; gap: 1rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 900px) {
+      .compare { grid-template-columns: 1fr 1fr; }
+    }
+    .panel {
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.78);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(20,32,26,0.05);
+    }
+    .panel-head {
+      padding: 1rem 1.15rem;
+      display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .panel-head h3 { font-size: 1.05rem; font-family: var(--font-display); }
+    .badge {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 0.3rem 0.55rem; border-radius: 999px;
+    }
+    .badge-before { background: #fff1e6; color: var(--warn); }
+    .badge-after { background: #e5f6ec; color: var(--good); }
+    .panel-body { padding: 1.15rem; }
+    .time-big {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      letter-spacing: -0.03em; line-height: 1;
+      margin: 0.35rem 0 0.7rem;
+    }
+    .before .time-big { color: var(--warn); }
+    .after .time-big { color: var(--good); }
+    .pain-list, .gain-list { list-style: none; display: grid; gap: 0.55rem; margin-top: 0.85rem; }
+    .pain-list li, .gain-list li {
+      display: grid; grid-template-columns: 1.1rem 1fr; gap: 0.55rem;
+      font-size: 0.9rem; color: var(--muted);
+    }
+    .pain-list li::before { content: "×"; color: var(--warn); font-weight: 700; }
+    .gain-list li::before { content: "✓"; color: var(--good); font-weight: 700; }
+    .note {
+      margin-top: 0.9rem; font-size: 0.78rem; color: var(--muted);
+      padding: 0.7rem 0.8rem; border-radius: 12px; background: var(--sand);
+    }
+
+    .delta-bar {
+      margin-top: 1.15rem;
+      display: grid; gap: 0.75rem;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+    .delta {
+      background: var(--dlf-deep); color: #f7f4ed;
+      border-radius: 14px; padding: 0.95rem 1rem;
+    }
+    .delta strong {
+      display: block; font-family: var(--font-display); font-size: 1.45rem; margin-bottom: 0.15rem;
+    }
+    .delta span { font-size: 0.78rem; opacity: 0.86; }
+
+    .demo-grid {
+      display: grid; gap: 1rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 980px) {
+      .demo-grid { grid-template-columns: 1.35fr 0.9fr; align-items: stretch; }
+    }
+    .demo-stage {
+      background: #10241b;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+      position: relative;
+      min-height: 520px;
+      box-shadow: var(--shadow);
+    }
+    .demo-toolbar {
+      display: flex; flex-wrap: wrap; gap: 0.55rem; align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1rem;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: #e8f0eb;
+    }
+    .seg {
+      display: inline-flex; padding: 0.2rem; border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+    }
+    .seg button {
+      border: 0; background: transparent; color: #c7d8cf;
+      padding: 0.45rem 0.85rem; border-radius: 999px;
+      font: inherit; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+    }
+    .seg button.active { background: #c9a44a; color: #14201a; }
+    .demo-actions { display: flex; gap: 0.45rem; }
+    .demo-actions .btn {
+      padding: 0.55rem 0.9rem; font-size: 0.8rem; border-radius: 999px;
+    }
+    .btn-play { background: #c9a44a; color: #14201a; }
+    .btn-reset { background: rgba(255,255,255,0.1); color: #e8f0eb; border: 1px solid rgba(255,255,255,0.15); }
+
+    .map-svg { width: 100%; height: auto; display: block; }
+    .city-label { fill: #e8f0eb; font-family: var(--font); font-size: 13px; font-weight: 700; }
+    .sub-label { fill: #9eb5a8; font-family: var(--font); font-size: 10px; font-weight: 500; }
+    .restricted-zone {
+      fill: rgba(154, 52, 18, 0.28);
+      stroke: rgba(251, 146, 60, 0.65);
+      stroke-width: 1.5;
+      stroke-dasharray: 5 4;
+      animation: pulseRestricted 2.8s ease-in-out infinite;
+    }
+    @keyframes pulseRestricted {
+      0%, 100% { fill: rgba(154, 52, 18, 0.22); }
+      50% { fill: rgba(154, 52, 18, 0.38); }
+    }
+    .route-base { fill: none; stroke: rgba(255,255,255,0.12); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+    .route-today { fill: none; stroke: #f59e0b; stroke-width: 3.5; stroke-dasharray: 7 6; opacity: 0.55; }
+    .route-north { fill: none; stroke: var(--north); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(29,111,216,.55)); }
+    .route-south { fill: none; stroke: var(--south); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(194,65,12,.45)); }
+    .route-hidden { opacity: 0.18; }
+    .traveler {
+      fill: #c9a44a; stroke: #fff; stroke-width: 2;
+      filter: drop-shadow(0 0 8px rgba(201,164,74,.9));
+    }
+    .trail {
+      fill: none; stroke: #c9a44a; stroke-width: 2.5; stroke-linecap: round;
+      opacity: 0.85; stroke-dasharray: 4 8;
+    }
+
+    .side-stack { display: grid; gap: 1rem; }
+    .side-card {
+      background: rgba(255,255,255,0.82);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem;
+    }
+    .side-card h3 {
+      font-family: var(--font-display); font-size: 1.15rem; margin-bottom: 0.45rem;
+    }
+    .leg { display: grid; gap: 0.55rem; margin-top: 0.75rem; }
+    .leg-item {
+      display: grid; grid-template-columns: auto 1fr auto; gap: 0.55rem; align-items: start;
+      font-size: 0.86rem;
+    }
+    .dot {
+      width: 0.7rem; height: 0.7rem; border-radius: 50%; margin-top: 0.3rem;
+    }
+    .dot-y { background: #eab308; }
+    .dot-b { background: var(--north); }
+    .dot-p { background: #7c3aed; }
+    .dot-m { background: var(--south); }
+    .leg-item strong { display: block; color: var(--ink); font-size: 0.86rem; }
+    .leg-item span { color: var(--muted); font-size: 0.78rem; }
+    .leg-item em { font-style: normal; font-size: 0.72rem; font-weight: 700; color: var(--dlf); }
+
+    .progress-wrap { margin-top: 0.9rem; }
+    .progress-meta {
+      display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); margin-bottom: 0.35rem;
+    }
+    .progress {
+      height: 8px; border-radius: 999px; background: var(--sand-2); overflow: hidden;
+    }
+    .progress > i {
+      display: block; height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--dlf), #c9a44a);
+      border-radius: inherit;
+      transition: width 0.1s linear;
+    }
+
+    .drawing-frame {
+      border-radius: 14px; overflow: hidden; border: 1px solid var(--line);
+      background: #111;
+      aspect-ratio: 16/10;
+    }
+    .drawing-frame img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 4s ease;
+    }
+    .drawing-frame:hover img { transform: scale(1.04); }
+    .caption {
+      font-size: 0.75rem; color: var(--muted); margin-top: 0.45rem;
+    }
+
+    .table-wrap {
+      overflow: auto; border-radius: var(--radius);
+      border: 1px solid var(--line); background: rgba(255,255,255,0.85);
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 820px; }
+    th, td {
+      text-align: left; padding: 0.75rem 0.85rem; border-bottom: 1px solid var(--line);
+      font-size: 0.86rem; vertical-align: top;
+    }
+    th {
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--muted); background: var(--sand);
+      position: sticky; top: 0;
+    }
+    tr:last-child td { border-bottom: 0; }
+    .status {
+      display: inline-flex; align-items: center; border-radius: 999px;
+      padding: 0.2rem 0.55rem; font-size: 0.72rem; font-weight: 700;
+    }
+    .st-op { background: #e5f6ec; color: var(--good); }
+    .st-part { background: #eef4ff; color: #1d4ed8; }
+    .st-prop { background: #fff7ed; color: #c2410c; }
+    .st-wip { background: #f5f3ff; color: #6d28d9; }
+    .swatch {
+      display: inline-block; width: 2rem; height: 0.35rem; border-radius: 999px;
+      vertical-align: middle; margin-right: 0.35rem;
+    }
+
+    .intel-grid {
+      display: grid; gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .intel {
+      background: rgba(255,255,255,0.8);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.15rem;
+    }
+    .intel .num {
+      font-family: var(--font-display); font-size: 1.8rem; color: var(--dlf-deep);
+      letter-spacing: -0.03em; margin-bottom: 0.35rem;
+    }
+    .intel h3 { font-size: 1rem; margin-bottom: 0.35rem; }
+    .intel p { font-size: 0.88rem; color: var(--muted); }
+
+    .gallery {
+      display: grid; gap: 0.85rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .g-card {
+      border-radius: 14px; overflow: hidden; border: 1px solid var(--line);
+      background: #fff; cursor: zoom-in; text-decoration: none; color: inherit;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .g-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .g-card img { aspect-ratio: 16/10; object-fit: cover; width: 100%; }
+    .g-card figcaption { padding: 0.7rem 0.8rem; font-size: 0.8rem; color: var(--muted); }
+
+    .lightbox {
+      position: fixed; inset: 0; z-index: 80;
+      background: rgba(10, 20, 16, 0.86);
+      display: none; align-items: center; justify-content: center;
+      padding: 1.25rem;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: min(1200px, 96vw); max-height: 88vh; object-fit: contain;
+      border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,.45);
+    }
+    .lightbox button {
+      position: absolute; top: 1rem; right: 1rem;
+      border: 0; border-radius: 999px; padding: 0.55rem 0.9rem;
+      background: #fff; font: inherit; font-weight: 600; cursor: pointer;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 2rem 0 2.5rem;
+      color: var(--muted); font-size: 0.82rem;
+    }
+    footer .wrap { display: grid; gap: 0.55rem; }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); border: 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="dlf-ncr-connectivity.html">
+        <div class="brand-mark">D</div>
+        <div>
+          <strong>DLF NCR Connectivity</strong>
+          <span>Independent consulting support to NHAI</span>
+        </div>
+      </a>
+      <nav class="top-nav" aria-label="Page">
+        <a href="#scenario">Before / After</a>
+        <a href="#demo">Live demo</a>
+        <a href="#projects">Projects</a>
+        <a href="#intel">Intelligence</a>
+        <a href="#drawings">Drawings</a>
+        <a href="index.html">Profile home</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" aria-label="Hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <p class="eyebrow">DLF good-faith public infrastructure support · Oct 2026 tracker</p>
+      <h1>Move the city without crossing the city.</h1>
+      <p class="hero-lead">
+        A minister-ready briefing of Gurugram–NCR key road projects tracked by DLF —
+        design suggestions, consulting inputs, and a living demo of how citizens travel
+        Gurgaon → Ghaziabad while avoiding peak and restricted central Delhi corridors.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#demo">Play commute demo</a>
+        <a class="btn btn-ghost" href="#scenario">See before vs after</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap exec-strip">
+    <div class="exec-card">
+      <div>
+        <span class="pill">For Chamkaur Singh · DLF executive briefing</span>
+        <h3>Support India’s growth. Decongest Delhi. Protect citizen time.</h3>
+        <p>
+          DLF tracks NHAI / MoRTH corridors using public listings and independent expertise —
+          then feeds design, sequencing, and last-mile improvement suggestions to Nitin Gadkari’s
+          office and state officials in good faith.
+        </p>
+      </div>
+      <div class="stat-mini">
+        <strong>18</strong>
+        <span>Key road projects on the master tracker</span>
+      </div>
+      <div class="stat-mini">
+        <strong>~2 hrs</strong>
+        <span>Illustrative peak-time saved on GGN → GZB northern bypass once Extension Link closes</span>
+      </div>
+    </div>
+  </div>
+
+  <section id="scenario">
+    <div class="wrap">
+      <p class="section-kicker">Citizen story</p>
+      <h2>One morning, one office — two completely different Delhis</h2>
+      <p class="lede">
+        Persona: a professional living in Gurugram (Sector 49 / SPR belt) who must reach an office
+        in Ghaziabad (Hindon / Raj Nagar Extension side) by 9:30 AM. Distance is only ~55–80 km —
+        but today’s route is forced through Delhi’s peak choke points.
+      </p>
+
+      <div class="compare">
+        <article class="panel before">
+          <div class="panel-head">
+            <h3>Today — through the core</h3>
+            <span class="badge badge-before">Painful peak</span>
+          </div>
+          <div class="panel-body">
+            <p style="font-size:0.88rem;color:var(--muted);">Typical morning drive via NH-48 → Mahipalpur / Dhaula Kuan → Ring Road → NH-24</p>
+            <div class="time-big">2.5 – 3.5 hrs</div>
+            <p style="font-weight:600;">Leave home by ~6:00–6:15 AM for a 9:30 start — or gamble and arrive late.</p>
+            <ul class="pain-list">
+              <li>NH-48 / Mahipalpur merge jams before the airport even appears</li>
+              <li>Dhaula Kuan and Ring Road absorb VIP / high-security movement freezes</li>
+              <li>Stop-start fuel burn, unpredictable ETA, high cognitive load</li>
+              <li>Freight and passenger traffic share the same inner corridors</li>
+              <li>Any incident near central Delhi cascades across the whole NCR</li>
+            </ul>
+            <p class="note">
+              Sources (illustrative ranges): Uber Intercity ~83 km / ~3 hrs average; public guides 1.5–2.5 hrs off-peak and 2–3+ hrs peak via NH-48 + NH-9; Rome2Rio ~56 km free-flow ~53 min (rarely available at office hour).
+            </p>
+          </div>
+        </article>
+
+        <article class="panel after">
+          <div class="panel-head">
+            <h3>After network completion — western / northern bypass</h3>
+            <span class="badge badge-after">Designed outcome</span>
+          </div>
+          <div class="panel-body">
+            <p style="font-size:0.88rem;color:var(--muted);">Dwarka Expy (#1) → UER-II Phase-I (#9A) → UER-II Ext (#10B/#10C) → Ghaziabad</p>
+            <div class="time-big">75 – 95 min</div>
+            <p style="font-weight:600;">Leave ~7:45–8:00 AM. Stay west and north of the restricted central zone.</p>
+            <ul class="gain-list">
+              <li>Signal-free Dwarka Expressway already operational (Kherki Daula → Shiv Murti)</li>
+              <li>UER-II acts as Delhi’s third ring — skirts Najafgarh, Rohini, Alipur</li>
+              <li>Extension Link (#10B/#10C) is the missing bridge into Ghaziabad–Noida–FBD</li>
+              <li>High-security / ministerial precincts are never on the path</li>
+              <li>More predictable door-to-desk time; lower fuel and stress</li>
+            </ul>
+            <p class="note">
+              Grounding: UER-II + Dwarka Expy inauguration reporting cites Singhu/airport cuts from ~2 hrs → ~20–40 min on western arcs; Delhi–Gurugram target ~30 min. Full GGN→GZB benefit depends on completing Extension Link Parts II–III (consultant being finalised on the Oct 2026 tracker).
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <div class="delta-bar">
+        <div class="delta"><strong>~2 hours</strong><span>Morning time returned to the citizen on a good day</span></div>
+        <div class="delta"><strong>0 km</strong><span>Through Lutyens / high-security central corridors</span></div>
+        <div class="delta"><strong>1 network</strong><span>Western ring + eastern extension instead of city cut-through</span></div>
+        <div class="delta"><strong>Public good</strong><span>DLF consulting capacity aligned to NHAI delivery</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="demo">
+    <div class="wrap">
+      <p class="section-kicker">Moving-piece demo</p>
+      <h2>Watch the commute choose the ring — not the core</h2>
+      <p class="lede">
+        Primary path is the northern / western bypass recommended for ministers’ briefings.
+        Toggle the southern Faridabad–DND alternative when stakeholders ask “what if SPR / FNG?”.
+      </p>
+
+      <div class="demo-grid">
+        <div class="demo-stage">
+          <div class="demo-toolbar">
+            <div class="seg" role="tablist" aria-label="Route scenario">
+              <button type="button" class="active" data-route="north" id="btn-north">Northern bypass (primary)</button>
+              <button type="button" data-route="south" id="btn-south">Southern DND–FBD–KMP</button>
+            </div>
+            <div class="demo-actions">
+              <button type="button" class="btn btn-play" id="btn-play">Play path</button>
+              <button type="button" class="btn btn-reset" id="btn-reset">Reset</button>
+            </div>
+          </div>
+
+          <svg class="map-svg" viewBox="0 0 900 560" role="img" aria-labelledby="mapTitle mapDesc">
+            <title id="mapTitle">Schematic NCR commute map</title>
+            <desc id="mapDesc">Animated schematic showing Gurgaon to Ghaziabad routes that avoid central Delhi restricted zones.</desc>
+            <defs>
+              <linearGradient id="land" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#163528" />
+                <stop offset="100%" stop-color="#0c1c14" />
+              </linearGradient>
+              <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+                <path d="M 28 0 L 0 0 0 28" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="900" height="560" fill="url(#land)" />
+            <rect width="900" height="560" fill="url(#grid)" />
+
+            <!-- Peripheral rings -->
+            <path d="M 70 390 C 40 250, 90 90, 280 55 C 420 30, 560 45, 690 90" fill="none" stroke="#c9a44a" stroke-width="3" opacity="0.55" />
+            <text x="55" y="250" class="sub-label" transform="rotate(-78 55 250)">Western Peripheral Expy (KMP)</text>
+            <path d="M 720 95 C 820 160, 850 280, 820 420 C 790 500, 700 530, 610 520" fill="none" stroke="#c9a44a" stroke-width="3" opacity="0.55" />
+            <text x="835" y="300" class="sub-label" transform="rotate(78 835 300)">Eastern Peripheral Expy</text>
+
+            <!-- Urban mass -->
+            <ellipse cx="470" cy="290" rx="210" ry="155" fill="rgba(255,255,255,0.04)" />
+            <ellipse class="restricted-zone" cx="500" cy="285" rx="78" ry="62" />
+            <text x="458" y="280" class="city-label" style="font-size:15px;fill:#fdba74;">RESTRICTED</text>
+            <text x="455" y="298" class="sub-label" style="fill:#fdba74;">Central / high-security</text>
+            <text x="470" y="318" class="sub-label" style="fill:#fdba74;">ministerial zone</text>
+
+            <text x="430" y="200" class="city-label">DELHI</text>
+            <text x="145" y="430" class="city-label">GURUGRAM</text>
+            <text x="700" y="175" class="city-label">GHAZIABAD</text>
+            <text x="620" y="455" class="sub-label">Faridabad / Noida arc</text>
+            <text x="290" y="250" class="sub-label">IGI Airport</text>
+            <circle cx="310" cy="265" r="10" fill="rgba(255,255,255,0.2)" stroke="#9eb5a8" />
+
+            <!-- Base ghost roads -->
+            <path class="route-base" d="M160 420 C 240 390, 300 340, 340 300 C 390 250, 450 240, 520 250 C 590 262, 650 230, 720 180" />
+
+            <!-- Today path through core -->
+            <path id="path-today" class="route-today" d="M160 420 C 250 380, 320 330, 380 300 C 430 275, 470 275, 510 285 C 560 300, 610 250, 700 185" />
+
+            <!-- Northern bypass -->
+            <path id="path-north" class="route-north" d="M160 420
+              C 200 400, 250 360, 285 310
+              C 310 275, 300 230, 270 195
+              C 240 160, 250 120, 320 100
+              C 400 78, 480 85, 545 110
+              C 600 132, 640 140, 690 155
+              C 720 165, 740 170, 760 168" />
+
+            <!-- Southern bypass -->
+            <path id="path-south" class="route-south route-hidden" d="M160 420
+              C 220 450, 300 470, 380 475
+              C 470 482, 540 470, 590 430
+              C 640 385, 680 330, 700 270
+              C 715 230, 730 200, 760 168" />
+
+            <path id="trail" class="trail" d="" />
+
+            <!-- Markers -->
+            <circle cx="160" cy="420" r="7" fill="#e8f0eb" />
+            <circle cx="760" cy="168" r="7" fill="#e8f0eb" />
+            <text x="128" y="448" class="sub-label">Home</text>
+            <text x="730" y="152" class="sub-label">Office</text>
+
+            <!-- Project callouts -->
+            <g id="callouts-north">
+              <text x="210" y="350" class="sub-label" style="fill:#93c5fd;">#1 Dwarka Expy</text>
+              <text x="210" y="145" class="sub-label" style="fill:#93c5fd;">#9A UER-II</text>
+              <text x="560" y="95" class="sub-label" style="fill:#c4b5fd;">#10B / #10C Extension</text>
+            </g>
+            <g id="callouts-south" opacity="0.25">
+              <text x="300" y="500" class="sub-label" style="fill:#fdba74;">#2 SPR → #16 Mandi</text>
+              <text x="560" y="455" class="sub-label" style="fill:#fdba74;">#18 DND–FBD–KMP</text>
+              <text x="690" y="250" class="sub-label" style="fill:#fdba74;">#8 / East links</text>
+            </g>
+
+            <circle id="traveler" class="traveler" cx="160" cy="420" r="9" />
+          </svg>
+        </div>
+
+        <div class="side-stack">
+          <div class="side-card" id="route-card">
+            <h3 id="route-title">Northern bypass — recommended</h3>
+            <p id="route-copy" style="font-size:0.9rem;color:var(--muted);">
+              Leave Gurugram on Dwarka Expressway, swing onto UER-II around the western rim,
+              then ride the Extension Link across to Ghaziabad — never entering the pulsing restricted core.
+            </p>
+            <div class="leg" id="route-legs">
+              <div class="leg-item"><i class="dot dot-y"></i><div><strong>#1 Dwarka Expressway</strong><span>Kherki Daula → Shiv Murti · 29.1 km · Operational</span></div><em>~20–25 min</em></div>
+              <div class="leg-item"><i class="dot dot-b"></i><div><strong>#9A UER-II Phase-I</strong><span>Shiv Murti / Dwarka arc → Bankoli (NH-44) · Operational</span></div><em>~35–45 min</em></div>
+              <div class="leg-item"><i class="dot dot-p"></i><div><strong>#10B + #10C Extension Link</strong><span>Alipur / Tronica → Noida–G. Noida Expy (GZB–Noida–FBD) · Consultant finalisation</span></div><em>~25–30 min*</em></div>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-meta"><span id="progress-label">Ready to play</span><span id="progress-eta">Target 75–95 min</span></div>
+              <div class="progress" aria-hidden="true"><i id="progress-bar"></i></div>
+            </div>
+          </div>
+
+          <figure class="side-card" style="padding:0.7rem;">
+            <div class="drawing-frame">
+              <img id="side-drawing" src="assets/ncr-maps/05-full-network-map.jpg" alt="Gurugram-NCR connectivity master map from DLF tracker drawings" />
+            </div>
+            <figcaption class="caption" id="side-caption">Source drawing: full NCR key-road network (DLF tracker, Oct 2026).</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <p class="section-kicker">Master key road network</p>
+      <h2>Projects on the DLF tracker — data from the drawings</h2>
+      <p class="lede">
+        Lengths, costs, routes and status transcribed from the Gurugram–NCR connectivity sheets
+        (Oct 2026). Status language kept close to the source tracker.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Infrastructure project</th>
+              <th>Length</th>
+              <th>Cost (Cr)</th>
+              <th>Route</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="swatch" style="background:#eab308"></span>1</td>
+              <td>Dwarka Expy (NPR / NH-248BB)</td>
+              <td>29.1 km</td>
+              <td>9,000</td>
+              <td>Kherki Daula (NH-48) → Dwarka Sec 21 → Shiv Murti</td>
+              <td><span class="status st-op">Operational</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#14b8a6"></span>2A–C</td>
+              <td>SPR upgradation (elevated + special repair)</td>
+              <td>4.2 / 8.5 / 2.6</td>
+              <td>776.2 / — / 4.84</td>
+              <td>Kherki Daula → Vatika → Ghata → Faridabad road</td>
+              <td><span class="status st-wip">Tenders WIP</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#84cc16"></span>3</td>
+              <td>Sohna elevated road</td>
+              <td>21.65 km</td>
+              <td>1,466</td>
+              <td>Rajiv Chowk → Sohna</td>
+              <td><span class="status st-op">Operational</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#ef4444"></span>4A–D</td>
+              <td>NH-48 road upgradation / flyovers</td>
+              <td>10 / 2 / 1.3 / 1.8</td>
+              <td>— / — / 140 / —</td>
+              <td>HH Chowk → Rampura; Dwarka Expy U-pass; Ambience; Sohna turns</td>
+              <td><span class="status st-prop">DPR / Proposed</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#dc2626"></span>5A–B</td>
+              <td>Greater SPR – MG road as NH-236</td>
+              <td>9 / 21</td>
+              <td>— / 12,000</td>
+              <td>Sec 58 (Ghata) → Sohna Rd → Manesar</td>
+              <td><span class="status st-wip">DPR / LA WIP</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#991b1b"></span>6A–C</td>
+              <td>AIIMS–Mahipalpur–Gurugram elevated / tunnel</td>
+              <td>4.9 / 20</td>
+              <td>7,000 / 5,000</td>
+              <td>Shiv Murti → NMM / AIIMS; Chhatarpur–Mahipalpur</td>
+              <td><span class="status st-wip">LA / alignment</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#a855f7"></span>7A–D</td>
+              <td>Ardee City road upgradation + junctions</td>
+              <td>— / 1.3</td>
+              <td>— / 55.45 / 140</td>
+              <td>IFFCO Chowk → Greater SPR; Millennium City; Ardee Jn</td>
+              <td><span class="status st-wip">DPR / eval</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#7c3aed"></span>8</td>
+              <td>Barapulla Ph-III (elevated)</td>
+              <td>3.5 km</td>
+              <td>1,635</td>
+              <td>Mayur Vihar Ph-1 → Sarai Kale Khan</td>
+              <td><span class="status st-op">Operational</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#2563eb"></span>9A–D</td>
+              <td>Urban Extension Road (UER-II) + spurs</td>
+              <td>38.1 / 7.3 / 29.6 / 21.1</td>
+              <td>7,715.6*</td>
+              <td>Bankoli (NH-44) → Shiv Murti; Bahadurgarh &amp; Sonipat spurs; Rangpuri→Badarpur</td>
+              <td><span class="status st-op">9A–C Op</span> <span class="status st-prop">9D Proposed</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#6366f1"></span>10A–C</td>
+              <td>UER-II Extension Link</td>
+              <td>17 / 17 / 65</td>
+              <td>1,500 / 3,500 / 7,500</td>
+              <td>Rohini → Delhi–Katra; Alipur → Tronica; Tronica → Noida–G. Noida Expy</td>
+              <td><span class="status st-prop">Consultant finalising</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#22d3ee"></span>11A–B</td>
+              <td>Urban Extension Road (UER-I)</td>
+              <td>11 / 51</td>
+              <td>—</td>
+              <td>Tikri Khurd → Bawana Rd → Rajokri (NH-48)</td>
+              <td><span class="status st-op">11A Op</span> <span class="status st-prop">11B Proposed</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#92400e"></span>12</td>
+              <td>Upper Dwarka Expy (UER-I Link)</td>
+              <td>10 km</td>
+              <td>103</td>
+              <td>Sec 99 (Gurugram) → UER-I (Bajghera MCD Toll)</td>
+              <td><span class="status st-part">Completed GGN; Delhi bottleneck 1.6 km</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#ca8a04"></span>13</td>
+              <td>Delhi–Mumbai Expy (Haryana–Rajasthan)</td>
+              <td>246 km stretch</td>
+              <td>~1,00,000 total</td>
+              <td>Sohna → Dausa (part of ~1,350 km programme)</td>
+              <td><span class="status st-op">Operational stretch</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#1e3a8a"></span>14</td>
+              <td>Gurugram–Pataudi–Rewari Expy</td>
+              <td>43.8 km</td>
+              <td>2,000</td>
+              <td>Sec 37D → Rewari along Pataudi road</td>
+              <td><span class="status st-part">Partially open (trials)</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#a16207"></span>15</td>
+              <td>Elevated MG road corridor</td>
+              <td>5 + 8.5 km</td>
+              <td>980</td>
+              <td>IFFCO Chowk → Haryana border → Andheria Mor</td>
+              <td><span class="status st-prop">Proposed; DPR finalised</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#15803d"></span>16</td>
+              <td>Mandi Road widening</td>
+              <td>9.1 km</td>
+              <td>597</td>
+              <td>Chhatarpur Metro → Gwal Pahari</td>
+              <td><span class="status st-prop">Proposed</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#111827"></span>17</td>
+              <td>Flyover along SSN Marg</td>
+              <td>4 km</td>
+              <td>700</td>
+              <td>Anuvrat Marg → DLF Farms cut (Qutab Minar Metro)</td>
+              <td><span class="status st-wip">Feasibility / DPR WIP</span></td>
+            </tr>
+            <tr>
+              <td><span class="swatch" style="background:#db2777"></span>18</td>
+              <td>DND Flyover – KMP Expressway</td>
+              <td>59 km</td>
+              <td>5,532</td>
+              <td>DND → Faridabad → KMP Expy</td>
+              <td><span class="status st-op">Operational</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note" style="margin-top:0.85rem;">
+        *Cost 7,715.6 Cr grouped for UER-II 9A/9B/9C on source sheet. Figures are as shown on DLF tracker drawings for discussion with NHAI — not a statutory cost schedule.
+      </p>
+    </div>
+  </section>
+
+  <section id="intel">
+    <div class="wrap">
+      <p class="section-kicker">Useful intelligence</p>
+      <h2>What DLF can put on the table for NHAI</h2>
+      <p class="lede">
+        Independent reading of the Oct 2026 tracker: celebrate what is open, sequence what still blocks
+        the citizen outcome, and keep freight off the high-security core.
+      </p>
+      <div class="intel-grid">
+        <article class="intel">
+          <div class="num">01</div>
+          <h3>Close the Ghaziabad hinge first</h3>
+          <p>
+            #1 and #9A are operational. The citizen GGN→GZB story still waits on #10B/#10C
+            (consultant being finalised). Prioritise that hinge for the northern bypass promise.
+          </p>
+        </article>
+        <article class="intel">
+          <div class="num">02</div>
+          <h3>Keep two escape valves</h3>
+          <p>
+            Northern UER-II ring for west→east office trips; southern #18 DND–FBD–KMP for
+            SPR / Faridabad-origin traffic. Resilience matters when one arc is under maintenance.
+          </p>
+        </article>
+        <article class="intel">
+          <div class="num">03</div>
+          <h3>Protect the restricted core by design</h3>
+          <p>
+            Messaging for ministers: this network is not “more cars in Lutyens” —
+            it is a deliberate outer ring so VIP / high-security precincts stay quieter.
+          </p>
+        </article>
+        <article class="intel">
+          <div class="num">04</div>
+          <h3>Fix the 1.6 km Delhi bottleneck</h3>
+          <p>
+            Upper Dwarka Expy (#12) is complete in Gurugram but still notes a 1.6 km Delhi-side
+            bottleneck — a high-ROI micro-fix before mega packages.
+          </p>
+        </article>
+        <article class="intel">
+          <div class="num">05</div>
+          <h3>SPR + Greater SPR are Gurugram’s south gate</h3>
+          <p>
+            #2 tenders and #5 land acquisition decide whether southern Gurugram feeds cleanly
+            into #16/#18 instead of dumping onto NH-48.
+          </p>
+        </article>
+        <article class="intel">
+          <div class="num">06</div>
+          <h3>Measure what citizens feel</h3>
+          <p>
+            Suggest NHAI publish a simple morning dashboard: GGN→GZB ETA via core vs ring,
+            incident minutes, and freight share on UER-II — so outcomes stay visible.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="drawings">
+    <div class="wrap">
+      <p class="section-kicker">Source drawings</p>
+      <h2>Actual tracker boards used in this briefing</h2>
+      <p class="lede">Click any board to enlarge. These are the annotated NCR maps and project tables supplied for the demo.</p>
+      <div class="gallery">
+        <a class="g-card" href="assets/ncr-maps/01-overview-ncr.jpg" data-lightbox>
+          <img src="assets/ncr-maps/01-overview-ncr.jpg" alt="Overview Gurugram-NCR connectivity map" loading="lazy" />
+          <figcaption>Overview — Gurugram–NCR key road projects</figcaption>
+        </a>
+        <a class="g-card" href="assets/ncr-maps/05-full-network-map.jpg" data-lightbox>
+          <img src="assets/ncr-maps/05-full-network-map.jpg" alt="Full network map with UER-II" loading="lazy" />
+          <figcaption>Full network with UER-II and peripheral expressways</figcaption>
+        </a>
+        <a class="g-card" href="assets/ncr-maps/06-northwest-uer.jpg" data-lightbox>
+          <img src="assets/ncr-maps/06-northwest-uer.jpg" alt="Northwest UER and KMP detail" loading="lazy" />
+          <figcaption>Northwest — UER-II, Bahadurgarh, Rohini, KMP</figcaption>
+        </a>
+        <a class="g-card" href="assets/ncr-maps/07-southeast-dnd-fbd.jpg" data-lightbox>
+          <img src="assets/ncr-maps/07-southeast-dnd-fbd.jpg" alt="Southeast DND Faridabad corridor" loading="lazy" />
+          <figcaption>Southeast — DND–FBD–KMP and east links</figcaption>
+        </a>
+        <a class="g-card" href="assets/ncr-maps/09-gurugram-detail.jpg" data-lightbox>
+          <img src="assets/ncr-maps/09-gurugram-detail.jpg" alt="Gurugram SPR and NH-48 detail" loading="lazy" />
+          <figcaption>Gurugram detail — SPR, NH-48, Dwarka Expy</figcaption>
+        </a>
+        <a class="g-card" href="assets/ncr-maps/10-east-ghaziabad.jpg" data-lightbox>
+          <img src="assets/ncr-maps/10-east-ghaziabad.jpg" alt="East Delhi Ghaziabad links" loading="lazy" />
+          <figcaption>East — Hindon / Dilshad Garden / #10C</figcaption>
+        </a>
+        <a class="g-card" href="assets/ncr-maps/02-projects-table-1.jpg" data-lightbox>
+          <img src="assets/ncr-maps/02-projects-table-1.jpg" alt="Projects table part 1" loading="lazy" />
+          <figcaption>Tracker table — projects 1–7</figcaption>
+        </a>
+        <a class="g-card" href="assets/ncr-maps/03-projects-table-2.jpg" data-lightbox>
+          <img src="assets/ncr-maps/03-projects-table-2.jpg" alt="Projects table part 2" loading="lazy" />
+          <figcaption>Tracker table — UER-II and extensions</figcaption>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <strong style="color:var(--ink);">DLF × public infrastructure — good-faith consulting support</strong>
+      <p>
+        Prepared for executive use by Chamkaur Singh when engaging NHAI / MoRTH stakeholders.
+        Project figures transcribed from DLF-tracked public drawings (dated Oct 2026). Travel times are
+        illustrative synthesised ranges from public commute sources and inauguration reporting — validate
+        with NHAI traffic studies before formal commitments.
+      </p>
+      <p>
+        <a href="index.html">Back to profile home</a>
+        · CI/CD via GitHub Pages on <code>gauravch86/gc-ao-enablement</code>
+      </p>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged drawing">
+    <button type="button" id="lightbox-close">Close</button>
+    <img id="lightbox-img" alt="" />
+  </div>
+
+  <script>
+    (function () {
+      const routes = {
+        north: {
+          title: "Northern bypass — recommended",
+          copy: "Leave Gurugram on Dwarka Expressway, swing onto UER-II around the western rim, then ride the Extension Link across to Ghaziabad — never entering the pulsing restricted core.",
+          eta: "Target 75–95 min",
+          drawing: "assets/ncr-maps/05-full-network-map.jpg",
+          caption: "Source drawing: full NCR key-road network with UER-II arc (DLF tracker, Oct 2026).",
+          legs: [
+            { cls: "dot-y", title: "#1 Dwarka Expressway", sub: "Kherki Daula → Shiv Murti · 29.1 km · Operational", eta: "~20–25 min" },
+            { cls: "dot-b", title: "#9A UER-II Phase-I", sub: "Western / northern rim → Bankoli (NH-44) · Operational", eta: "~35–45 min" },
+            { cls: "dot-p", title: "#10B + #10C Extension Link", sub: "Alipur / Tronica → Ghaziabad–Noida–FBD · Consultant finalisation", eta: "~25–30 min*" }
+          ]
+        },
+        south: {
+          title: "Southern DND–FBD–KMP — alternate",
+          copy: "Use SPR / Mandi Road to stay south of the core, join the operational DND–Faridabad–KMP expressway, then climb via east Delhi links toward Ghaziabad.",
+          eta: "Target 90–110 min",
+          drawing: "assets/ncr-maps/07-southeast-dnd-fbd.jpg",
+          caption: "Source drawing: southeast DND–FBD–KMP and east Delhi links (DLF tracker).",
+          legs: [
+            { cls: "dot-y", title: "#2 SPR / #16 Mandi Road", sub: "Southern Gurugram → Gwal Pahari / Andheria edge", eta: "~25–35 min" },
+            { cls: "dot-m", title: "#18 DND–FBD–KMP Expy", sub: "Faridabad arc · 59 km · Operational", eta: "~35–45 min" },
+            { cls: "dot-b", title: "#8 + east connectors", sub: "Sarai Kale Khan / Mayur Vihar → Hindon / GZB side", eta: "~25–30 min" }
+          ]
+        }
+      };
+
+      let active = "north";
+      let raf = null;
+      let playing = false;
+
+      const traveler = document.getElementById("traveler");
+      const trail = document.getElementById("trail");
+      const pathNorth = document.getElementById("path-north");
+      const pathSouth = document.getElementById("path-south");
+      const callNorth = document.getElementById("callouts-north");
+      const callSouth = document.getElementById("callouts-south");
+      const progressBar = document.getElementById("progress-bar");
+      const progressLabel = document.getElementById("progress-label");
+      const progressEta = document.getElementById("progress-eta");
+      const routeTitle = document.getElementById("route-title");
+      const routeCopy = document.getElementById("route-copy");
+      const routeLegs = document.getElementById("route-legs");
+      const sideDrawing = document.getElementById("side-drawing");
+      const sideCaption = document.getElementById("side-caption");
+
+      function activePath() {
+        return active === "north" ? pathNorth : pathSouth;
+      }
+
+      function setRoute(name) {
+        active = name;
+        document.querySelectorAll(".seg button").forEach((b) => {
+          b.classList.toggle("active", b.dataset.route === name);
+        });
+        pathNorth.classList.toggle("route-hidden", name !== "north");
+        pathSouth.classList.toggle("route-hidden", name !== "south");
+        callNorth.setAttribute("opacity", name === "north" ? "1" : "0.25");
+        callSouth.setAttribute("opacity", name === "south" ? "1" : "0.25");
+
+        const r = routes[name];
+        routeTitle.textContent = r.title;
+        routeCopy.textContent = r.copy;
+        progressEta.textContent = r.eta;
+        sideDrawing.src = r.drawing;
+        sideCaption.textContent = r.caption;
+        routeLegs.innerHTML = r.legs.map((leg) => (
+          `<div class="leg-item"><i class="dot ${leg.cls}"></i><div><strong>${leg.title}</strong><span>${leg.sub}</span></div><em>${leg.eta}</em></div>`
+        )).join("");
+        resetTraveler();
+      }
+
+      function resetTraveler() {
+        if (raf) cancelAnimationFrame(raf);
+        playing = false;
+        const path = activePath();
+        const start = path.getPointAtLength(0);
+        traveler.setAttribute("cx", start.x);
+        traveler.setAttribute("cy", start.y);
+        trail.setAttribute("d", "");
+        progressBar.style.width = "0%";
+        progressLabel.textContent = "Ready to play";
+      }
+
+      function play() {
+        if (playing) return;
+        playing = true;
+        const path = activePath();
+        const len = path.getTotalLength();
+        const duration = 5200;
+        const t0 = performance.now();
+        progressLabel.textContent = active === "north" ? "Riding western / northern ring…" : "Riding southern Faridabad arc…";
+
+        function frame(now) {
+          const t = Math.min(1, (now - t0) / duration);
+          const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+          const dist = len * eased;
+          const pt = path.getPointAtLength(dist);
+          traveler.setAttribute("cx", pt.x);
+          traveler.setAttribute("cy", pt.y);
+          const trailLen = Math.max(0, dist - 40);
+          const a = path.getPointAtLength(trailLen);
+          trail.setAttribute("d", `M ${a.x} ${a.y} L ${pt.x} ${pt.y}`);
+          progressBar.style.width = `${Math.round(eased * 100)}%`;
+          if (t < 1) {
+            raf = requestAnimationFrame(frame);
+          } else {
+            playing = false;
+            progressLabel.textContent = "Arrived — restricted core avoided";
+          }
+        }
+        raf = requestAnimationFrame(frame);
+      }
+
+      document.getElementById("btn-north").addEventListener("click", () => setRoute("north"));
+      document.getElementById("btn-south").addEventListener("click", () => setRoute("south"));
+      document.getElementById("btn-play").addEventListener("click", play);
+      document.getElementById("btn-reset").addEventListener("click", resetTraveler);
+
+      // Lightbox
+      const lb = document.getElementById("lightbox");
+      const lbImg = document.getElementById("lightbox-img");
+      document.querySelectorAll("[data-lightbox]").forEach((a) => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          lbImg.src = a.getAttribute("href");
+          lbImg.alt = a.querySelector("img")?.alt || "";
+          lb.classList.add("open");
+        });
+      });
+      document.getElementById("lightbox-close").addEventListener("click", () => lb.classList.remove("open"));
+      lb.addEventListener("click", (e) => { if (e.target === lb) lb.classList.remove("open"); });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") lb.classList.remove("open");
+      });
+
+      setRoute("north");
+
+      // Auto-play once when demo enters view
+      const stage = document.querySelector(".demo-stage");
+      if (stage && "IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              play();
+              io.disconnect();
+            }
+          });
+        }, { threshold: 0.45 });
+        io.observe(stage);
+      }
+    })();
+  </script>
+</body>
+</html>
